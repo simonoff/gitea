@@ -21,11 +21,11 @@ import (
 	"github.com/Unknwon/com"
 	"github.com/nfnt/resize"
 
-	"github.com/gogits/gogs/modules/avatar"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/avatar"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 type UserType int

@@ -11,10 +11,10 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/gogits/gogs/modules/httplib"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/setting"
-	"github.com/gogits/gogs/modules/uuid"
+	"github.com/go-gitea/gitea/modules/httplib"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/setting"
+	"github.com/go-gitea/gitea/modules/uuid"
 )
 
 var (

@@ -10,11 +10,11 @@ import (
 
 	"github.com/Unknwon/com"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/middleware"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 const (

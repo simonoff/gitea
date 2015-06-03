@@ -22,8 +22,8 @@ import (
 	"github.com/Unknwon/i18n"
 	"github.com/microcosm-cc/bluemonday"
 
-	"github.com/gogits/gogs/modules/avatar"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/avatar"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 var Sanitizer = bluemonday.UGCPolicy()

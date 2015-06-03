@@ -27,14 +27,14 @@ WORKDIR /go
 
 RUN useradd -m git
 
-ENV GOGS_PATH $GOPATH/src/github.com/gogits/gogs
+ENV GOGS_PATH $GOPATH/src/github.com/go-gitea/gitea
 ENV GOGS_CUSTOM_CONF_PATH $GOGS_PATH/custom/conf
 ENV GOGS_CUSTOM_CONF $GOGS_CUSTOM_CONF_PATH/app.ini
 
-RUN go get -u -d github.com/gogits/gogs
+RUN go get -u -d github.com/go-gitea/gitea
 # WORKDIR $GOGS_PATH
-WORKDIR /go/src/github.com/gogits/gogs
-RUN go build github.com/gogits/gogs
+WORKDIR /go/src/github.com/go-gitea/gitea
+RUN go build github.com/go-gitea/gitea
 RUN chown -R git $GOGS_PATH
 
 ADD init_gogs.sh /tmp/
