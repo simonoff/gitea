@@ -21,7 +21,7 @@ import (
 	"github.com/macaron-contrib/cache"
 	"github.com/macaron-contrib/captcha"
 	"github.com/macaron-contrib/csrf"
-	"github.com/macaron-contrib/i18n"
+	"github.com/makhov/i18n"
 	"github.com/macaron-contrib/oauth2"
 	"github.com/macaron-contrib/session"
 	"github.com/macaron-contrib/toolbox"
@@ -29,23 +29,23 @@ import (
 
 	api "github.com/gogits/go-gogs-client"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/auth"
-	"github.com/gogits/gogs/modules/auth/apiv1"
-	"github.com/gogits/gogs/modules/avatar"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/bindata"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/middleware"
-	"github.com/gogits/gogs/modules/setting"
-	"github.com/gogits/gogs/routers"
-	"github.com/gogits/gogs/routers/admin"
-	"github.com/gogits/gogs/routers/api/v1"
-	"github.com/gogits/gogs/routers/dev"
-	"github.com/gogits/gogs/routers/org"
-	"github.com/gogits/gogs/routers/repo"
-	"github.com/gogits/gogs/routers/user"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/auth"
+	"github.com/go-gitea/gitea/modules/auth/apiv1"
+	"github.com/go-gitea/gitea/modules/avatar"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/bindata"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
+	"github.com/go-gitea/gitea/routers"
+	"github.com/go-gitea/gitea/routers/admin"
+	"github.com/go-gitea/gitea/routers/api/v1"
+	"github.com/go-gitea/gitea/routers/dev"
+	"github.com/go-gitea/gitea/routers/org"
+	"github.com/go-gitea/gitea/routers/repo"
+	"github.com/go-gitea/gitea/routers/user"
 )
 
 var CmdWeb = cli.Command{
@@ -83,7 +83,7 @@ func checkVersion() {
 		{"github.com/macaron-contrib/binding", binding.Version, "0.0.6"},
 		{"github.com/macaron-contrib/cache", cache.Version, "0.0.7"},
 		{"github.com/macaron-contrib/csrf", csrf.Version, "0.0.3"},
-		{"github.com/macaron-contrib/i18n", i18n.Version, "0.0.7"},
+		{"github.com/makhov/i18n", i18n.Version, "0.0.7"},
 		{"github.com/macaron-contrib/session", session.Version, "0.1.6"},
 		{"gopkg.in/ini.v1", ini.Version, "1.2.0"},
 	}

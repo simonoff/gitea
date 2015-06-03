@@ -13,8 +13,8 @@ import (
 	"github.com/go-xorm/xorm"
 	"gopkg.in/ini.v1"
 
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 const _MIN_DB_VER = 0

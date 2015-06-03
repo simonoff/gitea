@@ -13,11 +13,11 @@ import (
 
 	"github.com/macaron-contrib/oauth2"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/middleware"
-	"github.com/gogits/gogs/modules/setting"
-	"github.com/gogits/gogs/modules/social"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
+	"github.com/go-gitea/gitea/modules/social"
 )
 
 func SocialSignIn(ctx *middleware.Context) {

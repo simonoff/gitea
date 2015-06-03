@@ -15,15 +15,15 @@ import (
 	"github.com/Unknwon/macaron"
 	"github.com/macaron-contrib/cache"
 	"github.com/macaron-contrib/csrf"
-	"github.com/macaron-contrib/i18n"
+	"github.com/makhov/i18n"
 	"github.com/macaron-contrib/session"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/auth"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/auth"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 // Context represents context of a request.

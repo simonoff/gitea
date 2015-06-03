@@ -7,11 +7,11 @@ package routers
 import (
 	"fmt"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/middleware"
-	"github.com/gogits/gogs/modules/setting"
-	"github.com/gogits/gogs/routers/user"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
+	"github.com/go-gitea/gitea/routers/user"
 )
 
 const (
