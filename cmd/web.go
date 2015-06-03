@@ -21,7 +21,7 @@ import (
 	"github.com/macaron-contrib/cache"
 	"github.com/macaron-contrib/captcha"
 	"github.com/macaron-contrib/csrf"
-	"github.com/makhov/i18n"
+	"github.com/macaron-contrib/i18n"
 	"github.com/macaron-contrib/oauth2"
 	"github.com/macaron-contrib/session"
 	"github.com/macaron-contrib/toolbox"
@@ -83,7 +83,7 @@ func checkVersion() {
 		{"github.com/macaron-contrib/binding", binding.Version, "0.0.6"},
 		{"github.com/macaron-contrib/cache", cache.Version, "0.0.7"},
 		{"github.com/macaron-contrib/csrf", csrf.Version, "0.0.3"},
-		{"github.com/makhov/i18n", i18n.Version, "0.0.7"},
+		{"github.com/macaron-contrib/i18n", i18n.Version, "0.0.7"},
 		{"github.com/macaron-contrib/session", session.Version, "0.1.6"},
 		{"gopkg.in/ini.v1", ini.Version, "1.2.0"},
 	}

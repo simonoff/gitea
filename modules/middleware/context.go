@@ -15,7 +15,7 @@ import (
 	"github.com/Unknwon/macaron"
 	"github.com/macaron-contrib/cache"
 	"github.com/macaron-contrib/csrf"
-	"github.com/makhov/i18n"
+	"github.com/macaron-contrib/i18n"
 	"github.com/macaron-contrib/session"
 
 	"github.com/go-gitea/gitea/models"
