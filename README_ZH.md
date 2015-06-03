@@ -1,7 +1,7 @@
-Gogs - Go Git Service [![Build Status](https://travis-ci.org/gogits/gogs.svg?branch=master)](https://travis-ci.org/gogits/gogs)
+Gitea - Git Service with a cup of tea. [![Build Status](https://travis-ci.org/go-gitea/gitea.svg?branch=master)](https://travis-ci.org/go-gitea/gitea)
 =====================
 
-Gogs (Go Git Service) 是一款可轻易搭建的自助 Git 服务。
+Gitea (Git Service with a cup of tea) 是一款可轻易搭建的自助 Git 服务。
 
 ![Demo](http://gogs.qiniudn.com/gogs_demo.gif)
 
@@ -9,7 +9,7 @@ Gogs (Go Git Service) 是一款可轻易搭建的自助 Git 服务。
 
 ## 开发目的
 
-Gogs 的目标是打造一个最简单、最快速和最轻松的方式搭建自助 Git 服务。使用 Go 语言开发使得 Gogs 能够通过独立的二进制分发，并且支持 Go 语言支持的 **所有平台**，包括 Linux、Mac OS X 以及 Windows。
+Gitea 的目标是打造一个最简单、最快速和最轻松的方式搭建自助 Git 服务。使用 Go 语言开发使得 Gitea 能够通过独立的二进制分发，并且支持 Go 语言支持的 **所有平台**，包括 Linux、Mac OS X 以及 Windows。
 
 ## 项目概览
 
@@ -48,7 +48,7 @@ Gogs 的目标是打造一个最简单、最快速和最轻松的方式搭建自
 
 ## 安装部署
 
-在安装 Gogs 之前，您需要先安装 [基本环境](http://gogs.io/docs/installation/)。
+在安装 Gitea 之前，您需要先安装 [基本环境](http://gogs.io/docs/installation/)。
 
 然后，您可以通过以下 5 种方式来安装 Gogs：
 

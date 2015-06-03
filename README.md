@@ -1,11 +1,9 @@
-Gogs - Go Git Service [![Build Status](https://travis-ci.org/gogits/gogs.svg?branch=master)](https://travis-ci.org/gogits/gogs)
+Gitea - Git service with a cup of tea. [![Build Status](https://travis-ci.org/go-gitea/gitea.svg?branch=master)](https://travis-ci.org/go-gitea/gitea)
 =====================
 
 [![Join the chat at https://gitter.im/go-gitea/gitea](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-gitea/gitea?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gogits/gogs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Gogs (Go Git Service) is a painless self-hosted Git service.
+Gitea (Git service with a cup of tea) is a self-hosted Git service.
 
 ![Demo](http://gogs.qiniudn.com/gogs_demo.gif)
 
@@ -24,7 +22,7 @@ Gogs (Go Git Service) is a painless self-hosted Git service.
 
 ## Purpose
 
-The goal of this project is to make the easiest, fastest, and most painless way to set up a self-hosted Git service. With Go, this can be done via an independent binary distribution across **ALL platforms** that Go supports, including Linux, Mac OS X, and Windows.
+The goal of this project is to make the easiest, fastest, and most painless way to set up a self-hosted Git service. With Go, this can be done via an independent binary distribution across **ALL platforms** that Go supports, including Linux, Mac OSX, and Windows.
 
 ## Overview
 
