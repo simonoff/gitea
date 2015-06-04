@@ -113,7 +113,7 @@ func CreatePost(ctx *middleware.Context, form auth.CreateRepoForm) {
 	}
 
 	if repo != nil {
-		if errDelete := models.DeleteRepository(ctxUser.Id, repo.Id, ctxUser.Name); errDelete != nil {
+		if errDelete := models.DeleteRepository(ctxUser.Id, repo.ID, ctxUser.Name); errDelete != nil {
 			log.Error(4, "DeleteRepository: %v", errDelete)
 		}
 	}
@@ -217,7 +217,7 @@ func MigratePost(ctx *middleware.Context, form auth.MigrateRepoForm) {
 	}
 
 	if repo != nil {
-		if errDelete := models.DeleteRepository(ctxUser.Id, repo.Id, ctxUser.Name); errDelete != nil {
+		if errDelete := models.DeleteRepository(ctxUser.Id, repo.ID, ctxUser.Name); errDelete != nil {
 			log.Error(4, "DeleteRepository: %v", errDelete)
 		}
 	}
@@ -336,7 +336,7 @@ func ForkPost(ctx *middleware.Context, form auth.CreateRepoForm) {
 	}
 
 	if repo != nil {
-		if errDelete := models.DeleteRepository(ctxUser.Id, repo.Id, ctxUser.Name); errDelete != nil {
+		if errDelete := models.DeleteRepository(ctxUser.Id, repo.ID, ctxUser.Name); errDelete != nil {
 			log.Error(4, "DeleteRepository: %v", errDelete)
 		}
 	}
@@ -361,13 +361,13 @@ func Action(ctx *middleware.Context) {
 	var err error
 	switch ctx.Params(":action") {
 	case "watch":
-		err = models.WatchRepo(ctx.User.Id, ctx.Repo.Repository.Id, true)
+		err = models.WatchRepo(ctx.User.Id, ctx.Repo.Repository.ID, true)
 	case "unwatch":
-		err = models.WatchRepo(ctx.User.Id, ctx.Repo.Repository.Id, false)
+		err = models.WatchRepo(ctx.User.Id, ctx.Repo.Repository.ID, false)
 	case "star":
-		err = models.StarRepo(ctx.User.Id, ctx.Repo.Repository.Id, true)
+		err = models.StarRepo(ctx.User.Id, ctx.Repo.Repository.ID, true)
 	case "unstar":
-		err = models.StarRepo(ctx.User.Id, ctx.Repo.Repository.Id, false)
+		err = models.StarRepo(ctx.User.Id, ctx.Repo.Repository.ID, false)
 	case "desc":
 		if !ctx.Repo.IsOwner() {
 			ctx.Error(404)
