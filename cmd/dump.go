@@ -1,3 +1,4 @@
+// Copyright 2015 The Gitea Authors. All rights reserved.
 // Copyright 2014 The Gogs Authors. All rights reserved.
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
@@ -20,9 +21,9 @@ import (
 
 var CmdDump = cli.Command{
 	Name:  "dump",
-	Usage: "Dump Gogs files and database",
+	Usage: "Dump Gitea files and database",
 	Description: `Dump compresses all related files and database into zip file.
-It can be used for backup and capture Gogs server image to send to maintainer`,
+It can be used for backup and capture Gitea server image to send to maintainer`,
 	Action: runDump,
 	Flags: []cli.Flag{
 		cli.StringFlag{"config, c", "custom/conf/app.ini", "Custom configuration file path", ""},
@@ -40,18 +41,18 @@ func runDump(ctx *cli.Context) {
 
 	log.Printf("Dumping local repositories...%s", setting.RepoRootPath)
 	zip.Verbose = ctx.Bool("verbose")
-	defer os.Remove("gogs-repo.zip")
-	if err := zip.PackTo(setting.RepoRootPath, "gogs-repo.zip", true); err != nil {
+	defer os.Remove("gitea-repo.zip")
+	if err := zip.PackTo(setting.RepoRootPath, "gitea-repo.zip", true); err != nil {
 		log.Fatalf("Fail to dump local repositories: %v", err)
 	}
 
 	log.Printf("Dumping database...")
-	defer os.Remove("gogs-db.sql")
-	if err := models.DumpDatabase("gogs-db.sql"); err != nil {
+	defer os.Remove("gitea-db.sql")
+	if err := models.DumpDatabase("gitea-db.sql"); err != nil {
 		log.Fatalf("Fail to dump database: %v", err)
 	}
 
-	fileName := fmt.Sprintf("gogs-dump-%d.zip", time.Now().Unix())
+	fileName := fmt.Sprintf("gitea-dump-%d.zip", time.Now().Unix())
 	log.Printf("Packing dump files...")
 	z, err := zip.Create(fileName)
 	if err != nil {
@@ -60,8 +61,8 @@ func runDump(ctx *cli.Context) {
 	}
 
 	workDir, _ := setting.WorkDir()
-	z.AddFile("gogs-repo.zip", path.Join(workDir, "gogs-repo.zip"))
-	z.AddFile("gogs-db.sql", path.Join(workDir, "gogs-db.sql"))
+	z.AddFile("gitea-repo.zip", path.Join(workDir, "gitea-repo.zip"))
+	z.AddFile("gitea-db.sql", path.Join(workDir, "gitea-db.sql"))
 	z.AddDir("custom", path.Join(workDir, "custom"))
 	z.AddDir("log", path.Join(workDir, "log"))
 	// FIXME: SSH key file.

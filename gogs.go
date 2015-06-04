@@ -1,5 +1,6 @@
 // +build go1.2
 
+// Copyright 2015 The Gitea Authors. All rights reserved.
 // Copyright 2014 The Gogs Authors. All rights reserved.
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
@@ -17,7 +18,7 @@ import (
 	"github.com/go-gitea/gitea/modules/setting"
 )
 
-const APP_VER = "0.6.1.0327 Beta"
+const APP_VER = "0.6.2.0604 Beta"
 
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
@@ -26,7 +27,7 @@ func init() {
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "Gogs"
+	app.Name = "Gitea"
 	app.Usage = "Go Git Service"
 	app.Version = APP_VER
 	app.Commands = []cli.Command{
@@ -34,7 +35,7 @@ func main() {
 		cmd.CmdServ,
 		cmd.CmdUpdate,
 		cmd.CmdDump,
-		cmd.CmdCert,
+		//cmd.CmdCert, // Cert command have been merged to Generate
 		cmd.CmdGenerate,
 	}
 	app.Flags = append(app.Flags, []cli.Flag{}...)
