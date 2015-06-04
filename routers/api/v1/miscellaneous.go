@@ -7,10 +7,10 @@ package v1
 import (
 	"strings"
 
-	"github.com/gogits/gogs/modules/auth/apiv1"
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/middleware"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/auth/apiv1"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 // Render an arbitrary Markdown document.

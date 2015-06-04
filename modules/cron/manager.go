@@ -7,8 +7,8 @@ package cron
 import (
 	"fmt"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/models"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 var c = New()

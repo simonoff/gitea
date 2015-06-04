@@ -17,7 +17,7 @@ import (
 	"github.com/russross/blackfriday"
 	"golang.org/x/net/html"
 
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 func isletter(c byte) bool {

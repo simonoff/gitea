@@ -9,8 +9,8 @@ package ldap
 import (
 	"fmt"
 
-	"github.com/gogits/gogs/modules/ldap"
-	"github.com/gogits/gogs/modules/log"
+	"github.com/go-gitea/gitea/modules/ldap"
+	"github.com/go-gitea/gitea/modules/log"
 )
 
 // Basic LDAP authentication service

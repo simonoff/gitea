@@ -20,9 +20,9 @@ import (
 	"github.com/macaron-contrib/session"
 	"gopkg.in/ini.v1"
 
-	"github.com/gogits/gogs/modules/bindata"
-	"github.com/gogits/gogs/modules/log"
-	// "github.com/gogits/gogs/modules/ssh"
+	"github.com/go-gitea/gitea/modules/bindata"
+	"github.com/go-gitea/gitea/modules/log"
+	// "github.com/go-gitea/gitea/modules/ssh"
 )
 
 type Scheme string

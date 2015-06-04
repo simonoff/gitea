@@ -16,10 +16,10 @@ import (
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 
-	"github.com/gogits/gogs/modules/auth/ldap"
-	"github.com/gogits/gogs/modules/auth/pam"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/uuid"
+	"github.com/go-gitea/gitea/modules/auth/ldap"
+	"github.com/go-gitea/gitea/modules/auth/pam"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/uuid"
 )
 
 type LoginType int
@@ -256,7 +256,7 @@ func UserSignIn(uname, passwd string) (*User, error) {
 // Query if name/passwd can login against the LDAP directory pool
 // Create a local user if success
 // Return the same LoginUserPlain semantic
-// FIXME: https://github.com/gogits/gogs/issues/672
+// FIXME: https://github.com/go-gitea/gitea/issues/672
 func LoginUserLdapSource(u *User, name, passwd string, sourceId int64, cfg *LDAPConfig, autoRegister bool) (*User, error) {
 	name, fn, sn, mail, logged := cfg.Ldapsource.SearchEntry(name, passwd)
 	if !logged {

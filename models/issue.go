@@ -16,7 +16,7 @@ import (
 	"github.com/Unknwon/com"
 	"github.com/go-xorm/xorm"
 
-	"github.com/gogits/gogs/modules/log"
+	"github.com/go-gitea/gitea/modules/log"
 )
 
 var (

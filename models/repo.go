@@ -22,12 +22,12 @@ import (
 	"github.com/Unknwon/cae/zip"
 	"github.com/Unknwon/com"
 
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/bindata"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/process"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/bindata"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/process"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 const (

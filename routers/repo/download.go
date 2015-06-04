@@ -8,9 +8,9 @@ import (
 	"io"
 	"path"
 
-	"github.com/gogits/gogs/modules/base"
-	"github.com/gogits/gogs/modules/git"
-	"github.com/gogits/gogs/modules/middleware"
+	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/git"
+	"github.com/go-gitea/gitea/modules/middleware"
 )
 
 func ServeBlob(ctx *middleware.Context, blob *git.Blob) error {

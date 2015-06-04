@@ -10,7 +10,7 @@ import (
 	"github.com/Unknwon/macaron"
 	"github.com/macaron-contrib/csrf"
 
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 type ToggleOptions struct {

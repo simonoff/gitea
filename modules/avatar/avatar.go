@@ -32,8 +32,8 @@ import (
 
 	"github.com/nfnt/resize"
 
-	"github.com/gogits/gogs/modules/log"
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/log"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 var gravatarSource string

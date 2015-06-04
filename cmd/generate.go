@@ -12,7 +12,7 @@ import (
 	"text/template"
 	"github.com/codegangsta/cli"
 
-	"github.com/gogits/gogs/modules/setting"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 var CmdGenerate = cli.Command{
