@@ -13,7 +13,7 @@ import (
 
 	"github.com/codegangsta/cli"
 
-	"github.com/gogits/gogs/cmd"
+	"github.com/go-gitea/gitea/cmd"
 	"github.com/gogits/gogs/modules/setting"
 )
 
@@ -35,6 +35,7 @@ func main() {
 		cmd.CmdUpdate,
 		cmd.CmdDump,
 		cmd.CmdCert,
+		cmd.CmdGenerate,
 	}
 	app.Flags = append(app.Flags, []cli.Flag{}...)
 	app.Run(os.Args)
