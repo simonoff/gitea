@@ -1,8 +1,8 @@
-# Contributing to Gogs
+# Contributing to Gitea
 
 > This guidelines sheet is forked from [CONTRIBUTING.md](https://github.com/drone/drone/blob/8d9c7cee56d6c2eac81dc156ce27be6716d97e68/CONTRIBUTING.md).
 
-Gogs is not perfect, and it has bugs or incomplete features in rare cases. You're welcome to tell us, or to contribute some code. This document describes details about how can you contribute to Gogs project.
+Gitea is not perfect, and it has bugs or incomplete features in rare cases. You're welcome to tell us, or to contribute some code. This document describes details about how can you contribute to Gitea project.
 
 ## Contribution guidelines
 
@@ -15,20 +15,20 @@ Depends on the situation, you will:
 
 ### Bug Report
 
-If you find something you consider a bug, please create a issue on [GitHub](https://github.com/gogits/gogs/issues). To avoid wasting time and reduce back-and-forth communication with team members, please include at least the following information in a form comfortable for you:
+If you find something you consider a bug, please create a issue on [GitHub](https://github.com/go-gitea/gitea/issues). To avoid wasting time and reduce back-and-forth communication with team members, please include at least the following information in a form comfortable for you:
 
 - Bug Description
-- Gogs Version
+- Gitea Version
 - Git Version
 - System Type
 - Error Log
 - Other information
 
-Please take a moment to check that an issue on [GitHub](https://github.com/gogits/gogs/issues) doesn't already exist documenting your bug report or improvement proposal. If it does, it never hurts to add a quick "+1" or "I have this problem too". This will help prioritize the most common problems and requests.
+Please take a moment to check that an issue on [GitHub](https://github.com/go-gitea/gitea/issues) doesn't already exist documenting your bug report or improvement proposal. If it does, it never hurts to add a quick "+1" or "I have this problem too". This will help prioritize the most common problems and requests.
 
 #### Bug Report Example
 
-Gogs crashed when creating a repository with a license, using v0.5.13.0207, SQLite3, Git 1.9.0, Ubuntu 12.04.
+Gitea crashed when creating a repository with a license, using v0.5.13.0207, SQLite3, Git 1.9.0, Ubuntu 12.04.
 
 Error log:
 
@@ -48,7 +48,7 @@ We are always thrilled to receive pull requests, and do our best to process them
 
 If your pull request is not accepted on the first try, don't be discouraged! If there's a problem with the implementation, hopefully you received feedback on what to improve.
 
-We're trying very hard to keep Gogs lean and focused. We don't want it to do everything for everybody. This means that we might decide against incorporating a new feature. We believe you do like to discuss with us first in [Gitter](https://gitter.im/gogits/gogs).
+We're trying very hard to keep Gitea lean and focused. We don't want it to do everything for everybody. This means that we might decide against incorporating a new feature. We believe you do like to discuss with us first in [Gitter](https://gitter.im/go-gitea/gitea).
 
 ### Ask For Help
 
@@ -56,7 +56,7 @@ Before opening an issue, please make sure your problem isn't already addressed o
 
 ## Things To Notice
 
-Please take a moment to check that an issue on [GitHub](https://github.com/gogits/gogs/issues) or card on [Trello](https://trello.com/b/uxAoeLUl/gogs-go-git-service) doesn't already exist documenting your bug report or improvement proposal. If it does, it never hurts to add a quick "+1" or "I have this problem too". This will help prioritize the most common problems and requests.
+Please take a moment to check that an issue on [GitHub](https://github.com/go-gitea/gitea/issues) or card on [Trello](https://trello.com/b/uxAoeLUl/gogs-go-git-service) doesn't already exist documenting your bug report or improvement proposal. If it does, it never hurts to add a quick "+1" or "I have this problem too". This will help prioritize the most common problems and requests.
 
 ## Code of conduct
 
@@ -68,6 +68,6 @@ Examples of unacceptable behavior by participants include the use of sexual lang
 
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. Project maintainers who do not follow the Code of Conduct may be removed from the project team.
 
-Instances of abusive, harassing, or otherwise unacceptable behavior can be reported by emailing u@gogs.io
+Instances of abusive, harassing, or otherwise unacceptable behavior can be reported by emailing lunny@gitea.io
 
 This Code of Conduct is adapted from the [Contributor Covenant](http:contributor-covenant.org), version 1.0.0, available at [http://contributor-covenant.org/version/1/0/0/](http://contributor-covenant.org/version/1/0/0/)
