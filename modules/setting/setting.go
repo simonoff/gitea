@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"os/user"
 	"path"
 	"path/filepath"
 	"runtime"
@@ -284,13 +285,14 @@ func NewConfigContext() {
 	}[Cfg.Section("time").Key("FORMAT").MustString("RFC1123")]
 
 	RunUser = Cfg.Section("").Key("RUN_USER").String()
-	curUser := os.Getenv("USER")
-	if len(curUser) == 0 {
-		curUser = os.Getenv("USERNAME")
-	}
+	curUser, err := user.Current()
 	// Does not check run user when the install lock is off.
-	if InstallLock && RunUser != curUser {
-		log.Fatal(4, "Expect user(%s) but current user is: %s", RunUser, curUser)
+	if InstallLock && (err != nil || RunUser != curUser.Username) {
+		curUsername := "unknown"
+		if curUser != nil {
+			curUsername = curUser.Username
+		}
+		log.Fatal(4, "Expect user(%s) but current user is: %s", RunUser, curUsername)
 	}
 
 	// Determine and create root git repository path.
