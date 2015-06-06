@@ -114,6 +114,7 @@ func runCert(ctx *cli.Context) {
 		SerialNumber: serialNumber,
 		Subject: pkix.Name{
 			Organization: []string{"Acme Co"},
+			CommonName: "Gitea",
 		},
 		NotBefore: notBefore,
 		NotAfter:  notAfter,
