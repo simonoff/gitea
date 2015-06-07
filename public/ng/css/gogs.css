@@ -966,6 +966,11 @@ The register and sign-in page style
 .sign-form.form-align .form-label {
   width: 160px;
 }
+.sign-form.form-align .chk-label {
+  width: auto;
+  text-align: left;
+  margin-left: 176px;
+}
 .sign-form.form-align .alert {
   margin: 0 30px 24px 30px;
 }
@@ -1083,11 +1088,19 @@ The register and sign-in page style
   padding: 18px;
   position: relative;
 }
+#repo-clone {
+  position: relative;
+  top: 14px;
+}
+#repo-clone .btn {
+  line-height: 20px;
+}
 #repo-clone-url {
-  border-right: none;
   width: 190px;
   border-left: none;
   cursor: default;
+  line-height: 20px;
+  border-radius: .25em;
 }
 #repo-clone-help {
   clear: both;
