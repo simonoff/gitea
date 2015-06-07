@@ -9,7 +9,6 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
-	"os/user"
 	"path"
 	"path/filepath"
 	"runtime"
@@ -24,6 +23,7 @@ import (
 	"github.com/go-gitea/gitea/modules/bindata"
 	"github.com/go-gitea/gitea/modules/log"
 	// "github.com/go-gitea/gitea/modules/ssh"
+	"github.com/go-gitea/gitea/modules/user"
 )
 
 type Scheme string
@@ -285,14 +285,13 @@ func NewConfigContext() {
 	}[Cfg.Section("time").Key("FORMAT").MustString("RFC1123")]
 
 	RunUser = Cfg.Section("").Key("RUN_USER").String()
-	curUser, err := user.Current()
+	curUser := user.CurrentUsername()
 	// Does not check run user when the install lock is off.
-	if InstallLock && (err != nil || RunUser != curUser.Username) {
-		curUsername := "unknown"
-		if curUser != nil {
-			curUsername = curUser.Username
+	if InstallLock && RunUser != curUser {
+		if len(curUser) == 0 {
+			curUser = "unknown"
 		}
-		log.Fatal(4, "Expect user(%s) but current user is: %s", RunUser, curUsername)
+		log.Fatal(4, "Expect user(%s) but current user is: %s.", RunUser, curUser)
 	}
 
 	// Determine and create root git repository path.
