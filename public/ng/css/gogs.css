@@ -1089,18 +1089,13 @@ The register and sign-in page style
   position: relative;
 }
 #repo-clone {
-  position: relative;
-  top: 15px;
-}
-#repo-clone .btn {
-  line-height: 18px;
+  display: inline-flex;
 }
 #repo-clone-url {
   width: 190px;
   border-left: none;
   border-right: none;
   cursor: default;
-  line-height: 18px;
 }
 #repo-clone-help {
   clear: both;
