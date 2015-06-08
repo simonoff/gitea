@@ -1766,6 +1766,14 @@ The register and sign-in page style
 #release #release-new-form {
   padding-top: 15px;
 }
+@media screen and (max-width: 600px) {
+  #repo-header-download {
+    display: none;
+  }
+  #repo-header-download-zip {
+    display: none;
+  }
+}
 #admin-wrapper,
 #setting-wrapper {
   padding-bottom: 100px;
