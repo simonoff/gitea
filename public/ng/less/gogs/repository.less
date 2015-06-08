@@ -72,10 +72,10 @@
 }
 #repo-header-download-drop {
     line-height: 24px;
-    width: 460px;
+    width: 240px;
     top: 50px;
-    left: -390px;
-    padding: 20px;
+    left: -175px;
+    padding: 10px;
     box-sizing: border-box;
     z-index: 1;
     .btn>i {
@@ -97,10 +97,18 @@
     padding: 18px;
     position: relative;
 }
+#repo-clone {
+    position: relative;
+    top: 15px;
+    > * {
+        line-height: 18px;
+    }
+}
+
 #repo-clone-url {
-    border-right: none;
     width: 190px;
     border-left: none;
+    border-right: none;
     cursor: default;
 }
 #repo-clone-help {
@@ -843,5 +851,14 @@
     }
     #release-new-form {
         padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #repo-header-download {
+        display: none;
+    }
+    #repo-header-download-zip {
+        display: none;
     }
 }
