@@ -548,6 +548,7 @@ func newWebhookService() {
 	sec := Cfg.Section("webhook")
 	td, err := time.ParseDuration(sec.Key("TASK_INTERVAL").String())
 	if err != nil {
+		log.Warn("invalid TASK_INTERVAL value %s %s", sec.Key("TASK_INTERVAL").String(), err.Error())
 		td, _ = time.ParseDuration("60s")
 	}
 	Webhook.TaskInterval = int(td.Seconds())
