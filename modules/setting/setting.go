@@ -543,7 +543,11 @@ func newNotifyMailService() {
 
 func newWebhookService() {
 	sec := Cfg.Section("webhook")
-	Webhook.TaskInterval = sec.Key("TASK_INTERVAL").MustInt(1)
+	td, err := time.ParseDuration(sec.Key("TASK_INTERVAL").String())
+	if err != nil {
+		td, _ = time.ParseDuration("60s")
+	}
+	Webhook.TaskInterval = int(td.Seconds())
 	Webhook.DeliverTimeout = sec.Key("DELIVER_TIMEOUT").MustInt(5)
 	Webhook.SkipTLSVerify = sec.Key("SKIP_TLS_VERIFY").MustBool()
 }
