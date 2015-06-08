@@ -43,21 +43,12 @@
             i {
                 margin-right: 6px;
             }
-            .num {
-                margin-left: 6px;
-            }
         }
     }
 }
 #repo-header-download-btn {
     >.btn>i {
         margin-right: 0 !important;
-    }
-    &:hover {
-        &:after, .btn {
-            background-color: @btnHoverBlackColor;
-            color: #FFF;
-        }
     }
     &:after {
         background-color: @btnBlackColor;
@@ -73,8 +64,8 @@
 #repo-header-download-drop {
     line-height: 24px;
     width: 240px;
-    top: 50px;
-    left: -175px;
+    top: 40px;
+    left: -40px;
     padding: 10px;
     box-sizing: border-box;
     z-index: 1;
@@ -97,11 +88,16 @@
     padding: 18px;
     position: relative;
 }
+
+#repo-header-download-zip {
+	padding-bottom: 20px;
+}
+
 #repo-clone {
     position: relative;
     top: 15px;
     > * {
-        line-height: 18px;
+        line-height: 20px;
     }
 }
 
@@ -141,6 +137,20 @@
     }
     i {
         margin-right: 6px;
+    }
+    .btns {
+        a.sidebar-btns {
+            padding-left: 0;
+            &:hover {
+                background-color: #fafafa;
+            }
+        }
+        .btn {
+            width: 200px;
+        }
+        .num {
+			margin-left: 6px;
+		}
     }
 }
 #repo-sidebar-mini {
