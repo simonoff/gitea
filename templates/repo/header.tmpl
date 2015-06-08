@@ -10,7 +10,7 @@
             {{if .IsFork}}<span class="fork-flag">forked from <a href="{{.ForkRepo.RepoLink}}">{{SubStr .ForkRepo.RepoLink 1 -1}}</a></span>{{end}}
         </h1>
         <ul id="repo-header-meta" class="right menu menu-line">
-            <li id="repo-header-download" class="drop">
+            <li id="repo-header-download">
 				<div id="repo-clone" class="clear">
 					{{if not $.DisableSSH}}
 					<button class="btn btn-blue left btn-left-radius" id="repo-clone-ssh" data-link="{{$.CloneLink.SSH}}">SSH</button>
@@ -21,6 +21,21 @@
 						<i class="octicon octicon-clippy"></i>
 					</button>
 				</div>
+            </li>
+            <li id="repo-header-download-zip" class="drop">
+                <a id="repo-header-download-btn" href="#">
+                    <button class="btn btn-black text-bold btn-radius">
+                        <i class="octicon octicon-cloud-download"></i>
+                    </button>
+                </a>
+                <div id="repo-header-download-drop" class="drop-down">
+                    <div id="repo-download" class="clear">
+                        <div class="text-center" id="repo-clone-zip">
+                            <a class="btn btn-green btn-radius" href="{{$.RepoLink}}/archive/{{EscapePound $.BranchName}}.zip"><i class="octicon octicon-file-zip"></i>ZIP</a>
+                            <a class="btn btn-green btn-radius" href="{{$.RepoLink}}/archive/{{EscapePound $.BranchName}}.tar.gz"><i class="octicon octicon-file-zip"></i>TAR.GZ</a>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li id="repo-header-watch">
                 <a id="repo-header-watch-btn" href="{{$.RepoLink}}/action/{{if $.IsWatchingRepo}}un{{end}}watch">

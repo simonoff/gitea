@@ -1062,10 +1062,10 @@ The register and sign-in page style
 }
 #repo-header-download-drop {
   line-height: 24px;
-  width: 460px;
+  width: 240px;
   top: 50px;
-  left: -390px;
-  padding: 20px;
+  left: -175px;
+  padding: 10px;
   box-sizing: border-box;
   z-index: 1;
 }
@@ -1090,17 +1090,17 @@ The register and sign-in page style
 }
 #repo-clone {
   position: relative;
-  top: 14px;
+  top: 15px;
 }
 #repo-clone .btn {
-  line-height: 20px;
+  line-height: 18px;
 }
 #repo-clone-url {
   width: 190px;
   border-left: none;
+  border-right: none;
   cursor: default;
-  line-height: 20px;
-  border-radius: .25em;
+  line-height: 18px;
 }
 #repo-clone-help {
   clear: both;
