@@ -1039,16 +1039,8 @@ The register and sign-in page style
 #repo-header-meta a > .btn i {
   margin-right: 6px;
 }
-#repo-header-meta a > .btn .num {
-  margin-left: 6px;
-}
 #repo-header-download-btn > .btn > i {
   margin-right: 0 !important;
-}
-#repo-header-download-btn:hover:after,
-#repo-header-download-btn:hover .btn {
-  background-color: #383838;
-  color: #FFF;
 }
 #repo-header-download-btn:after {
   background-color: #444444;
@@ -1063,8 +1055,8 @@ The register and sign-in page style
 #repo-header-download-drop {
   line-height: 24px;
   width: 240px;
-  top: 50px;
-  left: -175px;
+  top: 40px;
+  left: -40px;
   padding: 10px;
   box-sizing: border-box;
   z-index: 1;
@@ -1088,12 +1080,15 @@ The register and sign-in page style
   padding: 18px;
   position: relative;
 }
+#repo-header-download-zip {
+  padding-bottom: 20px;
+}
 #repo-clone {
   position: relative;
   top: 15px;
 }
 #repo-clone > * {
-  line-height: 18px;
+  line-height: 20px;
 }
 #repo-clone-url {
   width: 190px;
@@ -1130,6 +1125,18 @@ The register and sign-in page style
 }
 #repo-sidebar-nav i {
   margin-right: 6px;
+}
+#repo-sidebar-nav .btns a.sidebar-btns {
+  padding-left: 0;
+}
+#repo-sidebar-nav .btns a.sidebar-btns:hover {
+  background-color: #fafafa;
+}
+#repo-sidebar-nav .btns .btn {
+  width: 200px;
+}
+#repo-sidebar-nav .btns .num {
+  margin-left: 6px;
 }
 #repo-sidebar-mini {
   margin-top: 6px;
