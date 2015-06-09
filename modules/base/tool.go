@@ -171,7 +171,7 @@ func CreateTimeLimitCode(data string, minutes int, startInf interface{}) string 
 
 // AvatarLink returns avatar link by given e-mail.
 func AvatarLink(email string) string {
-	if setting.DisableGravatar || setting.OfflineMode {
+	if setting.DisableGravatar {
 		return setting.AppSubUrl + "/img/avatar_default.jpg"
 	}
 
