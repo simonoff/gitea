@@ -13,11 +13,11 @@ Gitea 的目标是打造一个最简单、最快速和最轻松的方式搭建�
 
 ## 项目概览
 
-- 有关项目设计、已知问题和变更日志，请通过 [使用手册](http://gogs.io/docs/intro/) 查看。
+- 有关项目设计、已知问题和变更日志，请通过 [使用手册](http://gitea.io/docs/intro/) 查看。
 - 您可以到 [Trello Board](https://trello.com/b/uxAoeLUl/gogs-go-git-service) 跟随开发团队的脚步。
 - 想要先睹为快？通过 [在线体验](https://try.gogs.io/unknwon/gogs) 或查看 **安装部署 -> 二进制安装** 小节。
-- 使用过程中遇到问题？尝试从 [故障排查](http://gogs.io/docs/intro/troubleshooting.md) 页面获取帮助。
-- 希望帮助多国语言界面的翻译吗？请立即访问 [详情页面](http://gogs.io/docs/features/i18n.html)！
+- 使用过程中遇到问题？尝试从 [故障排查](http://gitea.io/docs/intro/troubleshooting.md) 页面获取帮助。
+- 希望帮助多国语言界面的翻译吗？请立即访问 [详情页面](http://gitea.io/docs/features/i18n.html)！
 
 ## 功能特性
 
@@ -48,13 +48,13 @@ Gitea 的目标是打造一个最简单、最快速和最轻松的方式搭建�
 
 ## 安装部署
 
-在安装 Gitea 之前，您需要先安装 [基本环境](http://gogs.io/docs/installation/)。
+在安装 Gitea 之前，您需要先安装 [基本环境](http://gitea.io/docs/installation/)。
 
 然后，您可以通过以下 5 种方式来安装 Gogs：
 
-- [二进制安装](http://gogs.io/docs/installation/install_from_binary.md)
-- [源码安装](http://gogs.io/docs/installation/install_from_source.md)
-- [包管理安装](http://gogs.io/docs/installation/install_from_packages.md)
+- [二进制安装](http://gitea.io/docs/installation/install_from_binary.md)
+- [源码安装](http://gitea.io/docs/installation/install_from_source.md)
+- [包管理安装](http://gitea.io/docs/installation/install_from_packages.md)
 - [采用 Docker 部署](https://github.com/go-gitea/gitea/tree/master/docker)
 - [通过 Vagrant 安装](https://github.com/geerlingguy/ansible-vagrant-examples/tree/master/gogs)
 
@@ -69,7 +69,7 @@ Gitea 的目标是打造一个最简单、最快速和最轻松的方式搭建�
 
 ## 贡献成员
 
-- 本项目的 [开发团队](http://gogs.io/team)。
+- 本项目基于的Gogs的 [开发团队](http://gogs.io/team)。
 - 您可以通过查看 [贡献者页面](https://github.com/go-gitea/gitea/graphs/contributors) 获取完整的贡献者列表。
 - 您可以通过查看 [TRANSLATORS](conf/locale/TRANSLATORS) 文件获取完整的翻译人员列表。
 

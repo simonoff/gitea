@@ -13,7 +13,7 @@ Gitea (Git service with a cup of tea) is a self-hosted Git service.
 
 - Due to testing purpose, data of [try.gogs.io](https://try.gogs.io) has been reset in **Jan 28, 2015** and will reset multiple times after. Please do **NOT** put your important data on the site.
 - The demo site [try.gogs.io](https://try.gogs.io) is running under `develop` branch.
-- You **MUST** read [CONTRIBUTING.md](CONTRIBUTING.md) before you start filing an issue or making a Pull Request, and **MUST** discuss with us on [Gitter](https://gitter.im/gogits/gogs) for UI changes and feature Pull Requests, otherwise it's high possibilities that we are not going to merge it.
+- You **MUST** read [CONTRIBUTING.md](CONTRIBUTING.md) before you start filing an issue or making a Pull Request, and **MUST** discuss with us on [Gitter](https://gitter.im/go-gitea/gitea) for UI changes and feature Pull Requests, otherwise it's high possibilities that we are not going to merge it.
 - If you think there are vulnerabilities in the project, please talk privately to **lunny@gitea.io**. Thanks!
 
 #### Other language version
@@ -26,11 +26,11 @@ The goal of this project is to make the easiest, fastest, and most painless way 
 
 ## Overview
 
-- Please see the [Documentation](http://gogs.io/docs/intro/) for project design, known issues, and change log.
+- Please see the [Documentation](http://gitea.io/docs/intro/) for project design, known issues, and change log.
 - See the [Trello Board](https://trello.com/b/uxAoeLUl/gogs-go-git-service) to follow the develop team.
 - Want to try it before doing anything else? Do it [online](https://try.gogs.io/unknwon/gogs) or go down to the **Installation -> Install from binary** section!
-- Having trouble? Get help with [Troubleshooting](http://gogs.io/docs/intro/troubleshooting.md).
-- Want to help with localization? Check out the [guide](http://gogs.io/docs/features/i18n.html)!
+- Having trouble? Get help with [Troubleshooting](http://gitea.io/docs/intro/troubleshooting.md).
+- Want to help with localization? Check out the [guide](http://gitea.io/docs/features/i18n.html)!
 
 ## Features
 
@@ -61,13 +61,13 @@ The goal of this project is to make the easiest, fastest, and most painless way 
 
 ## Installation
 
-Make sure you install the [prerequisites](http://gogs.io/docs/installation/) first.
+Make sure you install the [prerequisites](http://gitea.io/docs/installation/) first.
 
 There are 5 ways to install Gogs:
 
-- [Install from binary](http://gogs.io/docs/installation/install_from_binary.md)
-- [Install from source](http://gogs.io/docs/installation/install_from_source.md)
-- [Install from packages](http://gogs.io/docs/installation/install_from_packages.md)
+- [Install from binary](http://gitea.io/docs/installation/install_from_binary.md)
+- [Install from source](http://gieta.io/docs/installation/install_from_source.md)
+- [Install from packages](http://gitea.io/docs/installation/install_from_packages.md)
 - [Ship with Docker](https://github.com/go-gitea/gitea/tree/master/docker)
 - [Install with Vagrant](https://github.com/geerlingguy/ansible-vagrant-examples/tree/master/gogs)
 
@@ -82,7 +82,7 @@ There are 5 ways to install Gogs:
 
 ## Contributors
 
-- The [core team](http://gogs.io/team) of this project.
+- The [gogs team](http://gogs.io/team) of Gogs project.
 - See [contributors page](https://github.com/go-gitea/gitea/graphs/contributors) for full list of contributors.
 - See [TRANSLATORS](conf/locale/TRANSLATORS) for full list of translators.
 
