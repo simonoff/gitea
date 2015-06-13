@@ -190,14 +190,15 @@ func GetIssueById(id int64) (*Issue, error) {
 }
 
 // GetIssues returns a list of issues by given conditions.
-func GetIssues(uid, rid, pid, mid int64, page int, isClosed bool, labelIds, sortType string) ([]Issue, error) {
-	sess := x.Limit(20, (page-1)*20)
+func GetIssues(uid, rid, pid, mid int64, page, limit int, isClosed bool, labelIds, sortType string, isPull bool) ([]Issue, error) {
+	sess := x.Limit(limit, (page-1)*limit)
 
 	if rid > 0 {
 		sess.Where("repo_id=?", rid).And("is_closed=?", isClosed)
 	} else {
 		sess.Where("is_closed=?", isClosed)
 	}
+	sess.And("is_pull=?", isPull)
 
 	if uid > 0 {
 		sess.And("assignee_id=?", uid)

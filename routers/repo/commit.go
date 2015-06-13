@@ -7,6 +7,7 @@ package repo
 import (
 	"container/list"
 	"path"
+	"strings"
 
 	"github.com/Unknwon/com"
 
@@ -261,12 +262,45 @@ func Diff(ctx *middleware.Context) {
 }
 
 func CompareDiff(ctx *middleware.Context) {
+	all := ctx.Params("*")
+	userName := ctx.Repo.Owner.Name
+	if len(all) == 0 {
+		if ctx.Repo.Repository.IsFork {
+			srcRepo, err := models.GetRepositoryById(ctx.Repo.Repository.ForkId)
+			if err != nil {
+				ctx.Handle(500, "GetRepositoryById ForkId", err)
+				return
+			}
+			lk, _ := srcRepo.RepoLink()
+			ctx.Redirect("/"+lk+"/compare/master..."+userName+":master")
+			return
+		}
+
+		ctx.Redirect("/"+ctx.Repo.RepoLink+"/compare/master..."+userName+":master")
+		return
+	}
+
+	s := strings.Split(all, "...")
+	if len(s) != 2 {
+		ctx.Redirect(ctx.Repo.RepoLink+"/compare")
+		return
+	}
+
+	beforeCommitId, afterCommitId := s[0], s[1]
+
+	if strings.Contains(beforeCommitId, ":") || strings.Contains(afterCommitId, ":") {
+		ForkDiff(ctx, beforeCommitId, afterCommitId)
+	} else {
+		// TODO: compare branch or tag
+		CompareCommits(ctx, beforeCommitId, afterCommitId)
+	}
+}
+
+func CompareCommits(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 	ctx.Data["IsRepoToolbarCommits"] = true
 	ctx.Data["IsDiffCompare"] = true
 	userName := ctx.Repo.Owner.Name
 	repoName := ctx.Repo.Repository.Name
-	beforeCommitId := ctx.Params(":before")
-	afterCommitId := ctx.Params(":after")
 
 	commit, err := ctx.Repo.GitRepo.GetCommit(afterCommitId)
 	if err != nil {

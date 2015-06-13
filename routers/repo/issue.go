@@ -41,6 +41,10 @@ var (
 )
 
 func Issues(ctx *middleware.Context) {
+	issues(ctx, ISSUES, false)
+}
+
+func issues(ctx *middleware.Context, tmpl base.TplName, isPull bool) {
 	ctx.Data["Title"] = "Issues"
 	ctx.Data["IsRepoToolbarIssues"] = true
 	ctx.Data["IsRepoToolbarIssuesList"] = true
@@ -97,8 +101,8 @@ func Issues(ctx *middleware.Context) {
 	page, _ := com.StrTo(ctx.Query("page")).Int()
 
 	// Get issues.
-	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.Id, posterId, mid, page,
-		isShowClosed, selectLabels, ctx.Query("sortType"))
+	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.Id, posterId, mid, page, 20,
+		isShowClosed, selectLabels, ctx.Query("sortType"), isPull)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetIssues): %v", err)
 		return
@@ -152,7 +156,7 @@ func Issues(ctx *middleware.Context) {
 	} else {
 		ctx.Data["ShowCount"] = issueStats.OpenCount
 	}
-	ctx.HTML(200, ISSUES)
+	ctx.HTML(200, tmpl)
 }
 
 func CreateIssue(ctx *middleware.Context) {
@@ -1143,10 +1147,6 @@ func IssueGetAttachment(ctx *middleware.Context) {
 // todo : move to Issue() function
 func Issues2(ctx *middleware.Context) {
 	ctx.HTML(200, "repo/issue2/list")
-}
-
-func PullRequest2(ctx *middleware.Context) {
-	ctx.HTML(200, "repo/pr2/list")
 }
 
 func Labels2(ctx *middleware.Context) {

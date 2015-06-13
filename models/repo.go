@@ -161,6 +161,7 @@ type Repository struct {
 	IsFork   bool `xorm:"NOT NULL DEFAULT false"`
 	ForkId   int64
 	ForkRepo *Repository `xorm:"-"`
+	Forks []*Repository `xorm:"-"`
 
 	Created time.Time `xorm:"CREATED"`
 	Updated time.Time `xorm:"UPDATED"`
@@ -189,6 +190,17 @@ func (repo *Repository) GetForkRepo() (err error) {
 
 	repo.ForkRepo, err = GetRepositoryById(repo.ForkId)
 	return err
+}
+
+func (repo *Repository) GetForks() (err error) {
+	repo.Forks = make([]*Repository, 0)
+	err = x.Where("is_fork = ?", true).Iterate(&Repository{ForkId: repo.Id}, func(i int, bean interface{}) error {
+		fork := bean.(*Repository)
+		fork.GetOwner()
+		repo.Forks = append(repo.Forks, fork)
+		return nil
+		})
+	return
 }
 
 func (repo *Repository) RepoPath() (string, error) {

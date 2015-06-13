@@ -10,10 +10,15 @@ import (
 )
 
 const (
-	PULLS base.TplName = "repo/pulls"
+	PULLS base.TplName = "repo/pull/list"
+	PULL base.TplName = "repo/pull/pull"
 )
 
 func Pulls(ctx *middleware.Context) {
+	issues(ctx, PULLS, true)
+}
+
+func Pull(ctx *middleware.Context) {
 	ctx.Data["IsRepoToolbarPulls"] = true
-	ctx.HTML(200, PULLS)
+	ctx.HTML(200, PULL)
 }

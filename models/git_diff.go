@@ -95,7 +95,7 @@ func ParsePatch(pid int64, maxlines int, cmd *exec.Cmd, reader io.Reader) (*Diff
 	var i int
 	for scanner.Scan() {
 		line := scanner.Text()
-		// fmt.Println(i, line)
+		//fmt.Println(i, line)
 		if strings.HasPrefix(line, "+++ ") || strings.HasPrefix(line, "--- ") {
 			continue
 		}
@@ -260,6 +260,62 @@ func GetDiffRange(repoPath, beforeCommitId string, afterCommitId string, maxline
 		wr.Close()
 	}()
 	defer rd.Close()
+
+	desc := fmt.Sprintf("GetDiffRange(%s)", repoPath)
+	pid := process.Add(desc, cmd)
+	go func() {
+		// In case process became zombie.
+		select {
+		case <-time.After(5 * time.Minute):
+			if errKill := process.Kill(pid); errKill != nil {
+				log.Error(4, "git_diff.ParsePatch(Kill): %v", err)
+			}
+			<-done
+			// return "", ErrExecTimeout.Error(), ErrExecTimeout
+		case err = <-done:
+			process.Remove(pid)
+		}
+	}()
+
+	return ParsePatch(pid, maxlines, cmd, rd)
+}
+
+func GetDiffForkedRange(repoPath, forkedRepoPath, beforeBranch string, afterBranch string, maxlines int) (*Diff, error) {
+	if !git.IsRemoteExist(forkedRepoPath, "upstream") {
+		_, _, err := com.ExecCmdDir(forkedRepoPath, "git", "remote", "add", "upstream", repoPath)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if !git.IsRemoteBranchExist(forkedRepoPath, "upstream", beforeBranch) {
+		_, _, err := com.ExecCmdDir(forkedRepoPath, "git", "remote", "update")
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	beforeBranch = "remotes/upstream/"+beforeBranch
+
+	rd, wr := io.Pipe()
+	var cmd *exec.Cmd
+	// if "after" commit given
+
+	cmd = exec.Command("git", "diff", beforeBranch, afterBranch)
+	cmd.Dir = forkedRepoPath
+	cmd.Stdout = wr
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+
+	done := make(chan error)
+	go func() {
+		cmd.Start()
+		done <- cmd.Wait()
+		wr.Close()
+	}()
+	defer rd.Close()
+
+	var err error
 
 	desc := fmt.Sprintf("GetDiffRange(%s)", repoPath)
 	pid := process.Add(desc, cmd)

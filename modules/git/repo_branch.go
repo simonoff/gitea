@@ -11,9 +11,39 @@ import (
 	"github.com/Unknwon/com"
 )
 
+func IsRemoteExist(repoPath, remoteName string) bool {
+	stdout, _, err := com.ExecCmdDir(repoPath, "git", "remote")
+	if err != nil {
+		return false
+	}
+
+	infos := strings.Split(stdout, "\n")
+	for _, name := range infos {
+		if name == remoteName {
+			return true
+		}
+	}
+	return false
+}
+
+func IsRemoteBranchExist(repoPath, originName, branchName string) bool {
+	_, _, err := com.ExecCmdDir(repoPath, "git", "show-ref", "--verify", "refs/remotes/"+originName+"/"+branchName)
+	return err == nil
+}
+
 func IsBranchExist(repoPath, branchName string) bool {
 	_, _, err := com.ExecCmdDir(repoPath, "git", "show-ref", "--verify", "refs/heads/"+branchName)
 	return err == nil
+}
+
+func (repo *Repository) GetRemotes() ([]string, error) {
+	stdout, stderr, err := com.ExecCmdDir(repo.Path, "git", "remote")
+	if err != nil {
+		return nil, errors.New(stderr)
+	}
+
+	infos := strings.Split(stdout, "\n")
+	return infos, nil
 }
 
 func (repo *Repository) IsBranchExist(branchName string) bool {

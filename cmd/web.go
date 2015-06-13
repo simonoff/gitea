@@ -445,7 +445,7 @@ func runWeb(ctx *cli.Context) {
 		m.Get("/branches", repo.Branches)
 		m.Get("/archive/*", repo.Download)
 		m.Get("/issues2/", repo.Issues2)
-		m.Get("/pulls2/", repo.PullRequest2)
+		m.Get("/pull/:id", repo.Pull)
 		m.Get("/labels2/", repo.Labels2)
 		m.Get("/milestone2/", repo.Milestones2)
 
@@ -456,7 +456,8 @@ func runWeb(ctx *cli.Context) {
 			m.Get("/commit/*", repo.Diff)
 		}, middleware.RepoRef())
 
-		m.Get("/compare/:before([a-z0-9]+)...:after([a-z0-9]+)", repo.CompareDiff)
+		m.Get("/compare", repo.CompareDiff)
+		m.Get("/compare/*", repo.CompareDiff)
 	}, ignSignIn, middleware.RepoAssignment(true))
 
 	m.Group("/:username", func() {
