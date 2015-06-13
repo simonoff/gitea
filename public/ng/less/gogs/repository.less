@@ -43,21 +43,12 @@
             i {
                 margin-right: 6px;
             }
-            .num {
-                margin-left: 6px;
-            }
         }
     }
 }
 #repo-header-download-btn {
     >.btn>i {
         margin-right: 0 !important;
-    }
-    &:hover {
-        &:after, .btn {
-            background-color: @btnHoverBlackColor;
-            color: #FFF;
-        }
     }
     &:after {
         background-color: @btnBlackColor;
@@ -72,10 +63,10 @@
 }
 #repo-header-download-drop {
     line-height: 24px;
-    width: 460px;
-    top: 50px;
-    left: -390px;
-    padding: 20px;
+    width: 240px;
+    top: 40px;
+    left: -40px;
+    padding: 10px;
     box-sizing: border-box;
     z-index: 1;
     .btn>i {
@@ -97,10 +88,23 @@
     padding: 18px;
     position: relative;
 }
+
+#repo-header-download-zip {
+	padding-bottom: 20px;
+}
+
+#repo-clone {
+    position: relative;
+    top: 15px;
+    > * {
+        line-height: 20px;
+    }
+}
+
 #repo-clone-url {
-    border-right: none;
     width: 190px;
     border-left: none;
+    border-right: none;
     cursor: default;
 }
 #repo-clone-help {
@@ -133,6 +137,20 @@
     }
     i {
         margin-right: 6px;
+    }
+    .btns {
+        a.sidebar-btns {
+            padding-left: 0;
+            &:hover {
+                background-color: #fafafa;
+            }
+        }
+        .btn {
+            width: 200px;
+        }
+        .num {
+			margin-left: 6px;
+		}
     }
 }
 #repo-sidebar-mini {
@@ -482,16 +500,51 @@
             display: block;
         }
     }
-    .lines-code > pre {
-        border: none;
-        border-left: 1px solid #ddd;
-        > ol.linenums > li {
-            padding: 0 10px;
-            line-height: 20px;
-            &.active {
-                background: #ffffdd;
+    .lines-code {
+        > pre {
+            border: none;
+            border-left: 1px solid #ddd;
+            border-radius: 0;
+            padding-left: 15px;
+            > ol.linenums > li {
+                padding: 0 10px;
+                line-height: 20px;
+                &.active {
+                    background: #ffffdd;
+                }
             }
         }
+        > b {
+            position: relative;
+            float: left;
+            width: 16px;
+            height: 16px;
+            margin: 2px -8px 0px -8px;
+            line-height: 16px;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            background-color: #428bca;
+            border-radius: 2px;
+            opacity: 0;
+            font-size: 16px;
+            &.ishovered {
+                opacity: 1;
+            }
+            &:hover {
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
+                font-size: 20px;
+                margin: 1px -10px 0px -9px;
+            }
+        }
+        button.answer {
+            margin: 0 0 10px 70px;
+        }
+    }
+    .commit-comment {
+        margin: 10px;
     }
 }
 .repo-setting-zone {
@@ -691,6 +744,21 @@
                         border-color: #F0DB88 !important;   
                     }
                 }
+                &.add-comment {
+                    td {
+                        padding: 10px;
+                    }
+                }
+                &.add-comment:hover, &.comment:hover {
+                    td, pre {
+                        background-color: #FFFFFF !important;
+                    }
+                }
+                &.comment {
+                    .markdown p {
+                        margin: 0;
+                    }
+                }
             }
         }
     }
@@ -794,5 +862,14 @@
     }
     #release-new-form {
         padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #repo-header-download {
+        display: none;
+    }
+    #repo-header-download-zip {
+        display: none;
     }
 }

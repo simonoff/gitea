@@ -23,6 +23,7 @@ import (
 	"github.com/go-gitea/gitea/modules/bindata"
 	"github.com/go-gitea/gitea/modules/log"
 	// "github.com/go-gitea/gitea/modules/ssh"
+	"github.com/go-gitea/gitea/modules/user"
 )
 
 type Scheme string
@@ -284,13 +285,13 @@ func NewConfigContext() {
 	}[Cfg.Section("time").Key("FORMAT").MustString("RFC1123")]
 
 	RunUser = Cfg.Section("").Key("RUN_USER").String()
-	curUser := os.Getenv("USER")
-	if len(curUser) == 0 {
-		curUser = os.Getenv("USERNAME")
-	}
+	curUser := user.CurrentUsername()
 	// Does not check run user when the install lock is off.
 	if InstallLock && RunUser != curUser {
-		log.Fatal(4, "Expect user(%s) but current user is: %s", RunUser, curUser)
+		if len(curUser) == 0 {
+			curUser = "unknown"
+		}
+		log.Fatal(4, "Expect user(%s) but current user is: %s.", RunUser, curUser)
 	}
 
 	// Determine and create root git repository path.
@@ -545,7 +546,12 @@ func newNotifyMailService() {
 
 func newWebhookService() {
 	sec := Cfg.Section("webhook")
-	Webhook.TaskInterval = sec.Key("TASK_INTERVAL").MustInt(1)
+	td, err := time.ParseDuration(sec.Key("TASK_INTERVAL").String())
+	if err != nil {
+		log.Warn("invalid TASK_INTERVAL value %s %s", sec.Key("TASK_INTERVAL").String(), err.Error())
+		td, _ = time.ParseDuration("60s")
+	}
+	Webhook.TaskInterval = int(td.Seconds())
 	Webhook.DeliverTimeout = sec.Key("DELIVER_TIMEOUT").MustInt(5)
 	Webhook.SkipTLSVerify = sec.Key("SKIP_TLS_VERIFY").MustBool()
 }

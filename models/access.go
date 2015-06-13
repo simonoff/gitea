@@ -145,6 +145,23 @@ func (repo *Repository) refreshCollaboratorAccesses(e Engine, accessMap map[int6
 	for _, c := range collaborators {
 		accessMap[c.Id] = ACCESS_MODE_WRITE
 	}
+	if repo.Owner.IsOrganization() {
+		if err = repo.Owner.GetTeams(); err != nil {
+			return fmt.Errorf("GetTeams: %v", err)
+		}
+		for _, t := range repo.Owner.Teams {
+			if err = t.GetMembers(); err != nil {
+				return fmt.Errorf("GetMembers: %v", err)
+			}
+			for _, m := range t.Members {
+				if t.IsOwnerTeam() || t.Authorize >= ACCESS_MODE_ADMIN {
+					accessMap[m.Id] = ACCESS_MODE_ADMIN
+				} else {
+					accessMap[m.Id] = ACCESS_MODE_WRITE
+				}
+			}
+		}
+	}
 	return nil
 }
 

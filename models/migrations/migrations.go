@@ -56,6 +56,7 @@ var migrations = []Migration{
 	NewMigration("refactor access table to use id's", accessRefactor),         // V2 -> V3:v0.5.13
 	NewMigration("generate team-repo from team", teamToTeamRepo),              // V3 -> V4:v0.5.13
 	NewMigration("fix locale file load panic", fixLocaleFileLoadPanic),        // V4 -> V5:v0.6.0
+	NewMigration("change comment table", prepareToCommitComments),             // V5 -> V6
 }
 
 // Migrate database to current version
@@ -387,5 +388,27 @@ func fixLocaleFileLoadPanic(_ *xorm.Engine) error {
 	}
 
 	setting.Langs = strings.Split(strings.Replace(strings.Join(setting.Langs, ","), "fr-CA", "fr-FR", 1), ",")
+	return nil
+}
+
+func prepareToCommitComments(x *xorm.Engine) error {
+
+	sql := `ALTER TABLE comment MODIFY commit_id VARCHAR(50) NULL DEFAULT NULL`
+	_, err := x.Exec(sql)
+	if err != nil {
+		return err
+	}
+
+	sql = `ALTER TABLE comment MODIFY line VARCHAR(50) NULL DEFAULT NULL;`
+	_, err = x.Exec(sql)
+	if err != nil {
+		return err
+	}
+
+	sql = `UPDATE comment SET commit_id = '', line = '' WHERE commit_id = '0' AND line = '0'`
+	_, err = x.Exec(sql)
+	if err != nil {
+		return err
+	}
 	return nil
 }

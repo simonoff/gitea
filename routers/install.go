@@ -12,10 +12,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"gopkg.in/ini.v1"
+
 	"github.com/Unknwon/com"
 	"github.com/Unknwon/macaron"
 	"github.com/go-xorm/xorm"
-	"gopkg.in/ini.v1"
 
 	"github.com/go-gitea/gitea/models"
 	"github.com/go-gitea/gitea/modules/auth"
@@ -26,6 +27,7 @@ import (
 	"github.com/go-gitea/gitea/modules/middleware"
 	"github.com/go-gitea/gitea/modules/setting"
 	"github.com/go-gitea/gitea/modules/social"
+	"github.com/go-gitea/gitea/modules/user"
 )
 
 const (
@@ -100,10 +102,7 @@ func Install(ctx *middleware.Context) {
 	// Note(unknwon): it's hard for Windows users change a running user,
 	// 	so just use current one if config says default.
 	if setting.IsWindows && setting.RunUser == "git" {
-		form.RunUser = os.Getenv("USER")
-		if len(form.RunUser) == 0 {
-			form.RunUser = os.Getenv("USERNAME")
-		}
+		form.RunUser = user.CurrentUsername()
 	} else {
 		form.RunUser = setting.RunUser
 	}
@@ -165,10 +164,7 @@ func InstallPost(ctx *middleware.Context, form auth.InstallForm) {
 	}
 
 	// Check run user.
-	curUser := os.Getenv("USER")
-	if len(curUser) == 0 {
-		curUser = os.Getenv("USERNAME")
-	}
+	curUser := user.CurrentUsername()
 	if form.RunUser != curUser {
 		ctx.Data["Err_RunUser"] = true
 		ctx.RenderWithErr(ctx.Tr("install.run_user_not_match", form.RunUser, curUser), INSTALL, &form)
