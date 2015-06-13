@@ -101,7 +101,7 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 	ctx.Data["RepoLink"] = repoLink
 	ctx.Data["AfterBranches"] = afterBranches
 	ctx.Data["AfterBranch"] = afterBranch
-	ctx.Data["AfterRepoPath"] = afterRepoPath
+	ctx.Data["AfterRepoPath"] = afterRepo.Owner.Name + "/" + afterRepo.Name
 	ctx.Data["Username"] = userName
 	ctx.Data["Reponame"] = repoName
 

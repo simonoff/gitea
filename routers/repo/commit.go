@@ -266,7 +266,7 @@ func CompareDiff(ctx *middleware.Context) {
 	userName := ctx.Repo.Owner.Name
 	if len(all) == 0 {
 		if ctx.Repo.Repository.IsFork {
-			srcRepo, err := models.GetRepositoryById(ctx.Repo.Repository.ForkId)
+			srcRepo, err := models.GetRepositoryById(ctx.Repo.Repository.ForkID)
 			if err != nil {
 				ctx.Handle(500, "GetRepositoryById ForkId", err)
 				return
@@ -302,11 +302,20 @@ func CompareCommits(ctx *middleware.Context, beforeCommitId, afterCommitId strin
 	userName := ctx.Repo.Owner.Name
 	repoName := ctx.Repo.Repository.Name
 
-	commit, err := ctx.Repo.GitRepo.GetCommit(afterCommitId)
+	var commit *git.Commit
+	var err error
+	if len(afterCommitId) != 40 {
+		commit, err = ctx.Repo.GitRepo.GetCommitOfBranch(afterCommitId)
+	} else {
+		commit, err = ctx.Repo.GitRepo.GetCommit(afterCommitId)
+	}
+
 	if err != nil {
 		ctx.Handle(404, "GetCommit", err)
 		return
 	}
+
+	afterCommitId = commit.Id.String()
 
 	diff, err := models.GetDiffRange(models.RepoPath(userName, repoName), beforeCommitId,
 		afterCommitId, setting.Git.MaxGitDiffLines)
@@ -332,6 +341,14 @@ func CompareCommits(ctx *middleware.Context, beforeCommitId, afterCommitId strin
 		}
 		_, isImage := base.IsImageFile(buf)
 		return isImage
+	}
+
+	if len(beforeCommitId) != 40 {
+		beforeCommitId, err = ctx.Repo.GitRepo.GetCommitIdOfBranch(beforeCommitId)
+		if err != nil {
+			ctx.Handle(500, "GetCommitIdOfBranch", err)
+			return
+		}
 	}
 
 	commits, err := commit.CommitsBeforeUntil(beforeCommitId)

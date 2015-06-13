@@ -1,3 +1,4 @@
+
 {{template "ng/base/head" .}}
 {{template "ng/base/header" .}}
 <div id="repo-wrapper">
@@ -6,37 +7,12 @@
         {{if .IsDiffCompare }}
         <div class="panel panel-info panel-radius compare-head-box">
             <div class="panel-header">
-            <select>
-                {{$beforeRepo := .BeforeRepo}}
-                {{range .Forks}}
-                <option{{if eq .Owner.Name $beforeRepo.Owner.Name}} selected{{end}}>{{.Owner.Name}}/{{.Name}}</option>
-                {{end}}
-            </select>
-            <select>
-            {{$beforeBranch := .BeforeBranch}}
-            {{range .BeforeBranches}}
-            <option{{if eq . $beforeBranch}} selected{{end}}>{{.}}</option>
-            {{end}}
-            </select>
-            ...
-            <select>
-                {{$afterRepo := .AfterRepo}}
-                {{range .Forks}}
-                <option{{if eq .Owner.Name $afterRepo.Owner.Name}} selected{{end}}>{{.Owner.Name}}/{{.Name}}</option>
-                {{end}}
-            </select>
-            <select>
-            {{$afterBranch := .AfterBranch}}
-            {{range .AfterBranches}}
-            <option{{if eq . $afterBranch}} selected{{end}}>{{.}}</option>
-            {{end}}
-            </select>
+                <a class="pull-right btn btn-blue btn-header btn-medium btn-radius" rel="nofollow" href="{{.SourcePath}}">{{.i18n.Tr "repo.diff.browse_source"}}</a>
+                <h4><a href="{{$.RepoLink}}/commit/{{.BeforeCommitId}}" class="label label-green">{{ShortSha .BeforeCommitId}}</a> ... <a href="{{$.RepoLink}}/commit/{{.AfterCommitId}}" class="label label-green">{{ShortSha .AfterCommitId}}</a></h4>
             </div>
-            <!--<div class="panel-body compare">
-            {{if .Commits}}
+            <div class="panel-body compare">
                 {{template "repo/commits_table" .}}
-            {{end}}
-            </div>-->
+            </div>
         </div>
         {{else}}
         <div class="panel panel-info panel-radius diff-head-box">

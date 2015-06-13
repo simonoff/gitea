@@ -159,7 +159,7 @@ func SettingsPost(ctx *middleware.Context, form auth.RepoSettingForm) {
 			return
 		}
 
-		if err := models.DeleteRepository(ctx.Repo.Owner.Id, ctx.Repo.Repository.Id, ctx.Repo.Owner.Name); err != nil {
+		if err := models.DeleteRepository(ctx.Repo.Owner.Id, ctx.Repo.Repository.ID, ctx.Repo.Owner.Name); err != nil {
 			ctx.Handle(500, "DeleteRepository", err)
 			return
 		}
@@ -261,7 +261,7 @@ func Webhooks(ctx *middleware.Context) {
 		return
 	}
 
-	ws, err := models.GetWebhooksByRepoId(ctx.Repo.Repository.Id)
+	ws, err := models.GetWebhooksByRepoId(ctx.Repo.Repository.ID)
 	if err != nil {
 		ctx.Handle(500, "GetWebhooksByRepoId", err)
 		return
@@ -561,7 +561,7 @@ func getOrgRepoCtx(ctx *middleware.Context) (*OrgRepoCtx, error) {
 	if _, ok := ctx.Data["RepoLink"]; ok {
 		return &OrgRepoCtx{
 			OrgId:       int64(0),
-			RepoId:      ctx.Repo.Repository.Id,
+			RepoId:      ctx.Repo.Repository.ID,
 			Link:        ctx.Repo.RepoLink,
 			NewTemplate: HOOK_NEW,
 		}, nil

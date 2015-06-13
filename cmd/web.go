@@ -403,6 +403,13 @@ func runWeb(ctx *cli.Context) {
 				m.Post("/:name", repo.GitHooksEditPost)
 			}, middleware.GitHookService())
 		})
+
+		m.Group("/pulls", func() {
+			m.Get("/", repo.Pulls)
+			m.Get("/:id", repo.Pull)
+			m.Combo("/new").Get(repo.NewPullRequest).
+				Post(bindIgnErr(auth.NewPullRequestForm{}), repo.NewPullRequestPost)
+		})
 	}, reqSignIn, middleware.RepoAssignment(true), reqAdmin)
 
 	m.Group("/:username/:reponame", func() {
@@ -441,7 +448,6 @@ func runWeb(ctx *cli.Context) {
 		m.Get("/issues", repo.Issues)
 		m.Get("/issues/:index", repo.ViewIssue)
 		m.Get("/issues/milestones", repo.Milestones)
-		m.Get("/pulls", repo.Pulls)
 		m.Get("/branches", repo.Branches)
 		m.Get("/archive/*", repo.Download)
 		m.Get("/issues2/", repo.Issues2)
