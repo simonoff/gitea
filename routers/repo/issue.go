@@ -99,9 +99,10 @@ func issues(ctx *middleware.Context, tmpl base.TplName, isPull bool) {
 	ctx.Data["Labels"] = labels
 
 	page, _ := com.StrTo(ctx.Query("page")).Int()
+	limit := 20
 
 	// Get issues.
-	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.ID, posterId, mid, page, 20,
+	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.ID, posterId, mid, page, limit,
 		isShowClosed, selectLabels, ctx.Query("sortType"), isPull)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetIssues): %v", err)
@@ -109,7 +110,7 @@ func issues(ctx *middleware.Context, tmpl base.TplName, isPull bool) {
 	}
 
 	// Get issue-user pairs.
-	pairs, err := models.GetIssueUserPairs(ctx.Repo.Repository.ID, posterId, isShowClosed)
+	pairs, err := models.GetIssueUserPairs(ctx.Repo.Repository.ID, posterId, isPull, isShowClosed)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetIssueUserPairs): %v", err)
 		return
@@ -144,19 +145,41 @@ func issues(ctx *middleware.Context, tmpl base.TplName, isPull bool) {
 	if ctx.User != nil {
 		uid = ctx.User.Id
 	}
-	issueStats := models.GetIssueStats(ctx.Repo.Repository.ID, uid, isShowClosed, filterMode)
+	issueStats := models.GetIssueStats(ctx.Repo.Repository.ID, uid, isPull, isShowClosed, filterMode)
 	ctx.Data["IssueStats"] = issueStats
 	ctx.Data["SelectLabels"], _ = com.StrTo(selectLabels).Int64()
 	ctx.Data["ViewType"] = viewType
 	ctx.Data["Issues"] = issues
 	ctx.Data["IsShowClosed"] = isShowClosed
+	var totalCount int64
 	if isShowClosed {
 		ctx.Data["State"] = "closed"
-		ctx.Data["ShowCount"] = issueStats.ClosedCount
+		totalCount = issueStats.ClosedCount
 	} else {
-		ctx.Data["ShowCount"] = issueStats.OpenCount
+		totalCount = issueStats.OpenCount
 	}
+	ctx.Data["ShowCount"] = totalCount
+	pages := func() []int64{
+		if totalCount == 0 {
+			return makeArray(1)
+		}
+		if totalCount % int64(limit) == 0 {
+			return makeArray(totalCount / int64(limit))
+		}
+		return makeArray(totalCount / int64(limit) + 1)
+	}()
+	ctx.Data["Pages"] = pages
+	repoLink, _ := ctx.Repo.Repository.RepoLink()
+	ctx.Data["RepoLink"] = repoLink
 	ctx.HTML(200, tmpl)
+}
+
+func makeArray(i int64) []int64 {
+	var res = make([]int64, i)
+	for k, _ := range res {
+		res[k] = int64(k + 1)
+	}
+	return res
 }
 
 func CreateIssue(ctx *middleware.Context) {

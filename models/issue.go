@@ -335,8 +335,9 @@ func PairsContains(ius []*IssueUser, issueId int64) int {
 }
 
 // GetIssueUserPairs returns issue-user pairs by given repository and user.
-func GetIssueUserPairs(rid, uid int64, isClosed bool) ([]*IssueUser, error) {
+func GetIssueUserPairs(rid, uid int64, isPull, isClosed bool) ([]*IssueUser, error) {
 	ius := make([]*IssueUser, 0, 10)
+	//  And is_pull = ?
 	err := x.Where("is_closed=?", isClosed).Find(&ius, &IssueUser{RepoId: rid, Uid: uid})
 	return ius, err
 }
@@ -400,16 +401,16 @@ const (
 )
 
 // GetIssueStats returns issue statistic information by given conditions.
-func GetIssueStats(rid, uid int64, isShowClosed bool, filterMode int) *IssueStats {
+func GetIssueStats(rid, uid int64, isPull, isShowClosed bool, filterMode int) *IssueStats {
 	stats := &IssueStats{}
 	issue := new(Issue)
 	tmpSess := &xorm.Session{}
 
 	sess := x.Where("repo_id=?", rid)
 	*tmpSess = *sess
-	stats.OpenCount, _ = tmpSess.And("is_closed=?", false).Count(issue)
+	stats.OpenCount, _ = tmpSess.And("is_closed=? And is_pull = ?", false, isPull).Count(issue)
 	*tmpSess = *sess
-	stats.ClosedCount, _ = tmpSess.And("is_closed=?", true).Count(issue)
+	stats.ClosedCount, _ = tmpSess.And("is_closed=? And is_pull = ?", true, isPull).Count(issue)
 	if isShowClosed {
 		stats.AllCount = stats.ClosedCount
 	} else {
@@ -427,15 +428,15 @@ func GetIssueStats(rid, uid int64, isShowClosed bool, filterMode int) *IssueStat
 			goto nofilter
 		}
 		*tmpSess = *sess
-		stats.OpenCount, _ = tmpSess.And("is_closed=?", false).Count(issue)
+		stats.OpenCount, _ = tmpSess.And("is_closed=? AND is_pull=?", false, isPull).Count(issue)
 		*tmpSess = *sess
-		stats.ClosedCount, _ = tmpSess.And("is_closed=?", true).Count(issue)
+		stats.ClosedCount, _ = tmpSess.And("is_closed=? AND is_pull=?", true, isPull).Count(issue)
 	} else {
 		sess := x.Where("repo_id=?", rid).And("uid=?", uid).And("is_mentioned=?", true)
 		*tmpSess = *sess
-		stats.OpenCount, _ = tmpSess.And("is_closed=?", false).Count(new(IssueUser))
+		stats.OpenCount, _ = tmpSess.And("is_closed=? AND is_pull=?", false, isPull).Count(new(IssueUser))
 		*tmpSess = *sess
-		stats.ClosedCount, _ = tmpSess.And("is_closed=?", true).Count(new(IssueUser))
+		stats.ClosedCount, _ = tmpSess.And("is_closed=? AND is_pull=?", true, isPull).Count(new(IssueUser))
 	}
 nofilter:
 	stats.AssignCount, _ = x.Where("repo_id=?", rid).And("is_closed=?", isShowClosed).And("assignee_id=?", uid).Count(issue)
