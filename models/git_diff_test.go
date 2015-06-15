@@ -8,7 +8,7 @@ import (
 func TestGetDiffForkedRange(t *testing.T) {
 	repoPath := "/Users/lunny/gogs-repos/lunny/sss.git"
 	forkedRepoPath := "/Users/lunny/gogs-repos/ttes/sss.git"
-	diffs, err := GetDiffForkedRange(repoPath, forkedRepoPath, 
+	diffs, err := GetDiffForkedRange(repoPath, forkedRepoPath,
 		"develop", "master", 10000)
 	if err != nil {
 		t.Fatal(err)
@@ -27,4 +27,16 @@ func TestGetDiffForkedRange(t *testing.T) {
 			fmt.Println()
 		}
 	}
+}
+
+func TestForkedMerge(t *testing.T) {
+	repoPath := "/Users/lunny/gogs-repos/lunny/sss.git"
+	forkedRepoPath := "/Users/lunny/gogs-repos/ttes/sss.git"
+	beforeBranch, afterBranch := "develop", "master"
+	before, after, err := ForkedMerge(repoPath, forkedRepoPath, beforeBranch, afterBranch)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+	fmt.Printf("%s..%s %s -> %s", before, after, afterBranch, beforeBranch)
 }
