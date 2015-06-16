@@ -30,6 +30,8 @@ const (
 	ISSUE_CREATE base.TplName = "repo/issue/create"
 	ISSUE_VIEW   base.TplName = "repo/issue/view"
 
+	LABELS base.TplName = "repo/issue2/labels"
+
 	MILESTONE      base.TplName = "repo/issue/milestone"
 	MILESTONE_NEW  base.TplName = "repo/issue/milestone_new"
 	MILESTONE_EDIT base.TplName = "repo/issue/milestone_edit"
@@ -914,6 +916,23 @@ func Comment(ctx *middleware.Context) {
 	send(200, fmt.Sprintf("%s/issues/%d", ctx.Repo.RepoLink, index), nil)
 }
 
+func Labels(ctx *middleware.Context) {
+	ctx.Data["Title"] = "Labels"
+	labels, err := models.GetLabels(ctx.Repo.Repository.ID)
+	if err != nil {
+		ctx.Handle(500, "issue.Issues(GetLabels): %v", err)
+		return
+	}
+	for _, l := range labels {
+		l.CalOpenIssues()
+	}
+	ctx.Data["Labels"] = labels
+	ctx.Data["LabelsCount"] = len(labels)
+	repoLink, _ := ctx.Repo.Repository.RepoLink()
+	ctx.Data["RepoLink"] = repoLink
+	ctx.HTML(200, LABELS)
+}
+
 func NewLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
 	if ctx.HasError() {
 		Issues(ctx)
@@ -929,7 +948,7 @@ func NewLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
 		ctx.Handle(500, "issue.NewLabel(NewLabel)", err)
 		return
 	}
-	ctx.Redirect(ctx.Repo.RepoLink + "/issues")
+	ctx.Redirect(ctx.Repo.RepoLink + "/issues/labels")
 }
 
 func UpdateLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
