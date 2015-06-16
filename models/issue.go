@@ -889,6 +889,15 @@ type Comment struct {
 	Created  time.Time `xorm:"CREATED"`
 }
 
+func (i *Comment) GetPoster() (err error) {
+	i.Poster, err = GetUserById(i.PosterId)
+	if err == ErrUserNotExist {
+		i.Poster = &User{Name: "FakeUser"}
+		return nil
+	}
+	return err
+}
+
 // CreateComment creates comment of issue or commit.
 func CreateComment(userId, repoId, issueId int64, commitId, line string, cmtType CommentType, content string, attachments []int64) (*Comment, error) {
 	sess := x.NewSession()
@@ -971,7 +980,15 @@ func (c *Comment) ContentHtml() template.HTML {
 // GetIssueComments returns list of comment by given issue id.
 func GetIssueComments(issueId int64) ([]Comment, error) {
 	comments := make([]Comment, 0, 10)
-	err := x.Asc("created").Find(&comments, &Comment{IssueId: issueId})
+	err := x.Asc("created").Iterate(&Comment{IssueId: issueId}, func(_ int, bean interface{}) error {
+		comment := bean.(*Comment)
+		err := comment.GetPoster()
+		if err != nil {
+			return err
+		}
+		comments = append(comments, *comment)
+		return nil
+	})
 	return comments, err
 }
 

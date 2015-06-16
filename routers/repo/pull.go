@@ -17,18 +17,30 @@ const (
 	PULLS base.TplName = "repo/pull/list"
 	PULL  base.TplName = "repo/pull/pull"
 	//PULLS    base.TplName = "repo/pulls"
-	NEW_PULL base.TplName = "repo/pull_new"
+	//NEW_PULL base.TplName = "repo/pull_new"
 )
 
 func Pulls(ctx *middleware.Context) {
 	issues(ctx, PULLS, true)
 }
 
+// view pull request /repopath/pull/:id
 func Pull(ctx *middleware.Context) {
 	ctx.Data["IsRepoToolbarPulls"] = true
 
-	issueID := ctx.ParamsInt64(":id")
-	issue, err := models.GetIssueById(issueID)
+	repo := ctx.Repo.Repository
+	repoLink, _ := repo.RepoLink()
+	ctx.Data["RepoLink"] = repoLink
+
+	issueIndex := ctx.ParamsInt64(":id")
+	issue, err := models.GetIssueByIndex(repo.ID, issueIndex)
+	if err != nil {
+		ctx.Handle(500, "GetIssueById", err)
+		return
+	}
+	issueID := issue.ID
+
+	err = issue.GetPoster()
 	if err != nil {
 		ctx.Handle(500, "GetIssueById", err)
 		return
@@ -36,26 +48,22 @@ func Pull(ctx *middleware.Context) {
 
 	ctx.Data["Issue"] = issue
 
+	pull, err := models.GetRepoPullByIssueID(issueID)
+	if err != nil {
+		ctx.Handle(500, "GetRepoPullByIssueId", err)
+		return
+	}
+	ctx.Data["Pull"] = pull
+
 	comments, err := models.GetIssueComments(issueID)
 	if err != nil {
 		ctx.Handle(500, "GetIssueComments", err)
 		return
 	}
-	ctx.Data["comments"] = comments
+	ctx.Data["Comments"] = comments
+	ctx.Data["CountComments"] = len(comments)
 
 	ctx.HTML(200, PULL)
-}
-
-func PullMerge(ctx *middleware.Context) {
-	//issueID := ctx.ParamsInt64(":id")
-	//repo := ctx.Repo.Repository
-	/*pull, err := models.NewRepoPull(repo.Id, issueID)
-	if err != nil {
-		ctx.Handle(500, "GetPullRepoById", err)
-		return
-	}*/
-
-	ctx.Redirect(ctx.Repo.RepoLink)
 }
 
 func hasPullRequested(ctx *middleware.Context, repoID int64, forkRepo *models.Repository) bool {
@@ -70,19 +78,18 @@ func hasPullRequested(ctx *middleware.Context, repoID int64, forkRepo *models.Re
 		if err != nil {
 			ctx.Handle(500, "RepoLink", err)
 		} else {
-			ctx.Redirect(fmt.Sprintf("%s/pulls/%d", repoLink, pr.Index))
+			ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, pr.Index))
 		}
 		return true
 	}
 	return false
 }
 
+/*
 func NewPullRequest(ctx *middleware.Context) {
 	repo := ctx.Repo.Repository
-	if !repo.IsFork {
-		ctx.Redirect(ctx.Repo.RepoLink)
-		return
-	}
+	repoID := ctx.ParamsInt64("RepoID")
+
 	ctx.Data["RequestFrom"] = repo.Owner.Name + "/" + repo.Name
 
 	if err := repo.GetForkRepo(); err != nil {
@@ -107,11 +114,13 @@ func NewPullRequest(ctx *middleware.Context) {
 	}
 	ctx.Data["DefaultBranch"] = forkRepo.DefaultBranch
 
-	ctx.HTML(200, NEW_PULL)
-}
+	//ctx.HTML(200, NEW_PULL)
+
+	ctx.Redirect(location)
+}*/
 
 // FIXME: check if branch exists
-func NewPullRequestPost(ctx *middleware.Context, form auth.NewPullRequestForm) {
+func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	repo := ctx.Repo.Repository
 	if err := repo.GetForkRepo(); err != nil {
 		ctx.Handle(500, "GetForkRepo", err)
@@ -146,11 +155,53 @@ func NewPullRequestPost(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	}
 
 	// FIXME: add action
-
 	repoLink, err := forkRepo.RepoLink()
 	if err != nil {
 		ctx.Handle(500, "RepoLink", err)
 		return
 	}
 	ctx.Redirect(fmt.Sprintf("%s/pulls/%d", repoLink, pr.Index))
+}
+
+func PullComment(ctx *middleware.Context) {
+	repoID := ctx.Repo.Repository.ID
+	userID := ctx.User.Id
+	issueID := ctx.QueryInt64("issueID")
+	issueIndex := ctx.QueryInt("issueIndex")
+	content := ctx.Query("content")
+	submit := ctx.Query("submit")
+
+	var err error
+	if submit == "comment" {
+		_, err = models.CreateComment(userID, repoID, issueID, "", "",
+			models.COMMENT_TYPE_COMMENT, content, nil)
+	} else if submit == "close" {
+		_, err = models.CreateComment(userID, repoID, issueID, "", "",
+			models.COMMENT_TYPE_CLOSE, content, nil)
+	}
+	if err != nil {
+		ctx.Handle(500, "CreateComment", err)
+		return
+	}
+
+	repoLink, err := ctx.Repo.Repository.RepoLink()
+	if err != nil {
+		ctx.Handle(500, "RepoLink", err)
+		return
+	}
+
+	ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, issueIndex))
+}
+
+// merge pulls
+func PullMerge(ctx *middleware.Context) {
+	//issueID := ctx.ParamsInt64(":id")
+	//repo := ctx.Repo.Repository
+	/*pull, err := models.NewRepoPull(repo.Id, issueID)
+	if err != nil {
+		ctx.Handle(500, "GetPullRepoById", err)
+		return
+	}*/
+
+	ctx.Redirect(ctx.Repo.RepoLink)
 }

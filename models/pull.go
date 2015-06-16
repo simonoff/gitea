@@ -38,6 +38,20 @@ type PullRepo struct {
 	Updated      time.Time `xorm:"updated"`
 }
 
+func GetRepoPullByIssueID(issueID int64) (*PullRepo, error) {
+	var pull = PullRepo{
+		PullID: issueID,
+	}
+	has, err := x.Get(&pull)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, ErrIssueNotExist
+	}
+	return &pull, nil
+}
+
 // NewPullRequest creates new pull request for repository.
 func NewPullRequest(pr *Issue, pullRepo *PullRepo) error {
 	toRepo, err := GetRepositoryById(pr.RepoID)

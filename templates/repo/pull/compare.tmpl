@@ -71,7 +71,7 @@
         <h4>{{.i18n.Tr "repo.diff.data_not_available"}}</h4>
         {{else}}
         <div class="diff-detail-box diff-box">
-            <a class="pull-right btn btn-gray btn-header btn-radius text-black" data-target="#diff-files" href="/{{$.AfterRepoPath}}/pulls/new">Create Pull Request</a>
+            <a class="pull-right btn btn-gray btn-header btn-radius text-black" data-target="#diff-files" href="{{AppSubUrl}}/{{$.AfterRepoPath}}/pull/new">Create Pull Request</a>
 
             <a class="pull-right btn btn-gray btn-header btn-radius text-black" data-target="#diff-files">{{.i18n.Tr "repo.diff.show_diff_stats"}}</a>
 

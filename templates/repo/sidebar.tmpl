@@ -2,7 +2,7 @@
     <ul class="menu menu-vertical" id="repo-sidebar-nav">
 		{{with .Repository}}
 		<li id="repo-header-fork" class="btns">
-            <a class="sidebar-btns" id="repo-header-fork-btn" {{if or (not $.IsRepositoryAdmin) $.Owner.IsOrganization}}href="{{AppSubUrl}}/repo/fork?fork_id={{.Id}}"{{end}}>
+            <a class="sidebar-btns" id="repo-header-fork-btn" {{if or (not $.IsRepositoryAdmin) $.Owner.IsOrganization}}href="{{AppSubUrl}}/repo/fork?fork_id={{.ID}}"{{end}}>
                 <button class="btn btn-gray text-bold btn-radius">
                     <i class="octicon octicon-repo-forked"></i>{{$.i18n.Tr "repo.fork"}}
                     <span class="num">{{.NumForks}}</span>

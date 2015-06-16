@@ -288,7 +288,7 @@ func Diff(ctx *middleware.Context) {
 	ctx.Data["Comments"] = commentsMap
 	ctx.Data["DiffNotAvailable"] = diff.NumFiles() == 0
 	ctx.Data["SourcePath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "src", commitId)
-	if (commit.ParentCount() > 0) {
+	if commit.ParentCount() > 0 {
 		ctx.Data["BeforeSourcePath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "src", parents[0])
 	}
 	ctx.Data["RawPath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "raw", commitId)
@@ -306,23 +306,32 @@ func CompareDiff(ctx *middleware.Context) {
 				return
 			}
 			lk, _ := srcRepo.RepoLink()
-			ctx.Redirect("/"+lk+"/compare/master..."+userName+":master")
+			ctx.Redirect("/" + lk + "/compare/master..." + userName + ":master")
 			return
 		}
 
-		ctx.Redirect("/"+ctx.Repo.RepoLink+"/compare/master..."+userName+":master")
+		ctx.Redirect("/" + ctx.Repo.RepoLink + "/compare/master..." + userName + ":master")
 		return
 	}
 
 	s := strings.Split(all, "...")
 	if len(s) != 2 {
-		ctx.Redirect(ctx.Repo.RepoLink+"/compare")
+		ctx.Redirect(ctx.Repo.RepoLink + "/compare")
 		return
 	}
 
 	beforeCommitId, afterCommitId := s[0], s[1]
 
-	if strings.Contains(beforeCommitId, ":") || strings.Contains(afterCommitId, ":") {
+	if strings.Contains(afterCommitId, ":") {
+		cc := strings.Split(afterCommitId, ":")
+		if len(cc) != 2 {
+			ctx.Handle(500, "AfterCommitId params", errors.New("should only have 1 colon"))
+			return
+		}
+		if cc[0] == userName {
+			ctx.Redirect("/" + ctx.Repo.RepoLink + "/compare/" + beforeCommitId + "..." + cc[1])
+			return
+		}
 		ForkDiff(ctx, beforeCommitId, afterCommitId)
 	} else {
 		// TODO: compare branch or tag
@@ -534,14 +543,14 @@ func DeleteCommitComment(ctx *middleware.Context) {
 	commentId := com.StrTo(ctx.Query("comment")).MustInt64()
 	if err := models.DeleteComment(int64(commentId), ctx.User.Id); err != nil {
 		ctx.JSON(200, map[string]interface{}{
-			"ok":     false,
-			"error":  err.Error(),
+			"ok":    false,
+			"error": err.Error(),
 		})
 		return
 	}
 
 	ctx.JSON(200, map[string]interface{}{
-		"ok":     true,
-		"data":  "ok",
+		"ok":   true,
+		"data": "ok",
 	})
 }

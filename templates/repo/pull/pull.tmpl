@@ -5,7 +5,7 @@
     <div class="clear container repo-wide-wrapper repo-pr">
         <div class="pr-main">
             <div class="pr-title clear">
-                <h2 class="pr-title grid-5-6 left">Fix: Repo Name can not be converted to lower in some cases <span class="pr-num">#256</span></h2>
+                <h2 class="pr-title grid-5-6 left">{{.Issue.Name}} <span class="pr-num">#{{.Issue.Index}}</span></h2>
                 <div class="pr-title-btn grid-1-6 right text-right">
                     <button class="btn btn-gray btn-radius">Edit</button>&nbsp;&nbsp;
                     <a href="#"><button class="btn btn-green btn-radius">New Issue</button></a>
@@ -16,16 +16,16 @@
                     <i class="octicon octicon-git-pull-request"></i> Open
                 </button>
             <span class="msg">
-                <a href="#" class="text-bold pr-author">eryx</a> <span class="label radius label-blue">2</span> commits
-                <span class="pr-branch label label-gray radius">gogits:master</span>
+                <a href="#" class="text-bold pr-author">{{.Issue.Poster.Name}}</a> <span class="label radius label-blue">2</span> commits
+                <span class="pr-branch label label-gray radius">gogits:{{.Pull.FromBranch}}</span>
                 <i class="octicon octicon-arrow-right"></i>
-                <span class="pr-branch label label-gray radius">unknown repository</span>
+                <span class="pr-branch label label-gray radius">{{.Pull.ToBranch}}</span>
             </span>
             </div>
             <div class="pr-nav clear">
                 <ul class="menu menu-line left" id="pr-nav">
                     <li class="current js-tab-nav js-tab-nav-show" data-tab-target="#pr-conversation"><a href="#"><i class="octicon octicon-comment"></i>conversations
-                        <span class="label label-gray label-radius">5</span>
+                        <span class="label label-gray label-radius">{{.CountComments}}</span>
                     </a></li>
                     <li class="js-tab-nav" data-tab-target="#pr-commit"><a href="#"><i class="octicon octicon-git-commit"></i>commits
                         <span class="label label-gray label-radius">2</span>
@@ -44,10 +44,12 @@
             </div>
             <div id="pr-conversation" class="js-tab-show clear">
                 <div id="pr-conversation-list" class="left grid-5-6">
+                    {{range .Comments}}
+                    {{if eq .Type 0}}
                     <div class="issue-comment clear">
                         <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
                         <div class="panel panel-radius">
-                            <p class="panel-header clear"><a class="author-name" href="#">eryx</a>
+                            <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
                                 <span class="date">7 days ago</span>
                             <span class="action right">
                                 <span class="label label-black label-radius">owner</span>
@@ -55,15 +57,20 @@
                                 <a href="#"><i class="octicon octicon-x"></i></a>
                             </span>
                             </p>
-                            <div class="panel-content content markdown">just like github.com, the RepoName can not be converted to lower in the case of backend data storage, or frontend clone link display.</div>
+                            <div class="panel-content content markdown">{{.Content}}</div>
                         </div>
                     </div>
+                    {{else if eq .Type 4}}
                     <div class="issue-commit clear">
                         <i class="mega-octicon octicon-git-commit left"></i>
                         <a class="author-avatar left" href="#"><img class="avatar-24 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
                         <a class="sha right" href="#">8e259ba</a>
                         <span class="message">Fix: Repo Name can not be converted to lower in the case of backend data storage, or frontend clone link display. or frontend clone link display or frontend clone link display.</span>
                     </div>
+                    {{else}}
+                    {{.Type}}
+                    {{end}}
+                    {{end}}
                     <div class="issue-line"></div>
                     <div class="issue-merge issue-merge-ok clear">
                         <span class="inline-block radius ico"><i class="mega-octicon octicon-git-pull-request"></i></span>
@@ -91,7 +98,10 @@
                                 </ul>
                             </div>
                             <div class="panel-content content">
-                                <form id="issue-add-comment-form" action="#" method="post">
+                                <form id="issue-add-comment-form" action="{{AppSubUrl}}{{.RepoLink}}/pull/{{.Issue.Index}}/comment" method="post">
+                                {{.CsrfTokenHtml}}
+                                    <input type="hidden" name="issueID" value="{{.Issue.ID}}"/>
+                                    <input type="hidden" name="issueIndex" value="{{.Issue.Index}}"/>
                                     <textarea class="ipt ipt-radius js-preview-input" name="content" id="issue-add-content"></textarea>
                                     <p class="submit text-right">
                                         <button class="btn btn-gray btn-radius text-bold" name="submit" value="close">Close pull request</button>&nbsp;&nbsp;

@@ -408,10 +408,10 @@ func runWeb(ctx *cli.Context) {
 			m.Get("/", repo.Pulls)
 		})
 		m.Group("/pull", func() {
+			m.Post("/create", bindIgnErr(auth.NewPullRequestForm{}), repo.NewPullRequest)
 			m.Get("/:id", repo.Pull)
 			m.Post("/:id/merge", repo.PullMerge)
-			m.Combo("/create").Get(repo.NewPullRequest).
-				Post(bindIgnErr(auth.NewPullRequestForm{}), repo.NewPullRequestPost)
+			m.Post("/:id/comment", repo.PullComment)
 		})
 	}, reqSignIn, middleware.RepoAssignment(true), reqAdmin)
 
