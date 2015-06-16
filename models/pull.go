@@ -40,7 +40,7 @@ type PullRepo struct {
 
 // NewPullRequest creates new pull request for repository.
 func NewPullRequest(pr *Issue, pullRepo *PullRepo) error {
-	toRepo, err := GetRepositoryById(pullRepo.ToRepoID)
+	toRepo, err := GetRepositoryById(pr.RepoID)
 	if err != nil {
 		return err
 	}

@@ -133,7 +133,6 @@ func NewPullRequestPost(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	}
 	pullRepo := &models.PullRepo{
 		FromRepoID: repo.ID,
-		ToRepoID:   forkRepo.ID,
 		FromBranch: form.FromBranch,
 		ToBranch:   form.ToBranch,
 	}

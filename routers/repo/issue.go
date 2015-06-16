@@ -159,14 +159,14 @@ func issues(ctx *middleware.Context, tmpl base.TplName, isPull bool) {
 		totalCount = issueStats.OpenCount
 	}
 	ctx.Data["ShowCount"] = totalCount
-	pages := func() []int64{
+	pages := func() []int64 {
 		if totalCount == 0 {
 			return makeArray(1)
 		}
-		if totalCount % int64(limit) == 0 {
+		if totalCount%int64(limit) == 0 {
 			return makeArray(totalCount / int64(limit))
 		}
-		return makeArray(totalCount / int64(limit) + 1)
+		return makeArray(totalCount/int64(limit) + 1)
 	}()
 	ctx.Data["Pages"] = pages
 	repoLink, _ := ctx.Repo.Repository.RepoLink()
@@ -1203,7 +1203,7 @@ func Issues2(ctx *middleware.Context) {
 	var mid int64
 	midx, _ := com.StrTo(ctx.Query("milestone")).Int64()
 	if midx > 0 {
-		mile, err := models.GetMilestoneByIndex(ctx.Repo.Repository.Id, midx)
+		mile, err := models.GetMilestoneByIndex(ctx.Repo.Repository.ID, midx)
 		if err != nil {
 			ctx.Handle(500, "issue.Issues(GetMilestoneByIndex): %v", err)
 			return
@@ -1212,7 +1212,7 @@ func Issues2(ctx *middleware.Context) {
 	}
 
 	selectLabels := ctx.Query("labels")
-	labels, err := models.GetLabels(ctx.Repo.Repository.Id)
+	labels, err := models.GetLabels(ctx.Repo.Repository.ID)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetLabels): %v", err)
 		return
@@ -1223,17 +1223,18 @@ func Issues2(ctx *middleware.Context) {
 	ctx.Data["Labels"] = labels
 
 	page, _ := com.StrTo(ctx.Query("page")).Int()
+	limit := 20
 
 	// Get issues.
-	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.Id, posterId, mid, page,
-		isShowClosed, selectLabels, ctx.Query("sortType"))
+	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.ID, posterId, mid, page,
+		limit, isShowClosed, selectLabels, ctx.Query("sortType"), false)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetIssues): %v", err)
 		return
 	}
 
 	// Get issue-user pairs.
-	pairs, err := models.GetIssueUserPairs(ctx.Repo.Repository.Id, posterId, isShowClosed)
+	pairs, err := models.GetIssueUserPairs(ctx.Repo.Repository.ID, posterId, isShowClosed, false)
 	if err != nil {
 		ctx.Handle(500, "issue.Issues(GetIssueUserPairs): %v", err)
 		return
@@ -1242,11 +1243,11 @@ func Issues2(ctx *middleware.Context) {
 	// Get posters.
 	for i := range issues {
 		if err = issues[i].GetLabels(); err != nil {
-			ctx.Handle(500, "GetLabels", fmt.Errorf("[#%d]%v", issues[i].Id, err))
+			ctx.Handle(500, "GetLabels", fmt.Errorf("[#%d]%v", issues[i].ID, err))
 			return
 		}
 
-		idx := models.PairsContains(pairs, issues[i].Id)
+		idx := models.PairsContains(pairs, issues[i].ID)
 
 		if filterMode == models.FM_MENTION && (idx == -1 || !pairs[idx].IsMentioned) {
 			continue
@@ -1259,7 +1260,7 @@ func Issues2(ctx *middleware.Context) {
 		}
 
 		if err = issues[i].GetPoster(); err != nil {
-			ctx.Handle(500, "issue.Issues(GetPoster)", fmt.Errorf("[#%d]%v", issues[i].Id, err))
+			ctx.Handle(500, "issue.Issues(GetPoster)", fmt.Errorf("[#%d]%v", issues[i].ID, err))
 			return
 		}
 	}
@@ -1268,7 +1269,7 @@ func Issues2(ctx *middleware.Context) {
 	if ctx.User != nil {
 		uid = ctx.User.Id
 	}
-	issueStats := models.GetIssueStats(ctx.Repo.Repository.Id, uid, isShowClosed, filterMode)
+	issueStats := models.GetIssueStats(ctx.Repo.Repository.ID, uid, false, isShowClosed, filterMode)
 	ctx.Data["IssueStats"] = issueStats
 	ctx.Data["SelectLabels"], _ = com.StrTo(selectLabels).Int64()
 	ctx.Data["ViewType"] = viewType
