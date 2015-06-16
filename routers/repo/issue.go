@@ -1169,6 +1169,117 @@ func IssueGetAttachment(ctx *middleware.Context) {
 // testing route handler for new issue ui page
 // todo : move to Issue() function
 func Issues2(ctx *middleware.Context) {
+	ctx.Data["Title"] = "Issues"
+	ctx.Data["IsRepoToolbarIssues"] = true
+	ctx.Data["IsRepoToolbarIssuesList"] = true
+
+	viewType := ctx.Query("type")
+	types := []string{"assigned", "created_by", "mentioned"}
+	if !com.IsSliceContainsStr(types, viewType) {
+		viewType = "all"
+	}
+
+	isShowClosed := ctx.Query("state") == "closed"
+
+	if viewType != "all" && !ctx.IsSigned {
+		ctx.SetCookie("redirect_to", "/"+url.QueryEscape(setting.AppSubUrl+ctx.Req.RequestURI), 0, setting.AppSubUrl)
+		ctx.Redirect(setting.AppSubUrl + "/user/login")
+		return
+	}
+
+	var assigneeId, posterId int64
+	var filterMode int
+	switch viewType {
+	case "assigned":
+		assigneeId = ctx.User.Id
+		filterMode = models.FM_ASSIGN
+	case "created_by":
+		posterId = ctx.User.Id
+		filterMode = models.FM_CREATE
+	case "mentioned":
+		filterMode = models.FM_MENTION
+	}
+
+	var mid int64
+	midx, _ := com.StrTo(ctx.Query("milestone")).Int64()
+	if midx > 0 {
+		mile, err := models.GetMilestoneByIndex(ctx.Repo.Repository.Id, midx)
+		if err != nil {
+			ctx.Handle(500, "issue.Issues(GetMilestoneByIndex): %v", err)
+			return
+		}
+		mid = mile.Id
+	}
+
+	selectLabels := ctx.Query("labels")
+	labels, err := models.GetLabels(ctx.Repo.Repository.Id)
+	if err != nil {
+		ctx.Handle(500, "issue.Issues(GetLabels): %v", err)
+		return
+	}
+	for _, l := range labels {
+		l.CalOpenIssues()
+	}
+	ctx.Data["Labels"] = labels
+
+	page, _ := com.StrTo(ctx.Query("page")).Int()
+
+	// Get issues.
+	issues, err := models.GetIssues(assigneeId, ctx.Repo.Repository.Id, posterId, mid, page,
+		isShowClosed, selectLabels, ctx.Query("sortType"))
+	if err != nil {
+		ctx.Handle(500, "issue.Issues(GetIssues): %v", err)
+		return
+	}
+
+	// Get issue-user pairs.
+	pairs, err := models.GetIssueUserPairs(ctx.Repo.Repository.Id, posterId, isShowClosed)
+	if err != nil {
+		ctx.Handle(500, "issue.Issues(GetIssueUserPairs): %v", err)
+		return
+	}
+
+	// Get posters.
+	for i := range issues {
+		if err = issues[i].GetLabels(); err != nil {
+			ctx.Handle(500, "GetLabels", fmt.Errorf("[#%d]%v", issues[i].Id, err))
+			return
+		}
+
+		idx := models.PairsContains(pairs, issues[i].Id)
+
+		if filterMode == models.FM_MENTION && (idx == -1 || !pairs[idx].IsMentioned) {
+			continue
+		}
+
+		if idx > -1 {
+			issues[i].IsRead = pairs[idx].IsRead
+		} else {
+			issues[i].IsRead = true
+		}
+
+		if err = issues[i].GetPoster(); err != nil {
+			ctx.Handle(500, "issue.Issues(GetPoster)", fmt.Errorf("[#%d]%v", issues[i].Id, err))
+			return
+		}
+	}
+
+	var uid int64 = -1
+	if ctx.User != nil {
+		uid = ctx.User.Id
+	}
+	issueStats := models.GetIssueStats(ctx.Repo.Repository.Id, uid, isShowClosed, filterMode)
+	ctx.Data["IssueStats"] = issueStats
+	ctx.Data["SelectLabels"], _ = com.StrTo(selectLabels).Int64()
+	ctx.Data["ViewType"] = viewType
+	ctx.Data["Issues"] = issues
+	ctx.Data["IsShowClosed"] = isShowClosed
+	if isShowClosed {
+		ctx.Data["State"] = "closed"
+		ctx.Data["ShowCount"] = issueStats.ClosedCount
+	} else {
+		ctx.Data["ShowCount"] = issueStats.OpenCount
+	}
 	ctx.HTML(200, "repo/issue2/list")
 }
 

@@ -164,8 +164,12 @@ func ExecPath() (string, error) {
 
 // WorkDir returns absolute path of work directory.
 func WorkDir() (string, error) {
-	execPath, err := ExecPath()
-	return path.Dir(strings.Replace(execPath, "\\", "/", -1)), err
+	work := os.Getenv("WORK_DIR")
+	if len(work) == 0 {
+		execPath, err := ExecPath()
+		return path.Dir(strings.Replace(execPath, "\\", "/", -1)), err
+	}
+	return work, nil
 }
 
 func forcePathSeparator(path string) {
@@ -325,9 +329,6 @@ func NewConfigContext() {
 		GravatarSource = "//1.gravatar.com/avatar/"
 	}
 	DisableGravatar = sec.Key("DISABLE_GRAVATAR").MustBool()
-	if OfflineMode {
-		DisableGravatar = true
-	}
 
 	if err = Cfg.Section("git").MapTo(&Git); err != nil {
 		log.Fatal(4, "Fail to map Git settings: %v", err)

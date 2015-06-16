@@ -459,6 +459,7 @@ func initRepoCommit(tmpPath string, sig *git.Signature) (err error) {
 		"git", "push", "origin", "master"); err != nil {
 		return errors.New("git push: " + stderr)
 	}
+	os.RemoveAll(tmpPath)
 	return nil
 }
 

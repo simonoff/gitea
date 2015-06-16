@@ -257,7 +257,7 @@ var Gogs = {};
 
         $('.code-diff .lines-code > b, .code-diff .lines-code > button.answer').click(function () {
             prepareToForm();
-            var commit = document.location.href.match(/([a-zA-Z0-9.:\/\/]+)\/commit\/([a-z0-9]+)/);
+            var commit = document.location.href.match(/([a-zA-Z0-9-.:\/\/]+)\/commit\/([a-z0-9]+)/);
             console.log(commit);
             var lineNum;
             if ($(this).prop("tagName") == "BUTTON") {                
@@ -305,7 +305,7 @@ var Gogs = {};
             var text = $(this).parents('div.panel:first').find('.markdown').text();
             var id = $(this).parents('.commit-comment').attr('id');
             id = id.substr(15);
-            var commit = document.location.href.match(/([a-zA-Z0-9.:\/\/]+)\/commit\/([a-z0-9]+)/);
+            var commit = document.location.href.match(/([a-zA-Z0-9-.:\/\/]+)\/commit\/([a-z0-9]+)/);
             var url = commit[1] + '/commit/comment/' + commit[2];
             $(this).parents('.commit-comment').children().hide();
             $(this).parents('.commit-comment').append(
@@ -323,7 +323,7 @@ var Gogs = {};
 
         $('.remove-comment').click(function () {
             if (confirm('Are you sure?')) {
-                var commit = document.location.href.match(/([a-zA-Z0-9.:\/\/]+)\/commit\/([a-z0-9]+)/);
+                var commit = document.location.href.match(/([a-zA-Z0-9-.:\/\/]+)\/commit\/([a-z0-9]+)/);
                 var url = commit[1] + '/commit/comment/delete/';
                 $.ajax({
                     url: url,
