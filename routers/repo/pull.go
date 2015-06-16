@@ -15,7 +15,7 @@ import (
 
 const (
 	PULLS base.TplName = "repo/pull/list"
-	PULL base.TplName = "repo/pull/pull"
+	PULL  base.TplName = "repo/pull/pull"
 	//PULLS    base.TplName = "repo/pulls"
 	NEW_PULL base.TplName = "repo/pull_new"
 )
@@ -26,7 +26,36 @@ func Pulls(ctx *middleware.Context) {
 
 func Pull(ctx *middleware.Context) {
 	ctx.Data["IsRepoToolbarPulls"] = true
+
+	issueID := ctx.ParamsInt64(":id")
+	issue, err := models.GetIssueById(issueID)
+	if err != nil {
+		ctx.Handle(500, "GetIssueById", err)
+		return
+	}
+
+	ctx.Data["Issue"] = issue
+
+	comments, err := models.GetIssueComments(issueID)
+	if err != nil {
+		ctx.Handle(500, "GetIssueComments", err)
+		return
+	}
+	ctx.Data["comments"] = comments
+
 	ctx.HTML(200, PULL)
+}
+
+func PullMerge(ctx *middleware.Context) {
+	//issueID := ctx.ParamsInt64(":id")
+	//repo := ctx.Repo.Repository
+	/*pull, err := models.NewRepoPull(repo.Id, issueID)
+	if err != nil {
+		ctx.Handle(500, "GetPullRepoById", err)
+		return
+	}*/
+
+	ctx.Redirect(ctx.Repo.RepoLink)
 }
 
 func hasPullRequested(ctx *middleware.Context, repoID int64, forkRepo *models.Repository) bool {
