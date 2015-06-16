@@ -967,7 +967,7 @@ func UpdateLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
 		ctx.Handle(500, "issue.UpdateLabel(UpdateLabel)", err)
 		return
 	}
-	ctx.Redirect(ctx.Repo.RepoLink + "/issues")
+	ctx.Redirect(ctx.Repo.RepoLink + "/issues/labels")
 }
 
 func DeleteLabel(ctx *middleware.Context) {
@@ -985,6 +985,12 @@ func DeleteLabel(ctx *middleware.Context) {
 			ctx.Handle(500, "issue.DeleteLabel(DeleteLabel)", err)
 			return
 		}
+	}
+
+	// if form post, redirect url, not json
+	if ctx.Query("form") != "" {
+		ctx.Redirect(ctx.Repo.RepoLink + "/issues/labels")
+		return
 	}
 
 	ctx.JSON(200, map[string]interface{}{

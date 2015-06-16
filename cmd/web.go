@@ -426,9 +426,12 @@ func runWeb(ctx *cli.Context) {
 			m.Post("/:index/milestone", repo.UpdateIssueMilestone)
 			m.Post("/:index/assignee", repo.UpdateAssignee)
 			m.Get("/:index/attachment/:id", repo.IssueGetAttachment)
+
+			m.Get("/labels",repo.Labels)
 			m.Post("/labels/new", bindIgnErr(auth.CreateLabelForm{}), repo.NewLabel)
 			m.Post("/labels/edit", bindIgnErr(auth.CreateLabelForm{}), repo.UpdateLabel)
 			m.Post("/labels/delete", repo.DeleteLabel)
+
 			m.Get("/milestones/new", repo.NewMilestone)
 			m.Post("/milestones/new", bindIgnErr(auth.CreateMilestoneForm{}), repo.NewMilestonePost)
 			m.Get("/milestones/:index/edit", repo.UpdateMilestone)
