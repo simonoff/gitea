@@ -3,15 +3,15 @@
 {{template "repo/nav" .}}
 {{template "repo/toolbar" .}}
 <div id="body" class="container">
-    <div id="issue" data-id="{{.Issue.Id}}">
-        <div id="issue-{{.Issue.Id}}" class="issue-whole issue-is-opening">
+    <div id="issue" data-id="{{.Issue.ID}}">
+        <div id="issue-{{.Issue.ID}}" class="issue-whole issue-is-opening">
             <div class="issue-wrap col-md-10">
                 <div class="issue-head clearfix">
                     <div class="number pull-right">#{{.Issue.Index}}</div>
                     <a class="author pull-left" href="{{AppSubUrl}}/{{.Issue.Poster.Name}}"><img class="avatar" src="{{.Issue.Poster.AvatarLink}}" alt="" width="30"/></a>
                     <h1 class="title pull-left">{{.Issue.Name}}</h1>
                     <input id="issue-edit-title" class="form-control input-lg pull-left hidden" type="text" value="{{.Issue.Name}}" data-ajax-rel="issue-edit-save" data-ajax-val="val" data-ajax-field="title"/>
-                    <input type="hidden" value="{{.Issue.Id}}" data-ajax-rel="issue-edit-save" data-ajax-val="val" data-ajax-field="issue_id"/>
+                    <input type="hidden" value="{{.Issue.ID}}" data-ajax-rel="issue-edit-save" data-ajax-val="val" data-ajax-field="issue_id"/>
                     <p class="info pull-left">
                         {{if .IsIssueOwner}}<a class="btn btn-default pull-right issue-edit" href="#" id="issue-edit-btn">Edit</a>
                         <a class="btn btn-danger pull-right issue-edit-cancel hidden" href="#">Cancel</a>

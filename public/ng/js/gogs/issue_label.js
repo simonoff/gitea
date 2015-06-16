@@ -61,7 +61,7 @@ $(document).ready(function(){
         color_input.val(color);
 
         // add label name
-        $clone_form.find("input[name=name]").val($label_item.find(".label").text());
+        $clone_form.find("input[name=title]").val($label_item.find(".label").text());
 
         // add label id
         $clone_form.find("input[name=id]").val($label_item.attr("id").replace("label-",""));
@@ -83,7 +83,7 @@ $(document).ready(function(){
         var $clone_form = $del_form_tpl.clone();
 
         // add label id
-        $clone_form.find("input[name=id]").val($label_item.attr("id").replace("label-",""));
+        $clone_form.find("input[name=remove]").val($label_item.attr("id").replace("label-",""));
 
         // append form
         $label_item.after($clone_form.show());
