@@ -1013,6 +1013,10 @@ func Milestones(ctx *middleware.Context) {
 	for _, m := range miles {
 		m.RenderedContent = string(base.RenderMarkdown([]byte(m.Content), ctx.Repo.RepoLink))
 		m.CalOpenIssues()
+		m.DeadlineString = m.Deadline.UTC().Format("01/02/2006")
+		if m.DeadlineString == "12/31/9999" {
+			m.DeadlineString = ""
+		}
 	}
 	ctx.Data["Milestones"] = miles
 
@@ -1314,5 +1318,29 @@ func Labels2(ctx *middleware.Context) {
 }
 
 func Milestones2(ctx *middleware.Context) {
+	ctx.Data["Title"] = "Milestones"
+
+	isShowClosed := ctx.Query("state") == "closed"
+
+	miles, err := models.GetMilestones(ctx.Repo.Repository.ID, isShowClosed)
+	if err != nil {
+		ctx.Handle(500, "issue.Milestones(GetMilestones)", err)
+		return
+	}
+	for _, m := range miles {
+		m.RenderedContent = string(base.RenderMarkdown([]byte(m.Content), ctx.Repo.RepoLink))
+		m.CalOpenIssues()
+		m.DeadlineString = m.Deadline.UTC().Format("01/02/2006")
+		if m.DeadlineString == "12/31/9999" {
+			m.DeadlineString = ""
+		}
+	}
+	ctx.Data["Milestones"] = miles
+
+	if isShowClosed {
+		ctx.Data["State"] = "closed"
+	} else {
+		ctx.Data["State"] = "open"
+	}
 	ctx.HTML(200, "repo/milestone2/list")
 }
