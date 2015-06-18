@@ -8,16 +8,16 @@
             <li class="current"><a href="#">Pull Requests</a></li>
             <!--<li><a href="#">Labels</a></li>-->
             <li><a href="{{.RepoLink}}/issues/milestones">Milestones</a></li>
-            <li class="right" id="issue-new"><a href="{{.RepoLink}}/compare"><button id="issue-new-btn" class="btn btn-green text-bold">New Pull Request</button></a></li>
+            <!--<li class="right" id="issue-new"><a href="{{.RepoLink}}/compare"><button id="issue-new-btn" class="btn btn-green text-bold">New Pull Request</button></a></li>-->
             <!--<li class="right"><a href="#">Filter</a></li>-->
         </ul>
         <div id="issue-list-container">
             <div id="issue-list-menu">
                 <div class="left">
-                    <span class="mark open hover"><a href="#">
+                    <span class="mark open{{if not .IsShowClosed}} hover{{end}}"><a href="{{AppSubUrl}}{{.RepoLink}}/pulls">
                         <i class="octicon octicon-git-pull-request"></i> {{.IssueStats.OpenCount}} Open
                     </a></span>
-                    <span class="mark close"><a href="">
+                    <span class="mark close{{if .IsShowClosed}} hover{{end}}"><a href="{{AppSubUrl}}{{.RepoLink}}/pulls?type=all&state=closed">
                         <i class="octicon octicon-issue-closed"></i> {{.IssueStats.ClosedCount}} Closed
                     </a></span>
                 </div>
@@ -33,7 +33,7 @@
                         <i class="octicon octicon-git-pull-request"></i>
                         <a href="{{$.RepoLink}}/pull/{{.ID}}" class="title-text">{{.Name}}</a>
                     </p>
-                    <p class="desc">opened 7 days ago by <a href="#">{{.Poster.Name}}</a></p>
+                    <p class="desc">opened {{TimeSince .Created $.Lang}} by <a href="#">{{.Poster.Name}}</a></p>
                 </li>
                 {{end}}
             </ul>

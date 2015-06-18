@@ -9,8 +9,10 @@ import (
 
 	"github.com/go-gitea/gitea/models"
 	"github.com/go-gitea/gitea/modules/auth"
+	"github.com/go-gitea/gitea/modules/git"
 	"github.com/go-gitea/gitea/modules/base"
 	"github.com/go-gitea/gitea/modules/middleware"
+	"github.com/go-gitea/gitea/modules/setting"
 )
 
 const (
@@ -62,6 +64,87 @@ func Pull(ctx *middleware.Context) {
 	}
 	ctx.Data["Comments"] = comments
 	ctx.Data["CountComments"] = len(comments)
+
+	fromRepo, err := models.GetRepositoryById(pull.FromRepoID)
+	if err != nil {
+		ctx.Handle(500, "GetRepositoryById", err)
+		return
+	}
+
+	beforeRepoPath, err := repo.RepoPath()
+	if err != nil {
+		ctx.Handle(500, "GetRepositoryById", err)
+		return
+	}
+
+	beforeRepo, err := git.OpenRepository(beforeRepoPath)
+	if err != nil {
+		ctx.Handle(404, "OpenRepository", err)
+		return
+	}
+
+	afterRepoPath, err := fromRepo.RepoPath()
+	if err != nil {
+		ctx.Handle(500, "GetRepositoryById", err)
+		return
+	}
+
+	afterRepo, err := git.OpenRepository(afterRepoPath)
+	if err != nil {
+		ctx.Handle(404, "OpenRepository", err)
+		return
+	}
+
+	commit, err := beforeRepo.GetCommitOfBranch(pull.ToBranch)
+	if err != nil {
+		ctx.Handle(404, "GetCommit", err)
+		return
+	}
+
+	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath, 
+		pull.ToBranch, pull.FromBranch, setting.Git.MaxGitDiffLines)
+	if err != nil {
+		ctx.Handle(404, "GetDiffRange", err)
+		return
+	}
+
+	isImageFile := func(name string) bool {
+		blob, err := commit.GetBlobByPath(name)
+		if err != nil {
+			return false
+		}
+
+		dataRc, err := blob.Data()
+		if err != nil {
+			return false
+		}
+		buf := make([]byte, 1024)
+		n, _ := dataRc.Read(buf)
+		if n > 0 {
+			buf = buf[:n]
+		}
+		_, isImage := base.IsImageFile(buf)
+		return isImage
+	}
+
+	commit, err = afterRepo.GetCommitOfBranch(pull.FromBranch)
+	if err != nil {
+		ctx.Handle(500, "CommitsBeforeUntil", err)
+		return
+	}
+
+	commits, err := commit.CommitsBeforeUntil(commit.Id.String())
+	if err != nil {
+		ctx.Handle(500, "CommitsBeforeUntil", err)
+		return
+	}
+	commits = models.ValidateCommitsWithEmails(commits)
+
+	ctx.Data["Commits"] = commits
+	ctx.Data["CommitCount"] = commits.Len()
+	ctx.Data["Commit"] = commit
+	ctx.Data["Diff"] = diff
+	ctx.Data["IsImageFile"] = isImageFile
 
 	ctx.HTML(200, PULL)
 }
@@ -160,7 +243,7 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 		ctx.Handle(500, "RepoLink", err)
 		return
 	}
-	ctx.Redirect(fmt.Sprintf("%s/pulls/%d", repoLink, pr.Index))
+	ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, pr.Index))
 }
 
 func PullComment(ctx *middleware.Context) {

@@ -106,9 +106,6 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 	ctx.Data["Reponame"] = repoName
 
 	ctx.Data["Forks"] = append([]*models.Repository{ctx.Repo.Repository}, ctx.Repo.Repository.Forks...)
-	ctx.Data["Diff"] = map[string]interface{}{
-		"Files": []string{},
-	}
 	ctx.Data["Title"] = "Comparing " + base.ShortSha(beforeCommitId) + "..." + base.ShortSha(afterCommitId) + " · " + userName + "/" + repoName
 
 	repo, err := git.OpenRepository(afterRepoPath)
@@ -149,15 +146,15 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return isImage
 	}
 
-	/*commits, err := commit.CommitsBeforeUntil(beforeCommitId)
+	commits, err := commit.CommitsBeforeUntil(beforeCommitId)
 	if err != nil {
 		ctx.Handle(500, "CommitsBeforeUntil", err)
 		return
 	}
-	commits = models.ValidateCommitsWithEmails(commits)*/
+	commits = models.ValidateCommitsWithEmails(commits)
 
-	//ctx.Data["Commits"] = commits
-	//ctx.Data["CommitCount"] = commits.Len()
+	ctx.Data["Commits"] = commits
+	ctx.Data["CommitCount"] = commits.Len()
 	ctx.Data["Commit"] = commit
 	ctx.Data["Diff"] = diff
 	ctx.Data["IsImageFile"] = isImageFile
