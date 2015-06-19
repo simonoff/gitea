@@ -16,6 +16,7 @@ textarea,
 select,
 option,
 button {
+  font-size: 13px;
   font-family: Helvetica, "Microsoft Yahei", Arial, sans-serif;
 }
 article,
