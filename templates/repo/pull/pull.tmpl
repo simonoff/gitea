@@ -7,16 +7,17 @@
             <div class="pr-title clear">
                 <h2 class="pr-title grid-5-6 left">{{.Issue.Name}} <span class="pr-num">#{{.Issue.Index}}</span></h2>
                 <div class="pr-title-btn grid-1-6 right text-right">
-                    <!--<button class="btn btn-gray btn-radius">Edit</button>&nbsp;&nbsp;
-                    <a href="#"><button class="btn btn-green btn-radius">New Issue</button></a>-->
+                    <button class="btn btn-gray btn-radius">Edit</button><!--&nbsp;&nbsp;
+                    <a href="#"><button class="btn btn-green btn-radius">New Pull Request</button></a>-->
                 </div>
             </div>
             <div class="pr-meta">
-                <button class="btn btn-small btn-green btn-radius">
-                    <i class="octicon octicon-git-pull-request"></i> Open
+                <button class="btn btn-small {{if .Issue.IsClosed}}btn-red{{else}}btn-green{{end}} btn-radius">
+                <i class="octicon octicon-git-pull-request"></i>
+                    {{if .Issue.IsClosed}}Closed{{else}}Open{{end}}
                 </button>
             <span class="msg">
-                <a href="#" class="text-bold pr-author">{{.Issue.Poster.Name}}</a> <span class="label radius label-blue">2</span> commits
+                <a href="#" class="text-bold pr-author">{{.Issue.Poster.Name}}</a> <span class="label radius label-blue">{{.CommitCount}}</span> commits
                 <span class="pr-branch label label-gray radius">gogits:{{.Pull.FromBranch}}</span>
                 <i class="octicon octicon-arrow-right"></i>
                 <span class="pr-branch label label-gray radius">{{.Pull.ToBranch}}</span>
@@ -50,7 +51,7 @@
                         <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
                         <div class="panel panel-radius">
                             <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
-                                <span class="date">7 days ago</span>
+                                <span class="date">{{TimeSince .Created $.Lang}}</span>
                             <span class="action right">
                                 <span class="label label-black label-radius">owner</span>
                                 <a href="#"><i class="octicon octicon-pencil"></i></a>
@@ -67,10 +68,31 @@
                         <a class="sha right" href="#">8e259ba</a>
                         <span class="message">Fix: Repo Name can not be converted to lower in the case of backend data storage, or frontend clone link display. or frontend clone link display or frontend clone link display.</span>
                     </div>
+                    {{else if eq .Type 2}}
+                    <div class="issue-comment clear">
+                        <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <div class="panel panel-radius">
+                            <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
+                                <span class="date">{{TimeSince .Created $.Lang}}</span>
+                            <span class="action right">
+                                <span class="label label-black label-radius">owner</span>
+                                <a href="#"><i class="octicon octicon-pencil"></i></a>
+                                <a href="#"><i class="octicon octicon-x"></i></a>
+                            </span>
+                            </p>
+                            <div class="panel-content content markdown">{{.Content}}</div>
+                        </div>
+                    </div>
+                    <div class="issue-commit clear">
+                        <i class="mega-octicon octicon-issue-closed left"></i>
+                        <a class="author-avatar left" href="#"><img class="avatar-24 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <span class="message">{{.Poster.Name}} closed this {{TimeSince .Created $.Lang}}</span>
+                    </div>
                     {{else}}
                     {{.Type}}
                     {{end}}
                     {{end}}
+                    {{if not .Issue.IsClosed}}
                     <div class="issue-line"></div>
                     <div class="issue-merge issue-merge-ok clear">
                         <span class="inline-block radius ico"><i class="mega-octicon octicon-git-pull-request"></i></span>
@@ -88,6 +110,7 @@
                             </div>
                         </div>
                     </div>
+                    {{end}}
                     <div class="issue-add-comment clear">
                         <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
                         <div class="panel panel-radius">

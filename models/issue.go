@@ -943,9 +943,17 @@ func CreateComment(userId, repoId, issueId int64, commitId, line string, cmtType
 			sess.Rollback()
 			return nil, err
 		}
+		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed:false}); err != nil {
+			sess.Rollback()
+			return nil, err
+		}
 	case COMMENT_TYPE_CLOSE:
 		rawSql := "UPDATE `repository` SET num_closed_issues = num_closed_issues + 1 WHERE id = ?"
 		if _, err := sess.Exec(rawSql, repoId); err != nil {
+			sess.Rollback()
+			return nil, err
+		}
+		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed:true}); err != nil {
 			sess.Rollback()
 			return nil, err
 		}

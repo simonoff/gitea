@@ -8,7 +8,7 @@
             <li class="current"><a href="#">Pull Requests</a></li>
             <!--<li><a href="#">Labels</a></li>-->
             <li><a href="{{.RepoLink}}/issues/milestones">Milestones</a></li>
-            <!--<li class="right" id="issue-new"><a href="{{.RepoLink}}/compare"><button id="issue-new-btn" class="btn btn-green text-bold">New Pull Request</button></a></li>-->
+            <li class="right" id="issue-new"><a href="{{.RepoLink}}/compare"><button id="issue-new-btn" class="btn btn-green text-bold">New Pull Request</button></a></li>
             <!--<li class="right"><a href="#">Filter</a></li>-->
         </ul>
         <div id="issue-list-container">
@@ -46,5 +46,8 @@
             </div>
         </div>
     </div>
+    <!--<div class="pr-sidebar">
+            {{template "repo/sidebar_mini" .}}
+        </div>-->
 </div>
 {{template "ng/base/footer" .}}
