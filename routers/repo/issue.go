@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"os"
 
 	"github.com/Unknwon/com"
 
@@ -689,6 +690,13 @@ func uploadFiles(ctx *middleware.Context, issueId, commentId int64) {
 		if !allowed {
 			ctx.Handle(400, "issue.Comment", ErrFileTypeForbidden)
 			return
+		}
+
+		if !com.IsDir(setting.AttachmentPath) {
+			if err := os.MkdirAll(setting.AttachmentPath, os.ModePerm); err != nil {
+				ctx.Handle(500, "UploadFiles -> os.MkdirAll(setting.AttachmentPath)", err)
+				return
+			}
 		}
 
 		out, err := ioutil.TempFile(setting.AttachmentPath, "attachment_")

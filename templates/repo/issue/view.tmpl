@@ -153,7 +153,7 @@
                                 <div class="form-group">
                                     {{if .AttachmentsEnabled}}
                                     <input type="file" accept="{{.AllowedTypes}}" style="display: none;" id="attachments-input" name="attachments" multiple />
-                                    <button class="btn-default btn attachment-add" id="attachments-button">Select Attachments...</button>
+                                    <button class="btn-default btn attachment-add" id="attachments-button">Attach images...</button>
                                     {{end}}
                                     {{if .IsIssueOwner}}{{if .Issue.IsClosed}}
                                     <input type="submit" class="btn-default btn issue-open" id="issue-open-btn" data-origin="Reopen" data-text="Reopen & Comment" name="change_status" value="Reopen"/>{{else}}
