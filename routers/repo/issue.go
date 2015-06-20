@@ -913,7 +913,13 @@ func UpdateLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
 		return
 	}
 
-	l, _ := models.GetLabelById(id)
+	l, err := models.GetLabelById(id)
+
+	if l == nil {
+		log.Warn("Could not find label id in db: %s", err)
+		ctx.Redirect(ctx.Repo.RepoLink + "/issues")
+		return
+	}
 
 	l.Name = form.Title
 	l.Color = form.Color
