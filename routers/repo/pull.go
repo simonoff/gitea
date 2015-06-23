@@ -149,6 +149,7 @@ func Pull(ctx *middleware.Context) {
 	ctx.Data["Diff"] = diff
 	ctx.Data["IsImageFile"] = isImageFile
 	ctx.Data["FromRepo"] = fromRepo
+	ctx.Data["User"] = ctx.User
 
 	ctx.HTML(200, PULL)
 }

@@ -48,7 +48,7 @@
                     {{range .Comments}}
                     {{if eq .Type 0}}
                     <div class="issue-comment clear">
-                        <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <a class="author-avatar" href="{{AppSubUrl}}/{{.Poster.Name}}"><img class="avatar-40 radius" src="{{.Poster.AvatarLink}}" alt="{{.Poster.Name}}"/></a>
                         <div class="panel panel-radius">
                             <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
                                 <span class="date">{{TimeSince .Created $.Lang}}</span>
@@ -66,13 +66,13 @@
                     {{else if eq .Type 4}}
                     <div class="issue-commit clear">
                         <i class="mega-octicon octicon-git-commit left"></i>
-                        <a class="author-avatar left" href="#"><img class="avatar-24 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <a class="author-avatar left" href="{{AppSubUrl}}/{{.Poster.Name}}"><img class="avatar-24 radius" src="{{.Poster.AvatarLink}}" alt="{{.Poster.Name}}"/></a>
                         <a class="sha right" href="#">8e259ba</a>
                         <span class="message">Fix: Repo Name can not be converted to lower in the case of backend data storage, or frontend clone link display. or frontend clone link display or frontend clone link display.</span>
                     </div>
                     {{else if eq .Type 2}}
                     <div class="issue-comment clear">
-                        <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <a class="author-avatar" href="{{AppSubUrl}}/{{.Poster.Name}}"><img class="avatar-40 radius" src="{{.Poster.AvatarLink}}" alt="{{.Poster.Name}}"/></a>
                         <div class="panel panel-radius">
                             <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
                                 <span class="date">{{TimeSince .Created $.Lang}}</span>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="issue-commit clear">
                         <i class="mega-octicon octicon-issue-closed left"></i>
-                        <a class="author-avatar left" href="#"><img class="avatar-24 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <a class="author-avatar left" href="{{AppSubUrl}}/{{.Poster.Name}}"><img class="avatar-24 radius" src="{{.Poster.AvatarLink}}" alt="{{.Poster.Name}}"/></a>
                         <span class="message">{{.Poster.Name}} closed this {{TimeSince .Created $.Lang}}</span>
                     </div>
                     {{else}}
@@ -112,7 +112,7 @@
                     </div>
                     {{end}}
                     <div class="issue-add-comment clear">
-                        <a class="author-avatar" href="#"><img class="avatar-40 radius" src="https://avatars2.githubusercontent.com/u/275347?v=1&s=96" alt=""/></a>
+                        <a class="author-avatar" href="{{AppSubUrl}}/{{$.User.Name}}"><img class="avatar-40 radius" src="{{$.User.AvatarLink}}" alt="{{$.User.Name}}"/></a>
                         <div class="panel panel-radius">
                             <div class="panel-header">
                                 <ul class="menu menu-line add-nav">
