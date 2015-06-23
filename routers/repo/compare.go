@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"strings"
 	"path"
+	"strings"
 
 	"github.com/go-gitea/gitea/models"
 	"github.com/go-gitea/gitea/modules/base"
@@ -122,7 +122,7 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return
 	}
 
-	afterCommit, err := repo.GetCommitIdOfRef("refs/remotes/upstream/"+afterBranch)
+	afterCommit, err := repo.GetCommitIdOfRef("refs/remotes/upstream/" + afterBranch)
 	if err != nil {
 		ctx.Handle(404, "GetCommitIdOfRef", err)
 		return
@@ -135,7 +135,7 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return
 	}
 
-	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath, 
+	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath,
 		beforeBranch, afterBranch, setting.Git.MaxGitDiffLines)
 	if err != nil {
 		ctx.Handle(404, "GetDiffRange", err)

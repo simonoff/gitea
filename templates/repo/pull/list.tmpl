@@ -4,10 +4,10 @@
     {{template "repo/header" .}}
     <div class="issue-main container repo-wide-wrapper">
         <ul id="issue-list-nav" class="menu menu-line">
-            <li><a href="{{.RepoLink}}/issues">Issues</a></li>
-            <li class="current"><a href="#">Pull Requests</a></li>
-            <!--<li><a href="#">Labels</a></li>-->
-            <li><a href="{{.RepoLink}}/issues/milestones">Milestones</a></li>
+			<li><a href="{{.RepoLink}}/issues">Issue</a></li>
+			<li class="current"><a href="{{.RepoLink}}/pulls">Pull Request</a></li>
+			<li><a href="{{.RepoLink}}/issues/labels">Labels</a></li>
+			<li><a href="{{.RepoLink}}/issues/milestones">Milestones</a></li>
             <li class="right" id="issue-new"><a href="{{.RepoLink}}/compare"><button id="issue-new-btn" class="btn btn-green text-bold">New Pull Request</button></a></li>
             <!--<li class="right"><a href="#">Filter</a></li>-->
         </ul>

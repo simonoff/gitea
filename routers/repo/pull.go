@@ -11,8 +11,8 @@ import (
 
 	"github.com/go-gitea/gitea/models"
 	"github.com/go-gitea/gitea/modules/auth"
-	"github.com/go-gitea/gitea/modules/git"
 	"github.com/go-gitea/gitea/modules/base"
+	"github.com/go-gitea/gitea/modules/git"
 	"github.com/go-gitea/gitea/modules/middleware"
 	"github.com/go-gitea/gitea/modules/setting"
 )
@@ -104,7 +104,7 @@ func Pull(ctx *middleware.Context) {
 		return
 	}
 
-	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath, 
+	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath,
 		pull.ToBranch, pull.FromBranch, setting.Git.MaxGitDiffLines)
 	if err != nil {
 		ctx.Handle(404, "GetDiffRange", err)
@@ -206,7 +206,7 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	pullRepo := &models.PullRepo{
 		FromRepoID: fromRepoID,
 		FromBranch: froms[1],
-		ToRepoID: toRepoID,
+		ToRepoID:   toRepoID,
 		ToBranch:   tos[1],
 	}
 
