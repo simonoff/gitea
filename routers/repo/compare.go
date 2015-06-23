@@ -59,6 +59,14 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		ctx.Handle(500, "GetRepositoryByRef", err)
 		return
 	}
+
+	beforeCommit, err := beforeRep.GetCommitOfBranch(beforeBranch)
+	if err != nil {
+		ctx.Handle(404, "GetCommit", err)
+		return
+	}
+	beforeCommitId = beforeCommit.Id.String()
+
 	beforeBranches, _ := beforeRep.GetBranches()
 
 	if strings.Contains(afterCommitId, ":") {
@@ -114,7 +122,14 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return
 	}
 
-	commit, err := repo.GetCommitOfBranch(afterBranch)
+	afterCommit, err := repo.GetCommitIdOfRef("refs/remotes/upstream/"+afterBranch)
+	if err != nil {
+		ctx.Handle(404, "GetCommitIdOfRef", err)
+		return
+	}
+	afterCommitId = afterCommit
+
+	commit, err := repo.GetCommit(afterCommitId)
 	if err != nil {
 		ctx.Handle(404, "GetCommit", err)
 		return

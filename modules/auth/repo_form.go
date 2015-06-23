@@ -117,10 +117,10 @@ func (f *CreateIssueForm) Validate(ctx *macaron.Context, errs binding.Errors) bi
 //                                  \/     \/   |__|           \/     \/
 
 type NewPullRequestForm struct {
-	FromBranch  string `binding:"Required"`
-	ToBranch    string `binding:"Required"`
-	Title       string `binding:"Required;MaxSize(255)"`
-	Description string
+	FromBranch  string `form:"from" binding:"Required"`
+	ToBranch    string `form:"to" binding:"Required"`
+	Title       string `form:"title" binding:"Required;MaxSize(255)"`
+	Description string `form:"desc"`
 }
 
 func (f *NewPullRequestForm) Validate(ctx *macaron.Context, errs binding.Errors) binding.Errors {

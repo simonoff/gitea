@@ -14,6 +14,10 @@ import (
 	"github.com/Unknwon/com"
 )
 
+func (repo *Repository) GetCommitIdOfRef(refpath string) (string, error) {
+	return repo.getCommitIdOfRef(refpath)
+}
+
 func (repo *Repository) getCommitIdOfRef(refpath string) (string, error) {
 	stdout, stderr, err := com.ExecCmdDir(repo.Path, "git", "show-ref", "--verify", refpath)
 	if err != nil {

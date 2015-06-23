@@ -18,7 +18,7 @@
                 </button>
             <span class="msg">
                 <a href="#" class="text-bold pr-author">{{.Issue.Poster.Name}}</a> <span class="label radius label-blue">{{.CommitCount}}</span> commits
-                <span class="pr-branch label label-gray radius">gogits:{{.Pull.FromBranch}}</span>
+                <span class="pr-branch label label-gray radius">{{.FromRepo.Owner.Name}}:{{.Pull.FromBranch}}</span>
                 <i class="octicon octicon-arrow-right"></i>
                 <span class="pr-branch label label-gray radius">{{.Pull.ToBranch}}</span>
             </span>
@@ -53,9 +53,11 @@
                             <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
                                 <span class="date">{{TimeSince .Created $.Lang}}</span>
                             <span class="action right">
-                                <span class="label label-black label-radius">owner</span>
-                                <a href="#"><i class="octicon octicon-pencil"></i></a>
+                                {{if eq .PosterId $.Issue.PosterID}}<span class="label label-black label-radius">owner</span>{{end}}
+                                <!--TODO: complete this -->
+                                <!--<a href="#"><i class="octicon octicon-pencil"></i></a>
                                 <a href="#"><i class="octicon octicon-x"></i></a>
+                                -->
                             </span>
                             </p>
                             <div class="panel-content content markdown">{{.Content}}</div>
@@ -75,9 +77,7 @@
                             <p class="panel-header clear"><a class="author-name" href="#">{{.Poster.Name}}</a>
                                 <span class="date">{{TimeSince .Created $.Lang}}</span>
                             <span class="action right">
-                                <span class="label label-black label-radius">owner</span>
-                                <a href="#"><i class="octicon octicon-pencil"></i></a>
-                                <a href="#"><i class="octicon octicon-x"></i></a>
+                                {{if eq .PosterId $.Issue.PosterID}}<span class="label label-black label-radius">owner</span>{{end}}
                             </span>
                             </p>
                             <div class="panel-content content markdown">{{.Content}}</div>
@@ -127,7 +127,8 @@
                                     <input type="hidden" name="issueIndex" value="{{.Issue.Index}}"/>
                                     <textarea class="ipt ipt-radius js-preview-input" name="content" id="issue-add-content"></textarea>
                                     <p class="submit text-right">
-                                        <button class="btn btn-gray btn-radius text-bold" name="submit" value="close">Close pull request</button>&nbsp;&nbsp;
+                                        {{if not .Issue.IsClosed}}<button class="btn btn-gray btn-radius text-bold" name="submit" value="close">Close pull request</button>&nbsp;&nbsp;
+                                        {{end}}
                                         <button class="btn btn-green btn-radius text-bold" name="submit" value="comment">Comment</button>
                                     </p>
                                 </form>

@@ -899,7 +899,8 @@ func (i *Comment) GetPoster() (err error) {
 }
 
 // CreateComment creates comment of issue or commit.
-func CreateComment(userId, repoId, issueId int64, commitId, line string, cmtType CommentType, content string, attachments []int64) (*Comment, error) {
+func CreateComment(userId, repoId, issueId int64, commitId, line string, 
+	cmtType CommentType, content string, attachments []int64) (*Comment, error) {
 	sess := x.NewSession()
 	defer sess.Close()
 	if err := sess.Begin(); err != nil {
@@ -948,11 +949,32 @@ func CreateComment(userId, repoId, issueId int64, commitId, line string, cmtType
 			return nil, err
 		}
 	case COMMENT_TYPE_CLOSE:
-		rawSql := "UPDATE `repository` SET num_closed_issues = num_closed_issues + 1 WHERE id = ?"
-		if _, err := sess.Exec(rawSql, repoId); err != nil {
-			sess.Rollback()
+		var issue Issue
+		has, err := sess.Id(issueId).Get(&issue)
+		if err != nil {
 			return nil, err
 		}
+		if !has {
+			return nil, ErrIssueNotExist
+		}
+		if issue.IsPull {
+			if _, err := sess.Id(issueId).Cols("is_closed").Update(&PullRepo{IsClosed:true}); err != nil {
+				sess.Rollback()
+				return nil, err
+			}
+			rawSql := "UPDATE `repository` SET num_closed_pulls = num_closed_pulls + 1 WHERE id = ?"
+			if _, err := sess.Exec(rawSql, repoId); err != nil {
+				sess.Rollback()
+				return nil, err
+			}
+		} else {
+			rawSql := "UPDATE `repository` SET num_closed_issues = num_closed_issues + 1 WHERE id = ?"
+			if _, err := sess.Exec(rawSql, repoId); err != nil {
+				sess.Rollback()
+				return nil, err
+			}
+		}
+
 		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed:true}); err != nil {
 			sess.Rollback()
 			return nil, err

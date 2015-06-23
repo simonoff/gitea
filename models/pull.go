@@ -29,9 +29,11 @@ type PullRepo struct {
 	FromRepoID   int64
 	*Issue       `xorm:"-"`
 	FromBranch   string
+	ToRepoID int64
 	ToBranch     string
 	CanAutoMerge bool
 	IsMerged     bool
+	IsClosed     bool
 	BeforeCommit string
 	AfterCommit  string
 	Created      time.Time `xorm:"created"`
@@ -156,4 +158,8 @@ func GetPullRequest(fromRepoID int64) (*Issue, error) {
 		return nil, ErrIssueNotExist
 	}
 	return pr, nil
+}
+
+func IsPullRequestOpened(pull *PullRepo) (bool, error) {
+	return x.Where("is_merged = ? AND is_closed=?", false, false).Get(pull)
 }

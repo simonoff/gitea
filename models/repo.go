@@ -974,6 +974,31 @@ func GetRepositoryByRef(ref string) (*Repository, error) {
 	return GetRepositoryByName(user.Id, repoName)
 }
 
+func GetRepositoryByFork(repoId int64, ownerName string)(*Repository, error) {
+	var user = User{
+		Name: ownerName,
+	}
+	has, err := x.Get(&user)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, ErrRepoNotExist{0, repoId, ownerName}
+	}
+
+	repo := &Repository{
+		ForkID: repoId,
+		OwnerID:   user.Id,
+	}
+	has, err = x.Get(repo)
+	if err != nil {
+		return nil, err
+	} else if !has {
+		return nil, ErrRepoNotExist{0, user.Id, ownerName}
+	}
+	return repo, err
+}
+
 // GetRepositoryByName returns the repository by given name under user if exists.
 func GetRepositoryByName(uid int64, repoName string) (*Repository, error) {
 	repo := &Repository{

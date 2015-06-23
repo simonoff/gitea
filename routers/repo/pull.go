@@ -5,7 +5,9 @@
 package repo
 
 import (
+	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/go-gitea/gitea/models"
 	"github.com/go-gitea/gitea/modules/auth"
@@ -70,6 +72,7 @@ func Pull(ctx *middleware.Context) {
 		ctx.Handle(500, "GetRepositoryById", err)
 		return
 	}
+	fromRepo.GetOwner()
 
 	beforeRepoPath, err := repo.RepoPath()
 	if err != nil {
@@ -145,6 +148,7 @@ func Pull(ctx *middleware.Context) {
 	ctx.Data["Commit"] = commit
 	ctx.Data["Diff"] = diff
 	ctx.Data["IsImageFile"] = isImageFile
+	ctx.Data["FromRepo"] = fromRepo
 
 	ctx.HTML(200, PULL)
 }
@@ -168,81 +172,79 @@ func hasPullRequested(ctx *middleware.Context, repoID int64, forkRepo *models.Re
 	return false
 }
 
-/*
-func NewPullRequest(ctx *middleware.Context) {
-	repo := ctx.Repo.Repository
-	repoID := ctx.ParamsInt64("RepoID")
-
-	ctx.Data["RequestFrom"] = repo.Owner.Name + "/" + repo.Name
-
-	if err := repo.GetForkRepo(); err != nil {
-		ctx.Handle(500, "GetForkRepo", err)
-		return
-	}
-	forkRepo := repo.ForkRepo
-
-	if hasPullRequested(ctx, repo.ID, forkRepo) {
-		return
-	}
-
-	if err := forkRepo.GetBranches(); err != nil {
-		ctx.Handle(500, "GetBranches", err)
-		return
-	}
-	ctx.Data["ForkRepo"] = forkRepo
-	ctx.Data["RequestTo"] = forkRepo.Owner.Name + "/" + forkRepo.Name
-
-	if len(forkRepo.DefaultBranch) == 0 {
-		forkRepo.DefaultBranch = forkRepo.Branches[0]
-	}
-	ctx.Data["DefaultBranch"] = forkRepo.DefaultBranch
-
-	//ctx.HTML(200, NEW_PULL)
-
-	ctx.Redirect(location)
-}*/
-
 // FIXME: check if branch exists
 func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	repo := ctx.Repo.Repository
-	if err := repo.GetForkRepo(); err != nil {
+
+	froms := strings.Split(form.FromBranch, ":")
+	tos := strings.Split(form.ToBranch, ":")
+	if len(froms) != 2 && len(tos) != 2 {
+		ctx.Handle(500, "Params error", errors.New("should have repo and branch names"))
+		return
+	}
+
+	fromRepo, err := models.GetRepositoryByFork(repo.ID, froms[0])
+	if err != nil {
 		ctx.Handle(500, "GetForkRepo", err)
 		return
 	}
-	forkRepo := repo.ForkRepo
+	fromRepoID := fromRepo.ID
 
-	if hasPullRequested(ctx, repo.ID, forkRepo) {
+	var toRepoID int64
+	if repo.Owner.Name == tos[0] {
+		toRepoID = repo.ID
+	} else {
+		toRepo, err := models.GetRepositoryByFork(repo.ID, tos[0])
+		if err != nil {
+			ctx.Handle(500, "GetForkRepo", err)
+			return
+		}
+		toRepoID = toRepo.ID
+	}
+
+	pullRepo := &models.PullRepo{
+		FromRepoID: fromRepoID,
+		FromBranch: froms[1],
+		ToRepoID: toRepoID,
+		ToBranch:   tos[1],
+	}
+
+	has, err := models.IsPullRequestOpened(pullRepo)
+	if err != nil {
+		ctx.Handle(500, "GetByExample", err)
+		return
+	}
+
+	repoLink, err := repo.RepoLink()
+	if err != nil {
+		ctx.Handle(500, "RepoLink", err)
+		return
+	}
+
+	if has {
+		ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, pullRepo.Index))
 		return
 	}
 
 	pr := &models.Issue{
-		RepoID:   repo.ForkID,
-		Index:    int64(forkRepo.NumIssues) + 1,
+		RepoID:   repo.ID,
+		Index:    int64(repo.NumPulls) + 1,
 		Name:     form.Title,
 		PosterID: ctx.User.Id,
 		IsPull:   true,
 		Content:  form.Description,
 	}
-	pullRepo := &models.PullRepo{
-		FromRepoID: repo.ID,
-		FromBranch: form.FromBranch,
-		ToBranch:   form.ToBranch,
-	}
+
 	if err := models.NewPullRequest(pr, pullRepo); err != nil {
 		ctx.Handle(500, "NewPullRequest", err)
 		return
-	} else if err := models.NewIssueUserPairs(forkRepo, pr.ID, forkRepo.OwnerID,
+	} else if err := models.NewIssueUserPairs(repo, pr.ID, repo.OwnerID,
 		ctx.User.Id, 0); err != nil {
 		ctx.Handle(500, "NewIssueUserPairs", err)
 		return
 	}
 
 	// FIXME: add action
-	repoLink, err := forkRepo.RepoLink()
-	if err != nil {
-		ctx.Handle(500, "RepoLink", err)
-		return
-	}
 	ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, pr.Index))
 }
 
