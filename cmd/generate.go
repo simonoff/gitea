@@ -5,19 +5,19 @@
 package cmd
 
 import (
-	"os"
 	"bufio"
+	"github.com/codegangsta/cli"
 	"log"
+	"os"
 	"strings"
 	"text/template"
-	"github.com/codegangsta/cli"
 
 	"github.com/go-gitea/gitea/modules/setting"
 )
 
 var CmdGenerate = cli.Command{
-	Name:  "generate",
-	Usage: "Generate self-signed certificate, apache and nginx configuration files",
+	Name:        "generate",
+	Usage:       "Generate self-signed certificate, apache and nginx configuration files",
 	Description: `Generate configuration files to use a web server as a proxy for Gogs.`,
 	Flags: []cli.Flag{
 		cli.StringFlag{"config, c", "custom/conf/app.ini", "Custom configuration file path", ""},
@@ -25,16 +25,16 @@ var CmdGenerate = cli.Command{
 	Subcommands: []cli.Command{
 		CmdCert,
 		{
-			Name: "apache",
-			Usage: "generate Apache configuration file",
+			Name:   "apache",
+			Usage:  "generate Apache configuration file",
 			Action: runApache,
 			Flags: []cli.Flag{
 				cli.StringFlag{"subpath", "", "Use a sub-path", ""},
 			},
 		},
 		{
-			Name: "nginx",
-			Usage: "generate nginx configuration file",
+			Name:   "nginx",
+			Usage:  "generate nginx configuration file",
 			Action: runNginx,
 			Flags: []cli.Flag{
 				cli.StringFlag{"subpath", "", "Use a sub-path", ""},
@@ -50,8 +50,7 @@ const (
 	NGINX
 )
 
-const ApacheConfTemplate =
-`<VirtualHost *:80>
+const ApacheConfTemplate = `<VirtualHost *:80>
     ServerName {{.Domain}}
 
     <Proxy *>
@@ -67,8 +66,7 @@ const ApacheConfTemplate =
     </Location>
 </VirtualHost>`
 
-const NginxConfTemplate =
-`server {
+const NginxConfTemplate = `server {
     listen 80;
     server_name {{.Domain}};
 
@@ -79,7 +77,7 @@ const NginxConfTemplate =
 
 var ServerTemplates = map[ServerType]string{
 	APACHE: ApacheConfTemplate,
-	NGINX: NginxConfTemplate,
+	NGINX:  NginxConfTemplate,
 }
 
 const outFile = "gitea.conf"
@@ -111,16 +109,16 @@ func genConfigFile(ctx *cli.Context, st ServerType) {
 	w := bufio.NewWriter(confOut)
 
 	type Params struct {
-		Domain string
-		Addr string
-		Port string
+		Domain  string
+		Addr    string
+		Port    string
 		Subpath string
 	}
 
 	params := Params{
-		Domain: setting.Domain,
-		Addr: "127.0.0.1",
-		Port: setting.HttpPort,
+		Domain:  setting.Domain,
+		Addr:    "127.0.0.1",
+		Port:    setting.HttpPort,
 		Subpath: "/",
 	}
 
@@ -130,7 +128,7 @@ func genConfigFile(ctx *cli.Context, st ServerType) {
 
 	if ctx.IsSet("subpath") {
 		params.Subpath = ctx.String("subpath")
-		if (!strings.HasPrefix(params.Subpath, "/")) {
+		if !strings.HasPrefix(params.Subpath, "/") {
 			params.Subpath = "/" + params.Subpath
 		}
 	}

@@ -112,7 +112,7 @@ var (
 	commitPattern        = regexp.MustCompile(`(\s|^)https?.*commit/[0-9a-zA-Z]+(#+[0-9a-zA-Z-]*)?`)
 	issueFullPattern     = regexp.MustCompile(`(\s|^)https?.*issues/[0-9]+(#+[0-9a-zA-Z-]*)?`)
 	issueIndexPattern    = regexp.MustCompile(`( |^)#[0-9]+\b`)
-        crossRefIssuePattern = regexp.MustCompile(`( |^)[0-9a-zA-Z]+/[0-9a-zA-Z]+#[0-9]+\b`)
+	crossRefIssuePattern = regexp.MustCompile(`( |^)[0-9a-zA-Z]+/[0-9a-zA-Z]+#[0-9]+\b`)
 	sha1CurrentPattern   = regexp.MustCompile(`\b[0-9a-f]{40}\b`)
 )
 
@@ -148,7 +148,7 @@ func RenderSpecialLink(rawBytes []byte, urlPrefix string) []byte {
 	}
 	rawBytes = RenderIssueIndexPattern(rawBytes, urlPrefix)
 	rawBytes = RenderSha1CurrentPattern(rawBytes, urlPrefix)
-        rawBytes = RenderCrossReferenceIssuePattern(rawBytes)
+	rawBytes = RenderCrossReferenceIssuePattern(rawBytes)
 	return rawBytes
 }
 
@@ -177,19 +177,19 @@ func RenderIssueIndexPattern(rawBytes []byte, urlPrefix string) []byte {
 }
 
 func RenderCrossReferenceIssuePattern(rawBytes []byte) []byte {
-        ms := crossRefIssuePattern.FindAll(rawBytes, -1)
-        for _, m := range ms {
-                var space string
-                m2 := m
-                if m2[0] == ' ' {
-                    space = " "
-                    m2 = m2[1:]
-                }
-                repo := bytes.Split(m2, []byte("#"))[0]
-                issue := bytes.Split(m2, []byte("#"))[1]
-                rawBytes = bytes.Replace(rawBytes, m, []byte(fmt.Sprintf(`%s<a href="/%s/issues/%s">%s</a>`, space, repo, issue, m2)), 1)
-        }
-        return rawBytes
+	ms := crossRefIssuePattern.FindAll(rawBytes, -1)
+	for _, m := range ms {
+		var space string
+		m2 := m
+		if m2[0] == ' ' {
+			space = " "
+			m2 = m2[1:]
+		}
+		repo := bytes.Split(m2, []byte("#"))[0]
+		issue := bytes.Split(m2, []byte("#"))[1]
+		rawBytes = bytes.Replace(rawBytes, m, []byte(fmt.Sprintf(`%s<a href="/%s/issues/%s">%s</a>`, space, repo, issue, m2)), 1)
+	}
+	return rawBytes
 }
 func RenderRawMarkdown(body []byte, urlPrefix string) []byte {
 	htmlFlags := 0

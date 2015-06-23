@@ -427,7 +427,7 @@ func runWeb(ctx *cli.Context) {
 			m.Post("/:index/assignee", repo.UpdateAssignee)
 			m.Get("/:index/attachment/:id", repo.IssueGetAttachment)
 
-			m.Get("/labels",repo.Labels)
+			m.Get("/labels", repo.Labels)
 			m.Post("/labels/new", bindIgnErr(auth.CreateLabelForm{}), repo.NewLabel)
 			m.Post("/labels/edit", bindIgnErr(auth.CreateLabelForm{}), repo.UpdateLabel)
 			m.Post("/labels/delete", repo.DeleteLabel)
@@ -457,8 +457,8 @@ func runWeb(ctx *cli.Context) {
 		m.Get("/branches", repo.Branches)
 		m.Get("/archive/*", repo.Download)
 		m.Get("/issues2/", repo.Issues2)
-		m.Get("/labels2/", repo.Labels2)
-		m.Get("/milestone2/", repo.Milestones2)
+		m.Get("/issues/labels2/", repo.Labels2)
+		m.Get("/issues/milestone2/", repo.Milestones2)
 
 		m.Group("", func() {
 			m.Get("/src/*", repo.Home)

@@ -160,8 +160,8 @@ type Repository struct {
 
 	IsFork   bool `xorm:"NOT NULL DEFAULT false"`
 	ForkID   int64
-	ForkRepo *Repository `xorm:"-"`
-	Forks []*Repository `xorm:"-"`
+	ForkRepo *Repository   `xorm:"-"`
+	Forks    []*Repository `xorm:"-"`
 
 	Branches []string `xorm:"-"`
 
@@ -219,7 +219,7 @@ func (repo *Repository) GetForks() (err error) {
 		fork.GetOwner()
 		repo.Forks = append(repo.Forks, fork)
 		return nil
-		})
+	})
 	return
 }
 
@@ -974,7 +974,7 @@ func GetRepositoryByRef(ref string) (*Repository, error) {
 	return GetRepositoryByName(user.Id, repoName)
 }
 
-func GetRepositoryByFork(repoId int64, ownerName string)(*Repository, error) {
+func GetRepositoryByFork(repoId int64, ownerName string) (*Repository, error) {
 	var user = User{
 		Name: ownerName,
 	}
@@ -987,8 +987,8 @@ func GetRepositoryByFork(repoId int64, ownerName string)(*Repository, error) {
 	}
 
 	repo := &Repository{
-		ForkID: repoId,
-		OwnerID:   user.Id,
+		ForkID:  repoId,
+		OwnerID: user.Id,
 	}
 	has, err = x.Get(repo)
 	if err != nil {

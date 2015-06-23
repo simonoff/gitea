@@ -23,17 +23,17 @@ import (
 type ActionType int
 
 const (
-	CREATE_REPO   ActionType = iota + 1 // 1
-	DELETE_REPO                         // 2
-	STAR_REPO                           // 3
-	FOLLOW_REPO                         // 4
-	COMMIT_REPO                         // 5
-	CREATE_ISSUE                        // 6
-	PULL_REQUEST                        // 7
-	TRANSFER_REPO                       // 8
-	PUSH_TAG                            // 9
-	COMMENT_ISSUE                       // 10
-	COMMENT_COMMIT                      // 11
+	CREATE_REPO    ActionType = iota + 1 // 1
+	DELETE_REPO                          // 2
+	STAR_REPO                            // 3
+	FOLLOW_REPO                          // 4
+	COMMIT_REPO                          // 5
+	CREATE_ISSUE                         // 6
+	PULL_REQUEST                         // 7
+	TRANSFER_REPO                        // 8
+	PUSH_TAG                             // 9
+	COMMENT_ISSUE                        // 10
+	COMMENT_COMMIT                       // 11
 )
 
 var (

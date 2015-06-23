@@ -2,10 +2,10 @@ package ber
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"reflect"
-	"errors"
 )
 
 type Packet struct {
@@ -181,7 +181,7 @@ func readBytes(reader io.Reader, buf []byte) error {
 	if reader == nil {
 		return errors.New("reader was nil, aborting")
 	}
-	
+
 	for idx < buflen {
 		n, err := reader.Read(buf[idx:])
 		if err != nil {

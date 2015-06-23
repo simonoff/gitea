@@ -46,12 +46,12 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
-	"strings"
-	"os"
-	"time"
 	"io/ioutil"
+	"os"
 	"path"
 	"path/filepath"
+	"strings"
+	"time"
 )
 
 func bindataRead(data []byte, name string) ([]byte, error) {
@@ -80,9 +80,9 @@ type asset struct {
 }
 
 type bindataFileInfo struct {
-	name string
-	size int64
-	mode os.FileMode
+	name    string
+	size    int64
+	mode    os.FileMode
 	modTime time.Time
 }
 
@@ -121,7 +121,7 @@ func confAppIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/app.ini", size: 8707, mode: os.FileMode(420), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -141,7 +141,7 @@ func confGitignoreAndroid() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Android", size: 270, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -161,7 +161,7 @@ func confGitignoreC() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/C", size: 143, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -181,7 +181,7 @@ func confGitignoreCSharp() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/C Sharp", size: 1520, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -201,7 +201,7 @@ func confGitignoreC2() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/C++", size: 126, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -221,7 +221,7 @@ func confGitignoreGoogleGo() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Google Go", size: 251, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -241,7 +241,7 @@ func confGitignoreJava() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Java", size: 188, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -261,7 +261,7 @@ func confGitignoreObjectiveC() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Objective-C", size: 280, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -281,7 +281,7 @@ func confGitignorePython() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Python", size: 314, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -301,7 +301,7 @@ func confGitignoreRuby() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/gitignore/Ruby", size: 158, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -321,7 +321,7 @@ func confLicenseAfferoGpl() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/Affero GPL", size: 34499, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -341,7 +341,7 @@ func confLicenseApacheV2License() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/Apache v2 License", size: 11323, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -361,7 +361,7 @@ func confLicenseArtisticLicense20() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/Artistic License 2.0", size: 8887, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -381,7 +381,7 @@ func confLicenseBsd3ClauseLicense() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/BSD (3-Clause) License", size: 1473, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -401,7 +401,7 @@ func confLicenseBsdLicense() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/BSD license", size: 1280, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -421,7 +421,7 @@ func confLicenseCc010Universal() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/CC0 1.0 Universal", size: 6554, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -441,7 +441,7 @@ func confLicenseEclipsePublicLicenseV10() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/Eclipse Public License v1.0", size: 11513, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -461,7 +461,7 @@ func confLicenseGplV2() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/GPL v2", size: 18025, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -481,7 +481,7 @@ func confLicenseGplV3() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/GPL v3", size: 35120, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -501,7 +501,7 @@ func confLicenseIscLicense() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/ISC license", size: 716, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -521,7 +521,7 @@ func confLicenseLgplV21() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/LGPL v2.1", size: 26442, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -541,7 +541,7 @@ func confLicenseLgplV3() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/LGPL v3", size: 7631, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -561,7 +561,7 @@ func confLicenseMitLicense() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/MIT License", size: 1065, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -581,7 +581,7 @@ func confLicenseMozillaPublicLicenseVersion20() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/license/Mozilla Public License Version 2.0", size: 15920, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -601,7 +601,7 @@ func confLocaleTranslators() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/TRANSLATORS", size: 443, mode: os.FileMode(420), modTime: time.Unix(1433848758, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -621,7 +621,7 @@ func confLocaleLocale_deDeIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_de-DE.ini", size: 33030, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -641,7 +641,7 @@ func confLocaleLocale_enUsIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_en-US.ini", size: 31951, mode: os.FileMode(420), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -661,7 +661,7 @@ func confLocaleLocale_esEsIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_es-ES.ini", size: 34492, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -681,7 +681,7 @@ func confLocaleLocale_frFrIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_fr-FR.ini", size: 33846, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -701,7 +701,7 @@ func confLocaleLocale_jaJpIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_ja-JP.ini", size: 38079, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -721,7 +721,7 @@ func confLocaleLocale_lvLvIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_lv-LV.ini", size: 34490, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -741,7 +741,7 @@ func confLocaleLocale_nlNlIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_nl-NL.ini", size: 32292, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -761,7 +761,7 @@ func confLocaleLocale_plPlIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_pl-PL.ini", size: 32742, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -781,7 +781,7 @@ func confLocaleLocale_ptBrIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_pt-BR.ini", size: 33130, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -801,7 +801,7 @@ func confLocaleLocale_ruRuIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_ru-RU.ini", size: 45946, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -821,7 +821,7 @@ func confLocaleLocale_zhCnIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_zh-CN.ini", size: 30487, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -841,7 +841,7 @@ func confLocaleLocale_zhHkIni() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "conf/locale/locale_zh-HK.ini", size: 30658, mode: os.FileMode(493), modTime: time.Unix(1433933811, 0)}
-	a := &asset{bytes: bytes, info:  info}
+	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
@@ -864,7 +864,7 @@ func Asset(name string) ([]byte, error) {
 // It simplifies safe initialization of global variables.
 func MustAsset(name string) []byte {
 	a, err := Asset(name)
-	if (err != nil) {
+	if err != nil {
 		panic("asset: Asset(" + name + "): " + err.Error())
 	}
 
@@ -897,43 +897,43 @@ func AssetNames() []string {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
-	"conf/app.ini": confAppIni,
-	"conf/gitignore/Android": confGitignoreAndroid,
-	"conf/gitignore/C": confGitignoreC,
-	"conf/gitignore/C Sharp": confGitignoreCSharp,
-	"conf/gitignore/C++": confGitignoreC2,
-	"conf/gitignore/Google Go": confGitignoreGoogleGo,
-	"conf/gitignore/Java": confGitignoreJava,
-	"conf/gitignore/Objective-C": confGitignoreObjectiveC,
-	"conf/gitignore/Python": confGitignorePython,
-	"conf/gitignore/Ruby": confGitignoreRuby,
-	"conf/license/Affero GPL": confLicenseAfferoGpl,
-	"conf/license/Apache v2 License": confLicenseApacheV2License,
-	"conf/license/Artistic License 2.0": confLicenseArtisticLicense20,
-	"conf/license/BSD (3-Clause) License": confLicenseBsd3ClauseLicense,
-	"conf/license/BSD license": confLicenseBsdLicense,
-	"conf/license/CC0 1.0 Universal": confLicenseCc010Universal,
-	"conf/license/Eclipse Public License v1.0": confLicenseEclipsePublicLicenseV10,
-	"conf/license/GPL v2": confLicenseGplV2,
-	"conf/license/GPL v3": confLicenseGplV3,
-	"conf/license/ISC license": confLicenseIscLicense,
-	"conf/license/LGPL v2.1": confLicenseLgplV21,
-	"conf/license/LGPL v3": confLicenseLgplV3,
-	"conf/license/MIT License": confLicenseMitLicense,
+	"conf/app.ini":                                    confAppIni,
+	"conf/gitignore/Android":                          confGitignoreAndroid,
+	"conf/gitignore/C":                                confGitignoreC,
+	"conf/gitignore/C Sharp":                          confGitignoreCSharp,
+	"conf/gitignore/C++":                              confGitignoreC2,
+	"conf/gitignore/Google Go":                        confGitignoreGoogleGo,
+	"conf/gitignore/Java":                             confGitignoreJava,
+	"conf/gitignore/Objective-C":                      confGitignoreObjectiveC,
+	"conf/gitignore/Python":                           confGitignorePython,
+	"conf/gitignore/Ruby":                             confGitignoreRuby,
+	"conf/license/Affero GPL":                         confLicenseAfferoGpl,
+	"conf/license/Apache v2 License":                  confLicenseApacheV2License,
+	"conf/license/Artistic License 2.0":               confLicenseArtisticLicense20,
+	"conf/license/BSD (3-Clause) License":             confLicenseBsd3ClauseLicense,
+	"conf/license/BSD license":                        confLicenseBsdLicense,
+	"conf/license/CC0 1.0 Universal":                  confLicenseCc010Universal,
+	"conf/license/Eclipse Public License v1.0":        confLicenseEclipsePublicLicenseV10,
+	"conf/license/GPL v2":                             confLicenseGplV2,
+	"conf/license/GPL v3":                             confLicenseGplV3,
+	"conf/license/ISC license":                        confLicenseIscLicense,
+	"conf/license/LGPL v2.1":                          confLicenseLgplV21,
+	"conf/license/LGPL v3":                            confLicenseLgplV3,
+	"conf/license/MIT License":                        confLicenseMitLicense,
 	"conf/license/Mozilla Public License Version 2.0": confLicenseMozillaPublicLicenseVersion20,
-	"conf/locale/TRANSLATORS": confLocaleTranslators,
-	"conf/locale/locale_de-DE.ini": confLocaleLocale_deDeIni,
-	"conf/locale/locale_en-US.ini": confLocaleLocale_enUsIni,
-	"conf/locale/locale_es-ES.ini": confLocaleLocale_esEsIni,
-	"conf/locale/locale_fr-FR.ini": confLocaleLocale_frFrIni,
-	"conf/locale/locale_ja-JP.ini": confLocaleLocale_jaJpIni,
-	"conf/locale/locale_lv-LV.ini": confLocaleLocale_lvLvIni,
-	"conf/locale/locale_nl-NL.ini": confLocaleLocale_nlNlIni,
-	"conf/locale/locale_pl-PL.ini": confLocaleLocale_plPlIni,
-	"conf/locale/locale_pt-BR.ini": confLocaleLocale_ptBrIni,
-	"conf/locale/locale_ru-RU.ini": confLocaleLocale_ruRuIni,
-	"conf/locale/locale_zh-CN.ini": confLocaleLocale_zhCnIni,
-	"conf/locale/locale_zh-HK.ini": confLocaleLocale_zhHkIni,
+	"conf/locale/TRANSLATORS":                         confLocaleTranslators,
+	"conf/locale/locale_de-DE.ini":                    confLocaleLocale_deDeIni,
+	"conf/locale/locale_en-US.ini":                    confLocaleLocale_enUsIni,
+	"conf/locale/locale_es-ES.ini":                    confLocaleLocale_esEsIni,
+	"conf/locale/locale_fr-FR.ini":                    confLocaleLocale_frFrIni,
+	"conf/locale/locale_ja-JP.ini":                    confLocaleLocale_jaJpIni,
+	"conf/locale/locale_lv-LV.ini":                    confLocaleLocale_lvLvIni,
+	"conf/locale/locale_nl-NL.ini":                    confLocaleLocale_nlNlIni,
+	"conf/locale/locale_pl-PL.ini":                    confLocaleLocale_plPlIni,
+	"conf/locale/locale_pt-BR.ini":                    confLocaleLocale_ptBrIni,
+	"conf/locale/locale_ru-RU.ini":                    confLocaleLocale_ruRuIni,
+	"conf/locale/locale_zh-CN.ini":                    confLocaleLocale_zhCnIni,
+	"conf/locale/locale_zh-HK.ini":                    confLocaleLocale_zhHkIni,
 }
 
 // AssetDir returns the file names below a certain
@@ -972,138 +972,101 @@ func AssetDir(name string) ([]string, error) {
 }
 
 type bintree struct {
-	Func func() (*asset, error)
+	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
 	"conf": &bintree{nil, map[string]*bintree{
-		"app.ini": &bintree{confAppIni, map[string]*bintree{
-		}},
+		"app.ini": &bintree{confAppIni, map[string]*bintree{}},
 		"gitignore": &bintree{nil, map[string]*bintree{
-			"Android": &bintree{confGitignoreAndroid, map[string]*bintree{
-			}},
-			"C": &bintree{confGitignoreC, map[string]*bintree{
-			}},
-			"C Sharp": &bintree{confGitignoreCSharp, map[string]*bintree{
-			}},
-			"C++": &bintree{confGitignoreC2, map[string]*bintree{
-			}},
-			"Google Go": &bintree{confGitignoreGoogleGo, map[string]*bintree{
-			}},
-			"Java": &bintree{confGitignoreJava, map[string]*bintree{
-			}},
-			"Objective-C": &bintree{confGitignoreObjectiveC, map[string]*bintree{
-			}},
-			"Python": &bintree{confGitignorePython, map[string]*bintree{
-			}},
-			"Ruby": &bintree{confGitignoreRuby, map[string]*bintree{
-			}},
+			"Android":     &bintree{confGitignoreAndroid, map[string]*bintree{}},
+			"C":           &bintree{confGitignoreC, map[string]*bintree{}},
+			"C Sharp":     &bintree{confGitignoreCSharp, map[string]*bintree{}},
+			"C++":         &bintree{confGitignoreC2, map[string]*bintree{}},
+			"Google Go":   &bintree{confGitignoreGoogleGo, map[string]*bintree{}},
+			"Java":        &bintree{confGitignoreJava, map[string]*bintree{}},
+			"Objective-C": &bintree{confGitignoreObjectiveC, map[string]*bintree{}},
+			"Python":      &bintree{confGitignorePython, map[string]*bintree{}},
+			"Ruby":        &bintree{confGitignoreRuby, map[string]*bintree{}},
 		}},
 		"license": &bintree{nil, map[string]*bintree{
-			"Affero GPL": &bintree{confLicenseAfferoGpl, map[string]*bintree{
-			}},
-			"Apache v2 License": &bintree{confLicenseApacheV2License, map[string]*bintree{
-			}},
-			"Artistic License 2.0": &bintree{confLicenseArtisticLicense20, map[string]*bintree{
-			}},
-			"BSD (3-Clause) License": &bintree{confLicenseBsd3ClauseLicense, map[string]*bintree{
-			}},
-			"BSD license": &bintree{confLicenseBsdLicense, map[string]*bintree{
-			}},
-			"CC0 1.0 Universal": &bintree{confLicenseCc010Universal, map[string]*bintree{
-			}},
-			"Eclipse Public License v1.0": &bintree{confLicenseEclipsePublicLicenseV10, map[string]*bintree{
-			}},
-			"GPL v2": &bintree{confLicenseGplV2, map[string]*bintree{
-			}},
-			"GPL v3": &bintree{confLicenseGplV3, map[string]*bintree{
-			}},
-			"ISC license": &bintree{confLicenseIscLicense, map[string]*bintree{
-			}},
-			"LGPL v2.1": &bintree{confLicenseLgplV21, map[string]*bintree{
-			}},
-			"LGPL v3": &bintree{confLicenseLgplV3, map[string]*bintree{
-			}},
-			"MIT License": &bintree{confLicenseMitLicense, map[string]*bintree{
-			}},
-			"Mozilla Public License Version 2.0": &bintree{confLicenseMozillaPublicLicenseVersion20, map[string]*bintree{
-			}},
+			"Affero GPL":                         &bintree{confLicenseAfferoGpl, map[string]*bintree{}},
+			"Apache v2 License":                  &bintree{confLicenseApacheV2License, map[string]*bintree{}},
+			"Artistic License 2.0":               &bintree{confLicenseArtisticLicense20, map[string]*bintree{}},
+			"BSD (3-Clause) License":             &bintree{confLicenseBsd3ClauseLicense, map[string]*bintree{}},
+			"BSD license":                        &bintree{confLicenseBsdLicense, map[string]*bintree{}},
+			"CC0 1.0 Universal":                  &bintree{confLicenseCc010Universal, map[string]*bintree{}},
+			"Eclipse Public License v1.0":        &bintree{confLicenseEclipsePublicLicenseV10, map[string]*bintree{}},
+			"GPL v2":                             &bintree{confLicenseGplV2, map[string]*bintree{}},
+			"GPL v3":                             &bintree{confLicenseGplV3, map[string]*bintree{}},
+			"ISC license":                        &bintree{confLicenseIscLicense, map[string]*bintree{}},
+			"LGPL v2.1":                          &bintree{confLicenseLgplV21, map[string]*bintree{}},
+			"LGPL v3":                            &bintree{confLicenseLgplV3, map[string]*bintree{}},
+			"MIT License":                        &bintree{confLicenseMitLicense, map[string]*bintree{}},
+			"Mozilla Public License Version 2.0": &bintree{confLicenseMozillaPublicLicenseVersion20, map[string]*bintree{}},
 		}},
 		"locale": &bintree{nil, map[string]*bintree{
-			"TRANSLATORS": &bintree{confLocaleTranslators, map[string]*bintree{
-			}},
-			"locale_de-DE.ini": &bintree{confLocaleLocale_deDeIni, map[string]*bintree{
-			}},
-			"locale_en-US.ini": &bintree{confLocaleLocale_enUsIni, map[string]*bintree{
-			}},
-			"locale_es-ES.ini": &bintree{confLocaleLocale_esEsIni, map[string]*bintree{
-			}},
-			"locale_fr-FR.ini": &bintree{confLocaleLocale_frFrIni, map[string]*bintree{
-			}},
-			"locale_ja-JP.ini": &bintree{confLocaleLocale_jaJpIni, map[string]*bintree{
-			}},
-			"locale_lv-LV.ini": &bintree{confLocaleLocale_lvLvIni, map[string]*bintree{
-			}},
-			"locale_nl-NL.ini": &bintree{confLocaleLocale_nlNlIni, map[string]*bintree{
-			}},
-			"locale_pl-PL.ini": &bintree{confLocaleLocale_plPlIni, map[string]*bintree{
-			}},
-			"locale_pt-BR.ini": &bintree{confLocaleLocale_ptBrIni, map[string]*bintree{
-			}},
-			"locale_ru-RU.ini": &bintree{confLocaleLocale_ruRuIni, map[string]*bintree{
-			}},
-			"locale_zh-CN.ini": &bintree{confLocaleLocale_zhCnIni, map[string]*bintree{
-			}},
-			"locale_zh-HK.ini": &bintree{confLocaleLocale_zhHkIni, map[string]*bintree{
-			}},
+			"TRANSLATORS":      &bintree{confLocaleTranslators, map[string]*bintree{}},
+			"locale_de-DE.ini": &bintree{confLocaleLocale_deDeIni, map[string]*bintree{}},
+			"locale_en-US.ini": &bintree{confLocaleLocale_enUsIni, map[string]*bintree{}},
+			"locale_es-ES.ini": &bintree{confLocaleLocale_esEsIni, map[string]*bintree{}},
+			"locale_fr-FR.ini": &bintree{confLocaleLocale_frFrIni, map[string]*bintree{}},
+			"locale_ja-JP.ini": &bintree{confLocaleLocale_jaJpIni, map[string]*bintree{}},
+			"locale_lv-LV.ini": &bintree{confLocaleLocale_lvLvIni, map[string]*bintree{}},
+			"locale_nl-NL.ini": &bintree{confLocaleLocale_nlNlIni, map[string]*bintree{}},
+			"locale_pl-PL.ini": &bintree{confLocaleLocale_plPlIni, map[string]*bintree{}},
+			"locale_pt-BR.ini": &bintree{confLocaleLocale_ptBrIni, map[string]*bintree{}},
+			"locale_ru-RU.ini": &bintree{confLocaleLocale_ruRuIni, map[string]*bintree{}},
+			"locale_zh-CN.ini": &bintree{confLocaleLocale_zhCnIni, map[string]*bintree{}},
+			"locale_zh-HK.ini": &bintree{confLocaleLocale_zhHkIni, map[string]*bintree{}},
 		}},
 	}},
 }}
 
 // RestoreAsset restores an asset under the given directory
 func RestoreAsset(dir, name string) error {
-        data, err := Asset(name)
-        if err != nil {
-                return err
-        }
-        info, err := AssetInfo(name)
-        if err != nil {
-                return err
-        }
-        err = os.MkdirAll(_filePath(dir, path.Dir(name)), os.FileMode(0755))
-        if err != nil {
-                return err
-        }
-        err = ioutil.WriteFile(_filePath(dir, name), data, info.Mode())
-        if err != nil {
-                return err
-        }
-        err = os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
-        if err != nil {
-                return err
-        }
-        return nil
+	data, err := Asset(name)
+	if err != nil {
+		return err
+	}
+	info, err := AssetInfo(name)
+	if err != nil {
+		return err
+	}
+	err = os.MkdirAll(_filePath(dir, path.Dir(name)), os.FileMode(0755))
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(_filePath(dir, name), data, info.Mode())
+	if err != nil {
+		return err
+	}
+	err = os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // RestoreAssets restores an asset under the given directory recursively
 func RestoreAssets(dir, name string) error {
-        children, err := AssetDir(name)
-        // File
-        if err != nil {
-                return RestoreAsset(dir, name)
-        }
-        // Dir
-        for _, child := range children {
-                err = RestoreAssets(dir, path.Join(name, child))
-                if err != nil {
-                        return err
-                }
-        }
-        return nil
+	children, err := AssetDir(name)
+	// File
+	if err != nil {
+		return RestoreAsset(dir, name)
+	}
+	// Dir
+	for _, child := range children {
+		err = RestoreAssets(dir, path.Join(name, child))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func _filePath(dir, name string) string {
-        cannonicalName := strings.Replace(name, "\\", "/", -1)
-        return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
+	cannonicalName := strings.Replace(name, "\\", "/", -1)
+	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-

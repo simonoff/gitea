@@ -899,7 +899,7 @@ func (i *Comment) GetPoster() (err error) {
 }
 
 // CreateComment creates comment of issue or commit.
-func CreateComment(userId, repoId, issueId int64, commitId, line string, 
+func CreateComment(userId, repoId, issueId int64, commitId, line string,
 	cmtType CommentType, content string, attachments []int64) (*Comment, error) {
 	sess := x.NewSession()
 	defer sess.Close()
@@ -944,7 +944,7 @@ func CreateComment(userId, repoId, issueId int64, commitId, line string,
 			sess.Rollback()
 			return nil, err
 		}
-		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed:false}); err != nil {
+		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed: false}); err != nil {
 			sess.Rollback()
 			return nil, err
 		}
@@ -958,7 +958,7 @@ func CreateComment(userId, repoId, issueId int64, commitId, line string,
 			return nil, ErrIssueNotExist
 		}
 		if issue.IsPull {
-			if _, err := sess.Id(issueId).Cols("is_closed").Update(&PullRepo{IsClosed:true}); err != nil {
+			if _, err := sess.Id(issueId).Cols("is_closed").Update(&PullRepo{IsClosed: true}); err != nil {
 				sess.Rollback()
 				return nil, err
 			}
@@ -975,7 +975,7 @@ func CreateComment(userId, repoId, issueId int64, commitId, line string,
 			}
 		}
 
-		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed:true}); err != nil {
+		if _, err := sess.Id(issueId).Cols("is_closed").Update(&Issue{IsClosed: true}); err != nil {
 			sess.Rollback()
 			return nil, err
 		}

@@ -41,7 +41,7 @@ var (
 var LoginTypes = map[LoginType]string{
 	LDAP: "LDAP",
 	SMTP: "SMTP",
-	PAM: "PAM",
+	PAM:  "PAM",
 }
 
 // Ensure structs implemented interface.

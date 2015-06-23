@@ -29,7 +29,7 @@ type PullRepo struct {
 	FromRepoID   int64
 	*Issue       `xorm:"-"`
 	FromBranch   string
-	ToRepoID int64
+	ToRepoID     int64
 	ToBranch     string
 	CanAutoMerge bool
 	IsMerged     bool
