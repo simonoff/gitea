@@ -180,9 +180,9 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 	ctx.Data["Diff"] = diff
 	ctx.Data["IsImageFile"] = isImageFile
 	ctx.Data["DiffNotAvailable"] = diff.NumFiles() == 0
-	ctx.Data["SourcePath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "src", afterBranch)
-	ctx.Data["BeforeSourcePath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "src", beforeBranch)
-	ctx.Data["RawPath"] = setting.AppSubUrl + "/" + path.Join(userName, repoName, "raw", afterBranch)
+	ctx.Data["SourcePath"] = setting.AppSubUrl + "/" + path.Join(afterRepo.Owner.Name, afterRepo.Name, "src", afterBranch)
+	ctx.Data["BeforeSourcePath"] = setting.AppSubUrl + "/" + path.Join(beforeRepo.Owner.Name, beforeRepo.Name, "src", beforeBranch)
+	ctx.Data["RawPath"] = setting.AppSubUrl + "/" + path.Join(afterRepo.Owner.Name, afterRepo.Name, "raw", afterBranch)
 
 	ctx.HTML(200, PULL_COMPARE)
 }
