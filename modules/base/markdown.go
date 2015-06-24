@@ -199,7 +199,6 @@ func RenderRawMarkdown(body []byte, urlPrefix string) []byte {
 	extensions |= blackfriday.EXTENSION_AUTOLINK
 	extensions |= blackfriday.EXTENSION_STRIKETHROUGH
 	extensions |= blackfriday.EXTENSION_HARD_LINE_BREAK
-	extensions |= blackfriday.EXTENSION_SPACE_HEADERS
 	extensions |= blackfriday.EXTENSION_NO_EMPTY_LINE_BEFORE_BLOCK
 
 	body = blackfriday.Markdown(body, renderer, extensions)
