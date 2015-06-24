@@ -408,7 +408,7 @@ func runWeb(ctx *cli.Context) {
 			m.Get("/", repo.Pulls)
 		})
 		m.Group("/pull", func() {
-			m.Get("/create", bindIgnErr(auth.NewPullRequestForm{}), repo.NewPullRequest)
+			m.Post("/create", bindIgnErr(auth.NewPullRequestForm{}), repo.NewPullRequest)
 			m.Get("/:id", repo.Pull)
 			m.Post("/:id/merge", repo.PullMerge)
 			m.Post("/:id/comment", repo.PullComment)

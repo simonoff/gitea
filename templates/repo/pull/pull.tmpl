@@ -45,6 +45,22 @@
             </div>
             <div id="pr-conversation" class="js-tab-show clear">
                 <div id="pr-conversation-list" class="left grid-5-6">
+                    <div class="issue-comment clear">
+                        <a class="author-avatar" href="{{AppSubUrl}}/{{.Issue.Poster.Name}}"><img class="avatar-40 radius" src="{{.Issue.Poster.AvatarLink}}" alt="{{.Issue.Poster.Name}}"/></a>
+                        <div class="panel panel-radius">
+                            <p class="panel-header clear"><a class="author-name" href="#">{{.Issue.Poster.Name}}</a>
+                                <span class="date">{{TimeSince .Issue.Created $.Lang}}</span>
+                            <span class="action right">
+                                <span class="label label-black label-radius">owner</span>
+                                <!--TODO: complete this -->
+                                <!--<a href="#"><i class="octicon octicon-pencil"></i></a>
+                                <a href="#"><i class="octicon octicon-x"></i></a>
+                                -->
+                            </span>
+                            </p>
+                            <div class="panel-content content markdown">{{.Issue.Content}}</div>
+                        </div>
+                    </div>
                     {{range .Comments}}
                     {{if eq .Type 0}}
                     <div class="issue-comment clear">

@@ -65,7 +65,7 @@ func Pull(ctx *middleware.Context) {
 		return
 	}
 	ctx.Data["Comments"] = comments
-	ctx.Data["CountComments"] = len(comments)
+	ctx.Data["CountComments"] = len(comments) + 1
 
 	fromRepo, err := models.GetRepositoryById(pull.FromRepoID)
 	if err != nil {
