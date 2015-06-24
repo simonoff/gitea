@@ -11,7 +11,7 @@
             <ul id="repo-file-nav" class="clear menu menu-line">
                 {{if (and (.Repository.IsFork) .IsRepositoryAdmin)}}
                 <li>
-                    <a href="{{.RepoLink}}/pulls/new">
+                    <a href="{{.RepoLink}}/compare/">
                         <button class="btn btn-green btn-small btn-radius" id="repo-compare-btn"><i class="octicon octicon-git-pull-request"></i></button>
                     </a>
                 </li>
