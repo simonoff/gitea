@@ -80,12 +80,6 @@ func Pull(ctx *middleware.Context) {
 		return
 	}
 
-	beforeRepo, err := git.OpenRepository(beforeRepoPath)
-	if err != nil {
-		ctx.Handle(404, "OpenRepository", err)
-		return
-	}
-
 	afterRepoPath, err := fromRepo.RepoPath()
 	if err != nil {
 		ctx.Handle(500, "GetRepositoryById", err)
@@ -98,7 +92,7 @@ func Pull(ctx *middleware.Context) {
 		return
 	}
 
-	commit, err := beforeRepo.GetCommitOfBranch(pull.ToBranch)
+	commit, err := afterRepo.GetCommitOfBranch(pull.FromBranch)
 	if err != nil {
 		ctx.Handle(404, "GetCommit", err)
 		return
@@ -130,13 +124,7 @@ func Pull(ctx *middleware.Context) {
 		return isImage
 	}
 
-	commit, err = afterRepo.GetCommitOfBranch(pull.FromBranch)
-	if err != nil {
-		ctx.Handle(500, "CommitsBeforeUntil", err)
-		return
-	}
-
-	commits, err := commit.CommitsBeforeUntil(commit.Id.String())
+	commits, err := afterRepo.CommitsBetweenBranch("upstream/"+pull.ToBranch, pull.FromBranch, 1)
 	if err != nil {
 		ctx.Handle(500, "CommitsBeforeUntil", err)
 		return

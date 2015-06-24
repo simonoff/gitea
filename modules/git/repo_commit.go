@@ -252,6 +252,15 @@ func (repo *Repository) FileCommitsCount(branch, file string) (int, error) {
 	return com.StrTo(strings.TrimSpace(stdout)).Int()
 }
 
+func (repo *Repository) CommitsBetweenBranch(afterBranch, beforeBranch string, page int) (*list.List, error) {
+	stdout, stderr, err := com.ExecCmdDirBytes(repo.Path, "git", "log", afterBranch+".."+
+		beforeBranch, "--skip="+com.ToStr((page-1)*50), "--max-count=50", prettyLogFormat)
+	if err != nil {
+		return nil, errors.New(string(stderr))
+	}
+	return parsePrettyFormatLog(repo, stdout)
+}
+
 func (repo *Repository) CommitsByFileAndRange(branch, file string, page int) (*list.List, error) {
 	stdout, stderr, err := com.ExecCmdDirBytes(repo.Path, "git", "log", branch,
 		"--skip="+com.ToStr((page-1)*50), "--max-count=50", prettyLogFormat, "--", file)

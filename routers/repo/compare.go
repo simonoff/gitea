@@ -167,7 +167,7 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return isImage
 	}
 
-	commits, err := commit.CommitsBeforeUntil(beforeCommitId)
+	commits, err := repo.CommitsBetweenBranch("upstream/"+beforeBranch, afterBranch, 1)
 	if err != nil {
 		ctx.Handle(500, "CommitsBeforeUntil", err)
 		return
