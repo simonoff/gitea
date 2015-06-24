@@ -1,12 +1,12 @@
 <ul class="menu menu-vertical" id="repo-sidebar-mini">
-    <li><a href="#" class="btn-right-radius"><i class="octicon octicon-code"></i></a></li>
+    <li><a href="{{.RepoLink}}" class="btn-right-radius"><i class="octicon octicon-code"></i></a></li>
     <li class="border-bottom"></li>
-    <li><a href="#" class="btn-right-radius"><i class="octicon octicon-issue-opened"></i>
-        <span class="num label label-blue">999</span>
+    <li><a href="{{.RepoLink}}/issues" class="btn-right-radius"><i class="octicon octicon-issue-opened"></i>
+        <span class="num label label-blue">{{.NumIssues}}</span>
     </a></li>
-    <li class="current"><a href="#" class="btn-right-radius"><i class="octicon octicon-git-pull-request"></i>
-        <span class="num label label-black">12</span>
+    <li class="current"><a href="{{.RepoLink}}/pulls" class="btn-right-radius"><i class="octicon octicon-git-pull-request"></i>
+        <span class="num label label-black">{{.NumPulls}}</span>
     </a></li>
     <li class="border-bottom"></li>
-    <li><a href="#" class="btn-right-radius"><i class="octicon octicon-tools"></i></a></li>
+    <li><a href="{{.RepoLink}}/settings" class="btn-right-radius"><i class="octicon octicon-tools"></i></a></li>
 </ul>

@@ -35,6 +35,8 @@ func Pull(ctx *middleware.Context) {
 	repo := ctx.Repo.Repository
 	repoLink, _ := repo.RepoLink()
 	ctx.Data["RepoLink"] = repoLink
+	ctx.Data["NumIssues"] = repo.NumIssues
+	ctx.Data["NumPulls"] = repo.NumPulls
 
 	issueIndex := ctx.ParamsInt64(":id")
 	issue, err := models.GetIssueByIndex(repo.ID, issueIndex)
@@ -131,6 +133,15 @@ func Pull(ctx *middleware.Context) {
 	}
 	commits = models.ValidateCommitsWithEmails(commits)
 
+	autoMerge, err := afterRepo.MergeCheck(pull.FromBranch, "upstream/"+pull.ToBranch)
+	if err != nil {
+		ctx.Handle(500, "MergeCheck", err)
+		return
+	}
+
+	ctx.Data["Username"] = fromRepo.Owner.Name
+	ctx.Data["Reponame"] = fromRepo.Name
+	ctx.Data["IsAutoMerge"] = autoMerge
 	ctx.Data["Commits"] = commits
 	ctx.Data["CommitCount"] = commits.Len()
 	ctx.Data["Commit"] = commit

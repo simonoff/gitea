@@ -112,6 +112,7 @@
                     <div class="issue-line"></div>
                     <div class="issue-merge issue-merge-ok clear">
                         <span class="inline-block radius ico"><i class="mega-octicon octicon-git-pull-request"></i></span>
+                        {{if .IsAutoMerge}}
                         <div class="panel panel-radius">
                             <p class="panel-header clear">
                                 <i class="octicon octicon-check"></i><strong>All is well !</strong>
@@ -125,6 +126,17 @@
                                 </button>
                             </div>
                         </div>
+                        {{else}}
+                        <div class="panel panel-radius">
+                            <p class="panel-header clear">
+                                <i class="octicon octicon-check"></i><strong>Merge Conflicts</strong>
+                            </p>
+                            <div class="panel-content content clear">
+                                <div class="message left"><strong>This pull request CAN NOT be automatically merged.</strong><br/>
+                                    You can pull request again or merge branches on the <a href="#">command line</a>.</div>
+                            </div>
+                        </div>
+                        {{end}}
                     </div>
                     {{end}}
                     <div class="issue-add-comment clear">
