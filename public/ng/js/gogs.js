@@ -260,8 +260,8 @@ var Gogs = {};
             var commit = document.location.href.match(/([a-zA-Z0-9-.:\/\/]+)\/commit\/([a-z0-9]+)/);
             console.log(commit);
             var lineNum;
-            if ($(this).prop("tagName") == "BUTTON") {                
-                lineNum = $(this).attr('rel');                                
+            if ($(this).prop("tagName") == "BUTTON") {
+                lineNum = $(this).attr('rel');
             } else {
                 lineNum = $(this).parent().prev().find('span').attr('rel');
             }
@@ -403,7 +403,7 @@ var Gogs = {};
                 selectRange($list, $first);
                 $("html, body").scrollTop($first.offset().top - 200);
                 return;
-            }            
+            }
             m = window.location.hash.match(/^#comment-(\d+)$/);
             if (m) {
                 $("html, body").animate({
@@ -988,9 +988,9 @@ function initTimeSwitch() {
 }
 
 function initDiff() {
-    $('.diff-detail-box>a').click(function () {
+    $('#pr-diff-btn').click(function () {
         $($(this).data('target')).slideToggle(100);
-    })
+    });
 
     var $counter = $('.diff-counter');
     if ($counter.length < 1) {
@@ -1055,6 +1055,20 @@ $(document).ready(function () {
 
     $('#dashboard-sidebar-menu').tabs();
     $('#pull-issue-preview').markdown_preview(".issue-add-comment");
+
+	var $prCreateBtn = $("#pr-create-btn");
+	if ($prCreateBtn.length) {
+		var $prCreatePanel = $("#pr-create-panel");
+		$('#pull-add-preview').markdown_preview(".pr-create-new");
+		$prCreateBtn.on("click",function(){
+			$prCreatePanel.removeClass("hide");
+			$prCreateBtn.hide();
+		});
+		$('#pr-create-cancel-btn').on("click",function(){
+			$prCreatePanel.addClass("hide");
+			$prCreateBtn.show();
+		})
+	}
 
     homepage();
 

@@ -2119,6 +2119,15 @@ The register and sign-in page style
   border-top-left-radius: .2em;
   border-bottom-left-radius: .2em;
 }
+#pr-create-panel {
+  margin-top: 12px;
+}
+#pr-create-panel .menu > li > a {
+  padding: .2em .6em;
+}
+#pr-create-btn {
+  margin-left: 12px;
+}
 #pr-commit,
 #pr-file-diff,
 #commit-add-comment-preview,
@@ -2248,8 +2257,14 @@ The register and sign-in page style
 .commit-add-comment .add-nav > li.js-tab-nav-show > a {
   background-color: #FFF;
 }
+input#pr-add-title {
+  width: 100%;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+}
 textarea#issue-add-content,
-textarea#commit-add-content {
+textarea#commit-add-content,
+textarea#pr-add-content {
   width: 100%;
   box-sizing: border-box;
   height: 120px;
