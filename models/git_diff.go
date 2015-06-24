@@ -282,7 +282,7 @@ func GetDiffRange(repoPath, beforeCommitId string, afterCommitId string, maxline
 }
 
 // check if we have added original repo as a upstream remote and update all branches information
-func checkUpstream(repoPath, forkedRepoPath, beforeBranch string) error {
+func CheckUpstream(repoPath, forkedRepoPath, beforeBranch string) error {
 	if !git.IsRemoteExist(forkedRepoPath, "upstream") {
 		_, _, err := com.ExecCmdDir(forkedRepoPath, "git", "remote", "add", "upstream", repoPath)
 		if err != nil {
@@ -300,7 +300,7 @@ func checkUpstream(repoPath, forkedRepoPath, beforeBranch string) error {
 }
 
 func GetDiffForkedRange(repoPath, forkedRepoPath, beforeBranch string, afterBranch string, maxlines int) (*Diff, error) {
-	err := checkUpstream(repoPath, forkedRepoPath, beforeBranch)
+	err := CheckUpstream(repoPath, forkedRepoPath, beforeBranch)
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +345,7 @@ func GetDiffForkedRange(repoPath, forkedRepoPath, beforeBranch string, afterBran
 }
 
 func ForkedMerge(repoPath, forkedRepoPath, beforeBranch, afterBranch string) (string, string, error) {
-	err := checkUpstream(repoPath, forkedRepoPath, beforeBranch)
+	err := CheckUpstream(repoPath, forkedRepoPath, beforeBranch)
 	if err != nil {
 		return "", "", err
 	}

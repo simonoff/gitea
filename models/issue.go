@@ -530,6 +530,8 @@ type Label struct {
 	NumClosedIssues int
 	NumOpenIssues   int  `xorm:"-"`
 	IsChecked       bool `xorm:"-"`
+	Created time.Time `xorm:"created"`
+	Updated time.Time `xorm:"updated"`
 }
 
 // CalOpenIssues calculates the open issues of label.
@@ -632,6 +634,8 @@ type Milestone struct {
 	Deadline        time.Time
 	DeadlineString  string `xorm:"-"`
 	ClosedDate      time.Time
+	Created time.Time `xorm:"created"`
+	Updated time.Time `xorm:"updated"`
 }
 
 // CalOpenIssues calculates the open issues of milestone.

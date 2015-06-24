@@ -122,6 +122,19 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 		return
 	}
 
+	err = models.CheckUpstream(beforeRepoPath, afterRepoPath, beforeBranch)
+	if err != nil {
+		ctx.Handle(404, "CheckUpstream", err)
+		return
+	}
+
+	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath,
+		beforeBranch, afterBranch, setting.Git.MaxGitDiffLines)
+	if err != nil {
+		ctx.Handle(404, "GetDiffForkedRange", err)
+		return
+	}
+
 	afterCommit, err := repo.GetCommitIdOfRef("refs/remotes/upstream/" + afterBranch)
 	if err != nil {
 		ctx.Handle(404, "GetCommitIdOfRef", err)
@@ -132,13 +145,6 @@ func ForkDiff(ctx *middleware.Context, beforeCommitId, afterCommitId string) {
 	commit, err := repo.GetCommit(afterCommitId)
 	if err != nil {
 		ctx.Handle(404, "GetCommit", err)
-		return
-	}
-
-	diff, err := models.GetDiffForkedRange(beforeRepoPath, afterRepoPath,
-		beforeBranch, afterBranch, setting.Git.MaxGitDiffLines)
-	if err != nil {
-		ctx.Handle(404, "GetDiffRange", err)
 		return
 	}
 
