@@ -185,7 +185,7 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 
 	fromRepo, err := models.GetRepositoryByFork(repo.ID, froms[0])
 	if err != nil {
-		ctx.Handle(500, "GetForkRepo", err)
+		ctx.Handle(500, "GetRepositoryByFork", err)
 		return
 	}
 	fromRepoID := fromRepo.ID
@@ -196,7 +196,7 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	} else {
 		toRepo, err := models.GetRepositoryByFork(repo.ID, tos[0])
 		if err != nil {
-			ctx.Handle(500, "GetForkRepo", err)
+			ctx.Handle(500, "GetRepositoryByFork", err)
 			return
 		}
 		toRepoID = toRepo.ID
@@ -211,7 +211,7 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 
 	has, err := models.IsPullRequestOpened(pullRepo)
 	if err != nil {
-		ctx.Handle(500, "GetByExample", err)
+		ctx.Handle(500, "IsPullRequestOpened", err)
 		return
 	}
 
@@ -222,6 +222,12 @@ func NewPullRequest(ctx *middleware.Context, form auth.NewPullRequestForm) {
 	}
 
 	if has {
+		err = pullRepo.GetIssue()
+		if err != nil {
+			ctx.Handle(500, "GetIssue", err)
+			return
+		}
+
 		ctx.Redirect(fmt.Sprintf("%s/pull/%d", repoLink, pullRepo.Index))
 		return
 	}
