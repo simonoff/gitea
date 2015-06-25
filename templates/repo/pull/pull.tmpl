@@ -5,7 +5,10 @@
     <div class="clear container repo-wide-wrapper repo-pr">
         <div class="pr-main">
             <div class="pr-title clear">
-                <h2 class="pr-title grid-5-6 left">{{.Issue.Name}} <span class="pr-num">#{{.Issue.Index}}</span></h2>
+                <h2 class="pr-title grid-5-6 left">
+                	<i class="octicon octicon-git-pull-request"></i>
+                	{{.Issue.Name}} <span class="pr-num">#{{.Issue.Index}}</span>
+                </h2>
                 <div class="pr-title-btn grid-1-6 right text-right">
                     <button class="btn btn-gray btn-radius">Edit</button><!--&nbsp;&nbsp;
                     <a href="#"><button class="btn btn-green btn-radius">New Pull Request</button></a>-->
@@ -44,7 +47,7 @@
                 </div>
             </div>
             <div id="pr-conversation" class="js-tab-show clear">
-                <div id="pr-conversation-list" class="left grid-5-6">
+                <div id="pr-conversation-list">
                     <div class="issue-comment clear">
                         <a class="author-avatar" href="{{AppSubUrl}}/{{.Issue.Poster.Name}}"><img class="avatar-40 radius" src="{{.Issue.Poster.AvatarLink}}" alt="{{.Issue.Poster.Name}}"/></a>
                         <div class="panel panel-radius">
@@ -118,12 +121,22 @@
                                 <i class="octicon octicon-check"></i><strong>All is well !</strong>
                             </p>
                             <div class="panel-content content clear">
-                                <div class="message left"><strong>This pull request can be automatically merged.</strong><br/>
-                                    You can also merge branches on the <a href="#">command line</a>.</div>
-                                <button class="btn btn-green right btn-radius">
-                                    <i class="octicon octicon-git-merge"></i>
-                                    Merge Pull Request
-                                </button>
+                            	<div id="pr-merge-notice">
+									<div class="message left"><strong>This pull request can be automatically merged.</strong><br/>
+										You can also merge branches on the <a href="#">command line</a>.</div>
+									<button class="btn btn-green right btn-radius" id="pr-merge-btn">
+										<i class="octicon octicon-git-merge"></i>
+										Merge Pull Request
+									</button>
+                                </div>
+                                <form id="pr-merge-form" action="#" method="post" class="hide">
+                                	<h3>Merge pull request #{{.Issue.Index}} from {{.FromRepo.Owner.Name}}/{{.Pull.FromBranch}}</h3>
+                                	<textarea class="ipt ipt-radius" name="content" id="pr-merge-content"></textarea>
+                                	<p class="submit text-right">
+                                		<button class="btn btn-gray btn-radius text-bold" type="reset" id="pr-merge-cancel-btn">Cancel</button>
+                                		<button class="btn btn-green btn-radius text-bold" name="submit" value="confirm" id="pr-merge-confirm-btn">Confirm</button>
+                                	</p>
+                                </form>
                             </div>
                         </div>
                         {{else}}
@@ -167,9 +180,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="pr-conversation-sidebar" class="left grid-1-6">
+                <!--<div id="pr-conversation-sidebar" class="left grid-1-6">
                     1-4
-                </div>
+                </div>-->
             </div>
             <div id="pr-commit">
                 {{if .Commits}}

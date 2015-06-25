@@ -2057,6 +2057,10 @@ The register and sign-in page style
   font-weight: normal;
   color: #888;
 }
+.pr-title i {
+  margin-right: 6px;
+  font-size: 1.2em;
+}
 .pr-meta {
   color: #888;
   padding: 4px 0 8px 0;
@@ -2264,11 +2268,15 @@ input#pr-add-title {
 }
 textarea#issue-add-content,
 textarea#commit-add-content,
-textarea#pr-add-content {
+textarea#pr-add-content,
+textarea#pr-merge-content {
   width: 100%;
   box-sizing: border-box;
   height: 120px;
   resize: vertical;
+}
+textarea#pr-merge-content {
+  height: 80px;
 }
 #issue-list-nav {
   border-bottom: 1px solid #DDD;

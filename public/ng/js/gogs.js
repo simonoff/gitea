@@ -632,7 +632,7 @@ function initRepo() {
     var $clone_btn = $('#repo-clone-copy');
     $clone_btn.hover(function () {
         Gogs.bindCopy($(this));
-    })
+    });
     $clone_btn.tipsy({
         fade: true
     });
@@ -646,6 +646,37 @@ function initRepo() {
             $($this.data("preview")).html("no content");
         })
     });
+
+	// pr logic
+	(function () {
+		$('#pull-issue-preview').markdown_preview(".issue-add-comment");
+
+		var $prCreateBtn = $("#pr-create-btn");
+		if ($prCreateBtn.length) {
+			var $prCreatePanel = $("#pr-create-panel");
+			$('#pull-add-preview').markdown_preview(".pr-create-new");
+			$prCreateBtn.on("click", function () {
+				$prCreatePanel.removeClass("hide");
+				$prCreateBtn.hide();
+			});
+			$('#pr-create-cancel-btn').on("click", function () {
+				$prCreatePanel.addClass("hide");
+				$prCreateBtn.show();
+			})
+		}
+		var $prMergeBtn = $('#pr-merge-btn');
+		if($prMergeBtn.length){
+			var $prMergeNotice = $('#pr-merge-notice'),$prMergeForm = $('#pr-merge-form');
+			$prMergeBtn.on("click",function(){
+				$prMergeNotice.hide();
+				$prMergeForm.show();
+			});
+			$('#pr-merge-cancel-btn').on("click",function(){
+				$prMergeForm.hide();
+				$prMergeNotice.show();
+			});
+		}
+	})();
 }
 
 // when user changes hook type, hide/show proper divs
@@ -1054,21 +1085,6 @@ $(document).ready(function () {
     }
 
     $('#dashboard-sidebar-menu').tabs();
-    $('#pull-issue-preview').markdown_preview(".issue-add-comment");
-
-	var $prCreateBtn = $("#pr-create-btn");
-	if ($prCreateBtn.length) {
-		var $prCreatePanel = $("#pr-create-panel");
-		$('#pull-add-preview').markdown_preview(".pr-create-new");
-		$prCreateBtn.on("click",function(){
-			$prCreatePanel.removeClass("hide");
-			$prCreateBtn.hide();
-		});
-		$('#pr-create-cancel-btn').on("click",function(){
-			$prCreatePanel.addClass("hide");
-			$prCreateBtn.show();
-		})
-	}
 
     homepage();
 
