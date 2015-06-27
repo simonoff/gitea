@@ -80,8 +80,6 @@
                 <div class="diff-counter count pull-left">
                     {{if $file.IsBin}}
                     {{$.i18n.Tr "repo.diff.bin"}}
-                    {{else if $file.IsRenamed}}
-                    <span class="file">{{$file.OldName}} &rarr;</span>
                     {{else}}
                     <span class="add" data-line="{{.Addition}}">+ {{.Addition}}</span>
                     <span class="bar">
@@ -89,6 +87,10 @@
                         <span class="pull-left del"></span>
                     </span>
                     <span class="del" data-line="{{.Deletion}}">- {{.Deletion}}</span>
+                    {{end}}
+
+                    {{if $file.IsRenamed}}
+                    <span class="file">{{$file.OldName}} &rarr;</span>
                     {{end}}
                 </div>
                 {{if $file.IsDeleted}}
