@@ -200,7 +200,7 @@ func ParsePatch(pid int64, maxlines int, cmd *exec.Cmd, reader io.Reader) (*Diff
 					curFile.IsCreated = false
 					curFile.IsDeleted = false
 					curFile.IsRenamed = false
-				case strings.HasPrefix(scanner.Text(), "similarity index 100%"):
+				case strings.HasPrefix(scanner.Text(), "similarity index"):
 					curFile.Type = DIFF_FILE_RENAME
 					curFile.IsCreated = false
 					curFile.IsDeleted = false
