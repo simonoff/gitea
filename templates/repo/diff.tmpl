@@ -68,6 +68,9 @@
                     </div>
                     <!-- todo finish all file status, now modify, add, delete and rename -->
                     <span class="status {{DiffTypeToStr .Type}}" data-toggle="tooltip" data-placement="right" title="{{DiffTypeToStr .Type}}">&nbsp;</span>
+                    {{if .IsRenamed}}
+                    <span class="file">{{.OldName}} &rarr;</span>
+                    {{end}}
                     <a class="file" href="#diff-{{.Index}}">{{.Name}}</a>
                 </li>
                 {{end}}
