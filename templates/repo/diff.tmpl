@@ -78,15 +78,17 @@
         <div class="panel panel-radius diff-file-box diff-box file-content" id="diff-{{.Index}}">
             <div class="panel-header">
                 <div class="diff-counter count pull-left">
-                    {{if not $file.IsBin}}
+                    {{if $file.IsBin}}
+                    {{$.i18n.Tr "repo.diff.bin"}}
+                    {{else if $file.IsRenamed}}
+                    <span class="file">{{$file.OldName}} &rarr;</span>
+                    {{else}}
                     <span class="add" data-line="{{.Addition}}">+ {{.Addition}}</span>
                     <span class="bar">
                         <span class="pull-left add"></span>
                         <span class="pull-left del"></span>
                     </span>
                     <span class="del" data-line="{{.Deletion}}">- {{.Deletion}}</span>
-                    {{else}}
-                    {{$.i18n.Tr "repo.diff.bin"}}
                     {{end}}
                 </div>
                 {{if $file.IsDeleted}}
