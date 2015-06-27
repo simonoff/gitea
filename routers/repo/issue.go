@@ -510,6 +510,7 @@ func UpdateIssueLabel(ctx *middleware.Context) {
 	labelStrId := ctx.Query("id")
 	labelId := com.StrTo(labelStrId).MustInt64()
 	label, err := models.GetLabelById(labelId)
+
 	if err != nil {
 		if err == models.ErrLabelNotExist {
 			ctx.Handle(404, "issue.UpdateIssueLabel(GetLabelById)", err)
@@ -920,11 +921,17 @@ func UpdateLabel(ctx *middleware.Context, form auth.CreateLabelForm) {
 		return
 	}
 
-	l := &models.Label{
-		Id:    id,
-		Name:  form.Title,
-		Color: form.Color,
+	l, err := models.GetLabelById(id)
+
+	if l == nil {
+		log.Warn("Could not find label id in db: %s", err)
+		ctx.Redirect(ctx.Repo.RepoLink + "/issues")
+		return
 	}
+
+	l.Name = form.Title
+	l.Color = form.Color
+
 	if err := models.UpdateLabel(l); err != nil {
 		ctx.Handle(500, "issue.UpdateLabel(UpdateLabel)", err)
 		return
