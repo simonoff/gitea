@@ -10,51 +10,40 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestResponse(t *testing.T) {
-	req := Get("http://httpbin.org/get")
-	resp, err := req.Response()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(resp)
-}
-
 func TestGet(t *testing.T) {
-	req := Get("http://httpbin.org/get")
-	b, err := req.Bytes()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(b)
+	Convey("When making Get request", t, func() {
+		req := Get("http://httpbin.org/get")
+		Convey("Response() should return Response structure", func() {
+			resp, err := req.Response()
+			So(err, ShouldBeNil)
+			So(resp.StatusCode, ShouldEqual, 200)
+		})
 
-	s, err := req.String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(s)
-
-	if string(b) != s {
-		t.Fatal("request data not match")
-	}
+		Convey("Bytes() as string should equal to String()", func() {
+			b, errB := req.Bytes()
+			s, errS := req.String()
+			So(errB, ShouldBeNil)
+			So(errS, ShouldBeNil)
+			So(string(b), ShouldEqual, s)
+		})
+	})
 }
 
 func TestSimplePost(t *testing.T) {
-	v := "smallfish"
-	req := Post("http://httpbin.org/post")
-	req.Param("username", v)
+	Convey("Should make simple POST request", t, func() {
+		v := "smallfish"
+		req := Post("http://httpbin.org/post")
+		req.Param("username", v)
 
-	str, err := req.String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-
-	n := strings.Index(str, v)
-	if n == -1 {
-		t.Fatal(v + " not found in post")
-	}
+		str, err := req.String()
+		So(err, ShouldBeNil)
+		n := strings.Index(str, v)
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 // func TestPostFile(t *testing.T) {
@@ -76,131 +65,101 @@ func TestSimplePost(t *testing.T) {
 // }
 
 func TestSimplePut(t *testing.T) {
-	str, err := Put("http://httpbin.org/put").String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
+	Convey("Should make simple put without errors", t, func() {
+		_, err := Put("http://httpbin.org/put").String()
+		So(err, ShouldBeNil)
+	})
 }
 
 func TestSimpleDelete(t *testing.T) {
-	str, err := Delete("http://httpbin.org/delete").String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
+	Convey("Should make simple delete without errors", t, func() {
+		_, err := Delete("http://httpbin.org/delete").String()
+		So(err, ShouldBeNil)
+	})
 }
 
 func TestWithCookie(t *testing.T) {
-	v := "smallfish"
-	str, err := Get("http://httpbin.org/cookies/set?k1=" + v).SetEnableCookie(true).String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-
-	str, err = Get("http://httpbin.org/cookies").SetEnableCookie(true).String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-
-	n := strings.Index(str, v)
-	if n == -1 {
-		t.Fatal(v + " not found in cookie")
-	}
+	Convey("Should have cookies support", t, func() {
+		v := "smallfish"
+		_, err := Get("http://httpbin.org/cookies/set?k1=" + v).SetEnableCookie(true).String()
+		So(err, ShouldBeNil)
+		str, err := Get("http://httpbin.org/cookies").SetEnableCookie(true).String()
+		So(err, ShouldBeNil)
+		n := strings.Index(str, v)
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 func TestWithBasicAuth(t *testing.T) {
-	str, err := Get("http://httpbin.org/basic-auth/user/passwd").SetBasicAuth("user", "passwd").String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-	n := strings.Index(str, "authenticated")
-	if n == -1 {
-		t.Fatal("authenticated not found in response")
-	}
+	Convey("Should have support for Basic AUTH", t, func() {
+		str, err := Get("http://httpbin.org/basic-auth/user/passwd").SetBasicAuth("user", "passwd").String()
+		So(err, ShouldBeNil)
+		n := strings.Index(str, "authenticated")
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 func TestWithUserAgent(t *testing.T) {
-	v := "beego"
-	str, err := Get("http://httpbin.org/headers").SetUserAgent(v).String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-
-	n := strings.Index(str, v)
-	if n == -1 {
-		t.Fatal(v + " not found in user-agent")
-	}
+	Convey("Should have support for user-agent header", t, func() {
+		v := "beego"
+		str, err := Get("http://httpbin.org/headers").SetUserAgent(v).String()
+		So(err, ShouldBeNil)
+		n := strings.Index(str, v)
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 func TestWithSetting(t *testing.T) {
-	v := "beego"
-	var setting BeegoHttpSettings
-	setting.EnableCookie = true
-	setting.UserAgent = v
-	setting.Transport = nil
-	SetDefaultSetting(setting)
+	Convey("Should have possibility to set default settings", t, func() {
+		v := "beego"
+		var setting BeegoHttpSettings
+		setting.EnableCookie = true
+		setting.UserAgent = v
+		setting.Transport = nil
+		SetDefaultSetting(setting)
 
-	str, err := Get("http://httpbin.org/get").String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
-
-	n := strings.Index(str, v)
-	if n == -1 {
-		t.Fatal(v + " not found in user-agent")
-	}
+		str, err := Get("http://httpbin.org/get").String()
+		So(err, ShouldBeNil)
+		n := strings.Index(str, v)
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 func TestToJson(t *testing.T) {
-	req := Get("http://httpbin.org/ip")
-	resp, err := req.Response()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(resp)
-
-	// httpbin will return http remote addr
-	type Ip struct {
-		Origin string `json:"origin"`
-	}
-	var ip Ip
-	err = req.ToJson(&ip)
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(ip.Origin)
-
-	if n := strings.Count(ip.Origin, "."); n != 3 {
-		t.Fatal("response is not valid ip")
-	}
+	Convey("Should export to JSON", t, func() {
+		req := Get("http://httpbin.org/ip")
+		_, err := req.Response()
+		So(err, ShouldBeNil)
+		// httpbin will return http remote addr
+		type Ip struct {
+			Origin string `json:"origin"`
+		}
+		var ip Ip
+		err = req.ToJson(&ip)
+		So(err, ShouldBeNil)
+		n := strings.Count(ip.Origin, ".")
+		So(n, ShouldEqual, 3)
+	})
 }
 
 func TestToFile(t *testing.T) {
-	f := "beego_testfile"
-	req := Get("http://httpbin.org/ip")
-	err := req.ToFile(f)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer os.Remove(f)
-	b, err := ioutil.ReadFile(f)
-	if n := strings.Index(string(b), "origin"); n == -1 {
-		t.Fatal(err)
-	}
+	Convey("Should export to file", t, func() {
+		f := "beego_testfile"
+		req := Get("http://httpbin.org/ip")
+		err := req.ToFile(f)
+		So(err, ShouldBeNil)
+		defer os.Remove(f)
+		b, err := ioutil.ReadFile(f)
+		n := strings.Index(string(b), "origin")
+		So(n, ShouldNotEqual, -1)
+	})
 }
 
 func TestHeader(t *testing.T) {
-	req := Get("http://httpbin.org/headers")
-	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36")
-	str, err := req.String()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(str)
+	Convey("Should have support for headers", t, func() {
+		req := Get("http://httpbin.org/headers")
+		req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36")
+		_, err := req.String()
+		So(err, ShouldBeNil)
+	})
 }
